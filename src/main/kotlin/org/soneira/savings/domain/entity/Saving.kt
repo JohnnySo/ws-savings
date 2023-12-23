@@ -2,13 +2,13 @@ package org.soneira.savings.domain.entity
 
 import org.soneira.savings.domain.common.entity.AggregateRoot
 import org.soneira.savings.domain.vo.Money
-import org.soneira.savings.domain.vo.Period
+import org.soneira.savings.domain.vo.EconomicalPeriod
 import org.soneira.savings.domain.vo.Totals
 import org.soneira.savings.domain.vo.id.SavingId
 
 data class Saving(
     val user: User,
-    val period: Period,
+    val economicalPeriod: EconomicalPeriod,
     val filename: String,
     val movements: List<Movement>,
 ) : AggregateRoot<SavingId>() {
@@ -21,6 +21,11 @@ data class Saving(
         totals = calculateTotals()
         expenseByCategory = calculateExpensesByCategory()
         expenseBySubcategory = calculateExpensesBySubCategory()
+    }
+
+    public fun getMaxOrder(): Int {
+        val max = movements.maxByOrNull { m-> m.order }
+        return max?.order?.value ?: 0
     }
 
     private fun restoreOrderMovements() {

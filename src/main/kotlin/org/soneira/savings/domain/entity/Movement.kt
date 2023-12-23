@@ -23,6 +23,9 @@ data class Movement(
         }
     }
 
+    fun updateOrder(order: Int) {
+        this.order.value = order
+    }
 
     fun isExpense(): Boolean {
         return !amount.isGreaterThanZero
