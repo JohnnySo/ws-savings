@@ -1,62 +1,60 @@
 package org.soneira.savings.domain.service.period.strategy
 
 import org.soneira.savings.domain.entity.Movement
-import org.soneira.savings.domain.entity.Saving
+import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.User
-import org.soneira.savings.domain.vo.EconomicalPeriod
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
 
-class MonthStrategy(val user: User) : PeriodStrategy {
+class MonthStrategy(private val user: User) : PeriodStrategy {
 
-    override fun calculateSavings(movements: List<Movement>,
-                                  filename: String,
-                                  optLastSaving: Optional<Saving>): List<Saving> {
-        val savings = mutableListOf<Saving>()
+    override fun execute(movements: List<Movement>,
+                         filename: String,
+                         optLastPeriod: Optional<EconomicPeriod>): List<EconomicPeriod> {
+        val economicPeriods = mutableListOf<EconomicPeriod>()
         if(movements.isNotEmpty()) {
-            optLastSaving.ifPresent { lastSaving -> savings.add(completeLastSaving(lastSaving, movements)) }
+            optLastPeriod.ifPresent { lastPeriod -> economicPeriods.add(completeLastPeriod(lastPeriod, movements)) }
             val periods = getPeriods(movements.sortedWith(Movement.dateAndOrderComparator))
             for (period in periods) {
-                val saving = Saving(user, period, filename,
-                    movements.filter { m -> m.isDateBetween(period.start, period.end) }
+                val economicPeriod = EconomicPeriod(user, period.key, period.value, filename,
+                    movements.filter { m -> m.isDateBetween(period.key, period.value) }
                         .sortedWith(Movement.dateAndOrderComparator))
-                savings.add(saving)
+                economicPeriods.add(economicPeriod)
             }
         }
-        return savings
+        return economicPeriods
     }
 
     /**
      * Completes the last period that is incomplete from a previous importation
      *
-     * @param lastSaving last period
+     * @param lastPeriod last period
      * @param movements list of all movements to be imported
      */
-    private fun completeLastSaving(lastSaving: Saving, movements: List<Movement>): Saving {
-        val allMovements = lastSaving.movements.toMutableList()
-        val maxOrder = lastSaving.getMaxOrder()
+    private fun completeLastPeriod(lastPeriod: EconomicPeriod, movements: List<Movement>): EconomicPeriod {
+        val allMovements = lastPeriod.movements.toMutableList()
+        val maxOrder = lastPeriod.getMaxOrder()
         val movementsToAdd = movements
-            .filter { m -> m.isDateBetween(lastSaving.economicalPeriod.start, lastSaving.economicalPeriod.end) }
+            .filter { m -> m.isDateBetween(lastPeriod.start, lastPeriod.end) }
         allMovements.addAll(movementsToAdd)
         allMovements.forEach { m->m.updateOrder(m.order.value+maxOrder) }
-        return lastSaving.copy(movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
+        return lastPeriod.copy(movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
     }
 
     /**
      * Get the list of periods based on the first and last day of the movements list.
      * @param movements the list of movements ordered by date and order [Movement]
-     * @return the list of periods [EconomicalPeriod]
+     * @return the map of periods (key -> start date; value -> end date) [MutableMap]
      */
-    private fun getPeriods(movements: List<Movement>): List<EconomicalPeriod> {
+    private fun getPeriods(movements: List<Movement>): MutableMap<LocalDate, LocalDate> {
         var firstPeriodDay = YearMonth
             .of(movements.first().operationDate.year, movements.first().operationDate.month).atDay(1)
         val lastDay = movements.last().operationDate
-        val periods = mutableListOf<EconomicalPeriod>()
+        val periods = mutableMapOf<LocalDate, LocalDate>()
         while (firstPeriodDay.isBefore(lastDay)) {
-            val period = EconomicalPeriod(firstPeriodDay, YearMonth.of(firstPeriodDay.year, firstPeriodDay.month)
-                .atEndOfMonth())
-            periods.add(period)
+            val start = firstPeriodDay
+            periods[start] = YearMonth.of(start.year, start.month).atEndOfMonth()
             firstPeriodDay = firstPeriodDay.plusMonths(1)
         }
         return periods

@@ -1,8 +1,8 @@
 package org.soneira.savings.application.config
 
 import org.jetbrains.annotations.NotNull
-import org.soneira.savings.domain.service.SavingCreator
-import org.soneira.savings.domain.service.impl.SavingCreatorImpl
+import org.soneira.savings.domain.service.PeriodCreator
+import org.soneira.savings.domain.service.impl.PeriodCreatorImpl
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,13 +11,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-@EntityScan(basePackages = ["org.soneira.homepal.savings.persistence.mongo"])
-@EnableMongoRepositories(basePackages = ["org.soneira.homepal.savings.persistence.mongo"])
+@EntityScan(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
+@EnableMongoRepositories(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
 @Configuration
 class SavingsConfiguration {
     @Bean
-    fun savingCreator(): SavingCreator {
-        return SavingCreatorImpl()
+    fun periodCreator(): PeriodCreator {
+        return PeriodCreatorImpl()
     }
 
     @Bean

@@ -2,18 +2,17 @@ package org.soneira.savings.application.service
 
 import org.soneira.savings.domain.entity.*
 import org.soneira.savings.domain.port.input.ImportMovementApplicationService
-import org.soneira.savings.domain.service.SavingCreator
-import org.soneira.savings.domain.vo.params.SavingsCreatorParams
+import org.soneira.savings.domain.service.PeriodCreator
 import org.springframework.stereotype.Service
 
 @Service
 class ImportMovementApplicationService (
-    val savingCreator: SavingCreator): ImportMovementApplicationService {
-    override fun execute(movements: List<Movement>, filename: String): List<Saving> {
+    val periodCreator: PeriodCreator): ImportMovementApplicationService {
+    override fun execute(movements: List<Movement>, filename: String): List<EconomicPeriod> {
         //get User
-        //get last saving
-        //val savingsCreatorParams = SavingsCreatorParams(null, filename, movements, null)
-        //savingCreator.create(savingsCreatorParams)
+        //get last period
+        //val periodCreatorParams = PeriodCreatorParams(null, filename, movements, null)
+        //periodCreator.create(periodCreatorParams)
         TODO("Not yet implemented")
     }
 }
