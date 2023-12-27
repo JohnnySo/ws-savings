@@ -2,6 +2,7 @@ package org.soneira.savings.domain.service.period.strategy
 
 import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.EconomicPeriod
+import org.soneira.savings.domain.entity.File
 import org.soneira.savings.domain.entity.User
 import java.time.LocalDate
 import java.time.YearMonth
@@ -11,16 +12,16 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
 
     private val filterPayrolls = { m: Movement -> m.subcategory == user.settings.periodDefiner }
 
-    override fun execute(movements: List<Movement>,
-                         filename: String,
+    override fun execute(file: File,
                          optLastPeriod: Optional<EconomicPeriod>): List<EconomicPeriod> {
         val economicPeriods = mutableListOf<EconomicPeriod>()
-        if (movements.isNotEmpty()) {
-            optLastPeriod.ifPresent { lastPeriod -> economicPeriods.add(completeLastPeriod(lastPeriod, movements)) }
-            val periods = getPeriods(movements)
+        if (file.movements.isNotEmpty()) {
+            optLastPeriod.ifPresent { lastPeriod ->
+                economicPeriods.add(completeLastPeriod(lastPeriod, file.movements)) }
+            val periods = getPeriods(file.movements)
             for (period in periods) {
-                val economicPeriod = EconomicPeriod(user, period.key, period.value, filename,
-                    movements.filter { m -> m.isDateBetween(period.key, period.value) }
+                val economicPeriod = EconomicPeriod(user, period.key, period.value, file.filename,
+                    file.movements.filter { m -> m.isDateBetween(period.key, period.value) }
                         .sortedWith(Movement.dateAndOrderComparator))
                 economicPeriods.add(economicPeriod)
             }
