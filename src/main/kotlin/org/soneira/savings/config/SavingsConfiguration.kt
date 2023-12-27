@@ -1,4 +1,4 @@
-package org.soneira.savings.application.config
+package org.soneira.savings.config
 
 import org.jetbrains.annotations.NotNull
 import org.soneira.savings.domain.service.PeriodCreator
