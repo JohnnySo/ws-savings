@@ -1,8 +1,8 @@
 package org.soneira.savings.config
 
 import org.jetbrains.annotations.NotNull
-import org.soneira.savings.domain.service.PeriodCreator
-import org.soneira.savings.domain.service.impl.PeriodCreatorImpl
+import org.soneira.savings.domain.service.period.PeriodCreator
+import org.soneira.savings.domain.service.period.PeriodCreatorImpl
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

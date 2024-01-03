@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
 
-class Money(private val amount: BigDecimal) {
+data class Money(val amount: BigDecimal) {
     fun add(money: Money): Money {
         return of(setScale(amount.add(money.amount)))
     }

@@ -25,6 +25,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 	implementation("org.mapstruct:mapstruct:1.5.5.Final")
+	implementation("org.apache.poi:poi-ooxml:5.2.5")
 	kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 }
 

@@ -8,5 +8,6 @@ data class BusinessSettings(
     val periodDefiner: Subcategory,
     val monthStartBoundary: Int,
     val monthEndBoundary: Int,
-    val subcategoriesNotCountable: List<Subcategory>
+    val subcategoriesNotCountable: List<Subcategory>,
+    val fileParserSettings: FileParserSettings
 )

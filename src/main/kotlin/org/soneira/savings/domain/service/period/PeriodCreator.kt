@@ -1,4 +1,4 @@
-package org.soneira.savings.domain.service
+package org.soneira.savings.domain.service.period
 
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.File
