@@ -11,9 +11,9 @@ data class Movement(
     val description: String,
     val amount: Money,
     val order: Order,
-    val subcategory: Subcategory,
-    var comment: String,
-    val balance: Money
+    val subcategory: Subcategory?,
+    var comment: String?,
+    val balance: Money?
 ) : BaseEntity<MovementId>() {
     fun isDateBetween(start: LocalDate, end: LocalDate?): Boolean {
         return if (end == null) {
@@ -23,18 +23,23 @@ data class Movement(
         }
     }
 
-    fun updateOrder(order: Int) {
-        this.order.value = order
-    }
-
+    /**
+     * @return true if the amount is negative
+     */
     fun isExpense(): Boolean {
         return !amount.isGreaterThanZero
     }
 
+    /**
+     * @return true if the amount is positive
+     */
     fun isIncome(): Boolean {
         return amount.isGreaterThanZero
     }
 
+    /**
+     * @return true if a movement should be taken into account to calculate totals
+     */
     fun isCountable(subcategoriesNotCountable: List<Subcategory>): Boolean {
         return subcategory !in subcategoriesNotCountable
     }

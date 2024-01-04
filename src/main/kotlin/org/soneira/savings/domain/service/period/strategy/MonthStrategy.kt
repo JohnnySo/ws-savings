@@ -39,7 +39,7 @@ class MonthStrategy(private val user: User) : PeriodStrategy {
         val movementsToAdd = movements
             .filter { m -> m.isDateBetween(lastPeriod.start, lastPeriod.end) }
         allMovements.addAll(movementsToAdd)
-        allMovements.forEach { m->m.updateOrder(m.order.value+maxOrder) }
+        allMovements.forEach { m->m.order.value += maxOrder }
         return lastPeriod.copy(movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
     }
 

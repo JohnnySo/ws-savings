@@ -35,11 +35,17 @@ data class EconomicPeriod(
         yearMonth = getLogicalPeriod()
     }
 
-    public fun getMaxOrder(): Int {
+    /**
+     * Get the max order value in all the movements list
+     */
+    fun getMaxOrder(): Int {
         val max = movements.maxByOrNull { m-> m.order }
         return max?.order?.value ?: 0
     }
 
+    /**
+     * Reset the order of all the movements of the period to start in 1
+     */
     private fun restoreOrderMovements() {
         val min = movements.minByOrNull { it.order }
         if (min != null) {
@@ -49,6 +55,11 @@ data class EconomicPeriod(
         }
     }
 
+    /**
+     * Sum up all the movements of the same type (income or expense)
+     * and it calculates the total saved by summing or subtracting all the movements
+     * @return and object that hold the total income, expense and saved [Totals]
+     */
     private fun calculateTotals(): Totals {
         val totals = Totals(Money.ZERO, Money.ZERO, Money.ZERO)
         for (movement in movements) {
@@ -64,34 +75,44 @@ data class EconomicPeriod(
         return totals
     }
 
-    private fun calculateExpensesBy(
-        filterPredicate: (Movement) -> Boolean,
-        keySelector: (Movement) -> Category
-    ): Map<Category, Money> {
-        val distinctCategories = movements.filter(filterPredicate).map(keySelector).distinct()
+    /**
+     * Sum all the expenses of every category
+     * @return a map that contains the category as key and the total amount expended as value
+     */
+    private fun calculateExpensesByCategory(): Map<Category, Money> {
+        val distinctCategories = movements
+            .filter{ it.subcategory!=null && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
+            .map{it.subcategory?.parentCategory}.distinct()
         val categoriesMap = mutableMapOf<Category, Money>()
         for (distinctCategory in distinctCategories) {
-            val total = movements.filter {
-                distinctCategory == keySelector(it)
-                        && filterPredicate(it)
+            val total = movements.filter { distinctCategory == it.subcategory?.parentCategory
+                        && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            categoriesMap[distinctCategory] = total
+            if(distinctCategory!=null) {
+                categoriesMap[distinctCategory] = total
+            }
         }
         return categoriesMap
     }
 
-    private fun calculateExpensesByCategory(): Map<Category, Money> {
-        return calculateExpensesBy(
-            { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() },
-            { it.subcategory.parentCategory }
-        )
-    }
-
+    /**
+     * Sum all the expenses of every subcategory
+     * @return a map that contains the subcategory as key and the total amount expended as value
+     */
     private fun calculateExpensesBySubCategory(): Map<Subcategory, Money> {
-        return calculateExpensesBy(
-            { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() },
-            { it.subcategory }
-        ).mapKeys { it.key as Subcategory }
+        val distinctSubCategories = movements
+            .filter{ it.subcategory!=null && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
+            .map{ it.subcategory }.distinct()
+        val categoriesMap = mutableMapOf<Category, Money>()
+        for (distinctSubCategory in distinctSubCategories) {
+            val total = movements.filter { distinctSubCategory == it.subcategory
+                    && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
+            }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
+            if(distinctSubCategory!=null) {
+                categoriesMap[distinctSubCategory] = total
+            }
+        }
+        return categoriesMap.mapKeys { it.key as Subcategory }
     }
 
     /**

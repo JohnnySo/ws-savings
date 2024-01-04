@@ -50,7 +50,7 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
         val movementsToAdd = movements
             .filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
         allMovements.addAll(movementsToAdd)
-        allMovements.forEach { m->m.updateOrder(m.order.value+maxOrder) }
+        allMovements.forEach { m->m.order.value += maxOrder }
         return lastPeriod.copy(end = nextEndDate, movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
     }
 
