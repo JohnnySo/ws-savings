@@ -13,17 +13,17 @@ import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping(value = ["/movement"], consumes = [MediaType.APPLICATION_JSON_VALUE])
-class MovementController (val importMovementApplicationService: ImportMovementApplicationService){
+class MovementController(val importMovementApplicationService: ImportMovementApplicationService) {
 
     @PostMapping(value = ["/preview-file"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun previewFile(@RequestParam(value="file") file: MultipartFile): ResponseEntity<FileDTO>{
+    fun previewFile(@RequestParam(value = "file") file: MultipartFile): ResponseEntity<FileDTO> {
         val fileSaved = importMovementApplicationService.preview(file.inputStream, file.originalFilename ?: "")
         val fileMapper: FileMapper = Mappers.getMapper(FileMapper::class.java)
         return ResponseEntity<FileDTO>(fileMapper.toDto(fileSaved), HttpStatus.OK)
     }
 
     @PutMapping(value = ["/import-file"])
-    fun import(@RequestParam(value="fileId") fileId: String): ResponseEntity<String>{
+    fun import(@RequestParam(value = "fileId") fileId: String): ResponseEntity<String> {
         importMovementApplicationService.import(fileId)
         return ResponseEntity<String>(HttpStatusCode.valueOf(200))
     }

@@ -1,8 +1,8 @@
 package org.soneira.savings.domain.service.period.strategy
 
-import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.File
+import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.User
 import java.time.LocalDate
 import java.time.YearMonth
@@ -10,12 +10,15 @@ import java.util.*
 
 class MonthStrategy(private val user: User) : PeriodStrategy {
 
-    override fun execute(file: File,
-                         optLastPeriod: Optional<EconomicPeriod>): List<EconomicPeriod> {
+    override fun execute(
+        file: File,
+        optLastPeriod: Optional<EconomicPeriod>
+    ): List<EconomicPeriod> {
         val economicPeriods = mutableListOf<EconomicPeriod>()
-        if(file.movements.isNotEmpty()) {
+        if (file.movements.isNotEmpty()) {
             optLastPeriod.ifPresent { lastPeriod ->
-                economicPeriods.add(completeLastPeriod(lastPeriod, file.movements)) }
+                economicPeriods.add(completeLastPeriod(lastPeriod, file.movements))
+            }
             val periods = getPeriods(file.movements.sortedWith(Movement.dateAndOrderComparator))
             for (period in periods) {
                 val economicPeriod = EconomicPeriod(user, period.key, period.value, file.filename,
@@ -39,7 +42,7 @@ class MonthStrategy(private val user: User) : PeriodStrategy {
         val movementsToAdd = movements
             .filter { m -> m.isDateBetween(lastPeriod.start, lastPeriod.end) }
         allMovements.addAll(movementsToAdd)
-        allMovements.forEach { m->m.order.value += maxOrder }
+        allMovements.forEach { m -> m.order.value += maxOrder }
         return lastPeriod.copy(movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
     }
 

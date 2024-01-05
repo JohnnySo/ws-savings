@@ -22,6 +22,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.2.1")
 	implementation("org.springframework.boot:spring-boot-starter-data-rest:3.2.1")
+	implementation("org.springframework.boot:spring-boot-starter-cache:3.2.1")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 	implementation("org.mapstruct:mapstruct:1.5.5.Final")

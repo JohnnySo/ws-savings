@@ -1,4 +1,3 @@
 package org.soneira.savings.domain.port.output.repository
 
-interface MovementRepository {
-}
+interface MovementRepository

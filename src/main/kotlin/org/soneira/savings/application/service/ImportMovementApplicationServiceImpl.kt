@@ -15,23 +15,25 @@ import org.springframework.stereotype.Service
 import java.io.InputStream
 
 @Service
-class ImportMovementApplicationServiceImpl (
+class ImportMovementApplicationServiceImpl(
     val periodCreator: PeriodCreator,
     val userRepository: UserRepository,
     val periodRepository: PeriodRepository,
     val fileRepository: FileRepository,
     val applicationEventPublisher: ApplicationEventPublisher
-): ImportMovementApplicationService {
+) : ImportMovementApplicationService {
 
     override fun preview(file: InputStream, filename: String): File {
         val user = userRepository.getUser("test")
-        val preMovements = getReader(user.settings.fileParserSettings.fileType).read(file, user.settings.fileParserSettings)
+        val preMovements =
+            getReader(user.settings.fileParserSettings.fileType).read(file, user.settings.fileParserSettings)
         return fileRepository.save(user, filename, preMovements)
     }
 
     override fun import(fileId: String): List<EconomicPeriod> {
         val user = userRepository.getUser("test")
-        val periodsCreatedEvent = periodCreator.create(user, fileRepository.get(fileId), periodRepository.findLastPeriod())
+        val periodsCreatedEvent =
+            periodCreator.create(user, fileRepository.get(fileId), periodRepository.findLastPeriod())
         applicationEventPublisher.publishEvent(periodsCreatedEvent)
         return periodsCreatedEvent.economicPeriods
     }
@@ -42,7 +44,7 @@ class ImportMovementApplicationServiceImpl (
      * @return an instance of the required reader of type [FileReaderApplicationService]
      */
     private fun getReader(fileType: FileReaderType): FileReaderApplicationService {
-        when(fileType) {
+        when (fileType) {
             FileReaderType.EXCEL -> return ExcelFileReaderApplicationService()
         }
     }

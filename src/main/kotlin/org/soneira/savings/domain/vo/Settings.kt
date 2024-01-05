@@ -1,10 +1,9 @@
 package org.soneira.savings.domain.vo
 
 import org.soneira.savings.domain.entity.Subcategory
-import org.soneira.savings.domain.service.period.strategy.PeriodStrategyFactory
 
-data class BusinessSettings(
-    val periodStrategyType: PeriodStrategyFactory,
+data class Settings(
+    val periodStrategyType: PeriodStrategyType,
     val periodDefiner: Subcategory,
     val monthStartBoundary: Int,
     val monthEndBoundary: Int,

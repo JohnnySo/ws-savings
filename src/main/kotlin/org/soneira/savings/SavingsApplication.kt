@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SavingsApplication
 
 fun main(args: Array<String>) {
-	runApplication<SavingsApplication>(*args)
+    runApplication<SavingsApplication>(*args)
 }

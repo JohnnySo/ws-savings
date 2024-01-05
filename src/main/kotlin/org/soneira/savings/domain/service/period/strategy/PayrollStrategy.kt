@@ -1,8 +1,8 @@
 package org.soneira.savings.domain.service.period.strategy
 
-import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.File
+import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.User
 import java.time.LocalDate
 import java.time.YearMonth
@@ -12,12 +12,15 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
 
     private val filterPayrolls = { m: Movement -> m.subcategory == user.settings.periodDefiner }
 
-    override fun execute(file: File,
-                         optLastPeriod: Optional<EconomicPeriod>): List<EconomicPeriod> {
+    override fun execute(
+        file: File,
+        optLastPeriod: Optional<EconomicPeriod>
+    ): List<EconomicPeriod> {
         val economicPeriods = mutableListOf<EconomicPeriod>()
         if (file.movements.isNotEmpty()) {
             optLastPeriod.ifPresent { lastPeriod ->
-                economicPeriods.add(completeLastPeriod(lastPeriod, file.movements)) }
+                economicPeriods.add(completeLastPeriod(lastPeriod, file.movements))
+            }
             val periods = getPeriods(file.movements)
             for (period in periods) {
                 val economicPeriod = EconomicPeriod(user, period.key, period.value, file.filename,
@@ -40,7 +43,7 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
         val allMovements = lastPeriod.movements.toMutableList()
         val maxOrder = lastPeriod.getMaxOrder()
         val nextPayroll = movements.firstOrNull(filterPayrolls)
-        val nextEndDate : LocalDate
+        val nextEndDate: LocalDate
         if (nextPayroll == null) {
             val ym = YearMonth.of(lastPeriod.start.year, lastPeriod.start.month)
             nextEndDate = ym.atEndOfMonth()
@@ -50,7 +53,7 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
         val movementsToAdd = movements
             .filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
         allMovements.addAll(movementsToAdd)
-        allMovements.forEach { m->m.order.value += maxOrder }
+        allMovements.forEach { m -> m.order.value += maxOrder }
         return lastPeriod.copy(end = nextEndDate, movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
     }
 
@@ -94,9 +97,11 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
             if (payrollsIterator.hasNext()) {
                 periods[payrollsIterator.next().operationDate] =
                     payrollsIterator.next().operationDate.minusDays(1)
-            }else{
-                val ym = YearMonth.of(payrollsIterator.next().operationDate.year,
-                    payrollsIterator.next().operationDate.month)
+            } else {
+                val ym = YearMonth.of(
+                    payrollsIterator.next().operationDate.year,
+                    payrollsIterator.next().operationDate.month
+                )
                 periods[payrollsIterator.next().operationDate] = ym.atEndOfMonth()
             }
         } while (payrollsIterator.hasNext())

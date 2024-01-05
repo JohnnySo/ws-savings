@@ -17,8 +17,9 @@ interface PeriodCreator {
      * @param optLastPeriod the last period to complete it
      * @return All the movements divided into economic periods and with the totals calculated
      */
-    fun create(user: User,
-               file: File,
-               optLastPeriod: Optional<EconomicPeriod>
+    fun create(
+        user: User,
+        file: File,
+        optLastPeriod: Optional<EconomicPeriod>
     ): PeriodCreatedEvent
 }

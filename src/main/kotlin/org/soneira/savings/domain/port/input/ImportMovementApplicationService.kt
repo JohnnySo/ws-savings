@@ -1,8 +1,8 @@
 package org.soneira.savings.domain.port.input
 
-import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.File
+import org.soneira.savings.domain.entity.Movement
 import java.io.InputStream
 
 interface ImportMovementApplicationService {

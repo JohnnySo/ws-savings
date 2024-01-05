@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class PeriodCreatedEventListener(val fileRepository: FileRepository) {
     @EventListener
     @Async
-    fun listen(periodsCreatedEvent: PeriodCreatedEvent){
+    fun listen(periodsCreatedEvent: PeriodCreatedEvent) {
         //TODO: move to a new application service within a transaction
         fileRepository.remove(periodsCreatedEvent.file)
     }

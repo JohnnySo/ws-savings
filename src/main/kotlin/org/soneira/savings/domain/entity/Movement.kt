@@ -1,6 +1,5 @@
 package org.soneira.savings.domain.entity
 
-import org.soneira.savings.domain.common.entity.BaseEntity
 import org.soneira.savings.domain.vo.Money
 import org.soneira.savings.domain.vo.Order
 import org.soneira.savings.domain.vo.id.MovementId
@@ -14,7 +13,17 @@ data class Movement(
     val subcategory: Subcategory?,
     var comment: String?,
     val balance: Money?
-) : BaseEntity<MovementId>() {
+) {
+    var id: MovementId = MovementId("")
+
+    constructor(
+        id: MovementId, operationDate: LocalDate, description: String, amount: Money, order: Order,
+        subcategory: Subcategory?, comment: String?, balance: Money?
+    ) :
+            this(operationDate, description, amount, order, subcategory, comment, balance) {
+        this.id = id
+    }
+
     fun isDateBetween(start: LocalDate, end: LocalDate?): Boolean {
         return if (end == null) {
             operationDate > start

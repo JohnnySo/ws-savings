@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull
 import org.soneira.savings.domain.service.period.PeriodCreator
 import org.soneira.savings.domain.service.period.PeriodCreatorImpl
 import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @EntityScan(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
 @EnableMongoRepositories(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
 @EnableAsync
+@EnableCaching
 @Configuration
 class SavingsConfiguration {
     @Bean

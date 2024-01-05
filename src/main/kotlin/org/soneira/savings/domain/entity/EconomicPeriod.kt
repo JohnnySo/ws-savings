@@ -39,7 +39,7 @@ data class EconomicPeriod(
      * Get the max order value in all the movements list
      */
     fun getMaxOrder(): Int {
-        val max = movements.maxByOrNull { m-> m.order }
+        val max = movements.maxByOrNull { m -> m.order }
         return max?.order?.value ?: 0
     }
 
@@ -81,14 +81,18 @@ data class EconomicPeriod(
      */
     private fun calculateExpensesByCategory(): Map<Category, Money> {
         val distinctCategories = movements
-            .filter{ it.subcategory!=null && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
-            .map{it.subcategory?.parentCategory}.distinct()
+            .filter {
+                it.subcategory != null && it.isCountable(user.settings.subcategoriesNotCountable)
+                        && it.isExpense()
+            }
+            .map { it.subcategory?.parentCategory }.distinct()
         val categoriesMap = mutableMapOf<Category, Money>()
         for (distinctCategory in distinctCategories) {
-            val total = movements.filter { distinctCategory == it.subcategory?.parentCategory
+            val total = movements.filter {
+                distinctCategory == it.subcategory?.parentCategory
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            if(distinctCategory!=null) {
+            if (distinctCategory != null) {
                 categoriesMap[distinctCategory] = total
             }
         }
@@ -96,23 +100,27 @@ data class EconomicPeriod(
     }
 
     /**
-     * Sum all the expenses of every subcategory
+     * Sum all the expenses of every subcategory.
      * @return a map that contains the subcategory as key and the total amount expended as value
      */
     private fun calculateExpensesBySubCategory(): Map<Subcategory, Money> {
         val distinctSubCategories = movements
-            .filter{ it.subcategory!=null && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
-            .map{ it.subcategory }.distinct()
-        val categoriesMap = mutableMapOf<Category, Money>()
+            .filter {
+                it.subcategory != null && it.isCountable(user.settings.subcategoriesNotCountable)
+                        && it.isExpense()
+            }
+            .map { it.subcategory }.distinct()
+        val categoriesMap = mutableMapOf<Subcategory, Money>()
         for (distinctSubCategory in distinctSubCategories) {
-            val total = movements.filter { distinctSubCategory == it.subcategory
-                    && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
+            val total = movements.filter {
+                distinctSubCategory == it.subcategory
+                        && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            if(distinctSubCategory!=null) {
+            if (distinctSubCategory != null) {
                 categoriesMap[distinctSubCategory] = total
             }
         }
-        return categoriesMap.mapKeys { it.key as Subcategory }
+        return categoriesMap.mapKeys { it.key }
     }
 
     /**
@@ -142,7 +150,7 @@ data class EconomicPeriod(
         }
     }
 
-    companion object{
+    companion object {
         /**
          * If the day of month of the localDate passed as parameter is less or equal dan 15 return true.
          */
