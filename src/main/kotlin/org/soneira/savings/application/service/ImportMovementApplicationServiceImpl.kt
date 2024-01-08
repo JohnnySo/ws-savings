@@ -25,16 +25,17 @@ class ImportMovementApplicationServiceImpl(
 
     override fun preview(file: InputStream, filename: String): File {
         val user = userRepository.getUser("test")
-        val preMovements =
-            getReader(user.settings.fileParserSettings.fileType).read(file, user.settings.fileParserSettings)
+        val preMovements = getReader(user.settings.fileParserSettings.fileType)
+            .read(file, user.settings.fileParserSettings)
         return fileRepository.save(user, filename, preMovements)
     }
 
     override fun import(fileId: String): List<EconomicPeriod> {
         val user = userRepository.getUser("test")
         val periodsCreatedEvent =
-            periodCreator.create(user, fileRepository.get(fileId), periodRepository.findLastPeriod())
+            periodCreator.create(user, fileRepository.get(fileId, user), periodRepository.findLastPeriod(user))
         applicationEventPublisher.publishEvent(periodsCreatedEvent)
+        periodRepository.save(periodsCreatedEvent.economicPeriods)
         return periodsCreatedEvent.economicPeriods
     }
 

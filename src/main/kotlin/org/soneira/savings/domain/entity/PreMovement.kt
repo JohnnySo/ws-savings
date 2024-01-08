@@ -15,7 +15,7 @@ data class PreMovement(
     var comment: String?,
     val balance: Money?
 ) {
-    var id: PreMovementId = PreMovementId("")
+    lateinit var id: PreMovementId
 
     constructor(
         id: PreMovementId, operationDate: LocalDate, description: String, amount: Money, order: Order,

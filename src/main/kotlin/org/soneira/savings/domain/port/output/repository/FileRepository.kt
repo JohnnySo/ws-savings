@@ -17,9 +17,10 @@ interface FileRepository {
     /**
      * Get a [File] from its identifier.
      * @param fileId the file identifier
+     * @param user the user owner of the file [user]
      * @return an object [File] with a file identifier and all the movements
      */
-    fun get(fileId: String): File
+    fun get(fileId: String, user: User): File
 
     /**
      * Delete a File from database.
