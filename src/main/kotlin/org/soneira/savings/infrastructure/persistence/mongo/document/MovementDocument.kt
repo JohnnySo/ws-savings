@@ -1,11 +1,13 @@
 package org.soneira.savings.infrastructure.persistence.mongo.document
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.mapping.FieldType
 import java.math.BigDecimal
 import java.time.LocalDate
 
+@Document("movements")
 data class MovementDocument(
     val operationDate: LocalDate,
     val description: String,
@@ -16,13 +18,15 @@ data class MovementDocument(
     @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal?
 ) {
     @Id
-    var id: String = ""
+    lateinit var id: String
+    lateinit var periodId: String
 
     constructor(
-        id: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
+        id: String, periodId: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
         subcategory: String?, comment: String?, balance: BigDecimal?
     ) :
             this(operationDate, description, amount, order, subcategory, comment, balance) {
         this.id = id
+        this.periodId = periodId
     }
 }

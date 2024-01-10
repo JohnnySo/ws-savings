@@ -5,34 +5,30 @@ import org.soneira.savings.domain.entity.PreMovement
 import org.soneira.savings.domain.entity.User
 import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.FileRepository
-import org.soneira.savings.domain.vo.id.FileId
 import org.soneira.savings.infrastructure.persistence.mongo.document.FileDocument
-import org.soneira.savings.infrastructure.persistence.mongo.mapper.MovementMapper
+import org.soneira.savings.infrastructure.persistence.mongo.mapper.FileMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.FileMongoRepository
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
-class FileRepositoryImpl(private val fileRepository: FileMongoRepository, private val movementMapper: MovementMapper) :
+@Component
+@Transactional
+class FileRepositoryImpl(private val fileRepository: FileMongoRepository, private val fileMapper: FileMapper) :
     FileRepository {
     override fun save(user: User, filename: String, movements: List<PreMovement>): File {
         val fileDocument =
-            fileRepository.save(FileDocument(user.id.value, filename, movementMapper.preMovementsToDocument(movements)))
-        return File(
-            FileId(fileDocument.id), user, fileDocument.filename,
-            movementMapper.toDomain(fileDocument.movements)
-        )
+            fileRepository.save(FileDocument(user.id.value, filename, fileMapper.preMovementsToDocument(movements)))
+        return fileMapper.toDomain(fileDocument, user)
     }
 
+    @Transactional(readOnly = true)
     override fun get(fileId: String, user: User): File {
         val fileDocument = fileRepository.findByIdAndUserId(fileId, user.id.value)
-        return fileDocument.map {
-            File(
-                FileId(it.id), user, it.filename,
-                movementMapper.toDomain(it.movements)
-            )
-        }.orElseThrow {
+        return fileDocument.map { fileMapper.toDomain(it, user) }.orElseThrow {
             ResourceNotFoundException("The fileId $fileId was not found for user ${user.id.value}")
         }
     }
-
+    
     override fun remove(file: File) {
         fileRepository.findByIdAndUserId(file.id.value, file.user.id.value)
             .ifPresent { fileRepository.delete(it) }

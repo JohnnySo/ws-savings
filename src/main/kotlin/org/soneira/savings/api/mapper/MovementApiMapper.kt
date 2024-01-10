@@ -10,7 +10,7 @@ import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.Subcategory
 
 @Mapper
-interface MovementMapper {
+interface MovementApiMapper {
     @Mapping(source = "id.value", target = "movementId")
     @Mapping(source = "amount.amount", target = "amount")
     @Mapping(source = "balance.amount", target = "balance")

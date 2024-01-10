@@ -1,35 +1,28 @@
 package org.soneira.savings.infrastructure.persistence.adapter
 
 import org.soneira.savings.domain.entity.User
-import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
+import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.UserRepository
-import org.soneira.savings.domain.vo.FileParserSettings
-import org.soneira.savings.domain.vo.Settings
-import org.soneira.savings.domain.vo.id.UserId
+import org.soneira.savings.infrastructure.persistence.mongo.mapper.UserMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.UserMongoRepository
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
+@Transactional(readOnly = true)
 class UserRepositoryImpl(
     val userMongoRepository: UserMongoRepository,
-    val subcategoryRepository: SubcategoryRepository
+    val userMapper: UserMapper
 ) : UserRepository {
     override fun getUser(email: String): User {
         val userDocument = userMongoRepository.findByEmail(email)
-        val subcategories = subcategoryRepository.getAll()
-        val fileParserSettings = FileParserSettings(
-            userDocument.settings.fileParserSettings.fileType,
-            userDocument.settings.fileParserSettings.headerOffset,
-            userDocument.settings.fileParserSettings.fieldPosition
-        )
-        val settings = Settings(
-            userDocument.settings.periodStrategyType,
-            subcategories.first { userDocument.settings.periodDefiner == it.id.value },
-            userDocument.settings.monthStartBoundary,
-            userDocument.settings.monthEndBoundary,
-            subcategories.filter { it.id.value in userDocument.settings.subcategoriesNotCountable },
-            fileParserSettings
-        )
-        return User(UserId(userDocument.id), userDocument.name, userDocument.surname, userDocument.email, settings)
+        return userMapper.toDomain(userDocument)
+    }
+
+    override fun getUserById(id: String): User {
+        val userDocument = userMongoRepository.findById(id)
+        return userDocument.map { userMapper.toDomain(it) }.orElseThrow {
+            ResourceNotFoundException("The userId $id was not found.")
+        }
     }
 }

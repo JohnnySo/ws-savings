@@ -10,4 +10,11 @@ interface UserRepository {
      * @return the full information of the user [User]
      */
     fun getUser(email: String): User
+
+    /**
+     * Get a user by his identifier.
+     * @param id the identifier of the user
+     * @return the full information of the user [User]
+     */
+    fun getUserById(id: String): User
 }

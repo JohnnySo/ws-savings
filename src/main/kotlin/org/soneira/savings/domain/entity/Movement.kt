@@ -24,12 +24,14 @@ data class Movement(
         this.id = id
     }
 
-    fun isDateBetween(start: LocalDate, end: LocalDate?): Boolean {
-        return if (end == null) {
-            operationDate > start
-        } else {
-            operationDate in start..end
-        }
+    /**
+     * Check if operationDate is between start and end
+     * @param start the start date to check if it is between
+     * @param end the end date to check if it is between
+     * @return true if operationDate is between start and end
+     */
+    fun isDateBetween(start: LocalDate, end: LocalDate): Boolean {
+        return operationDate in start..end
     }
 
     /**

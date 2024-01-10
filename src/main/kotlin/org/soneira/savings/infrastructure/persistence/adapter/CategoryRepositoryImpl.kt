@@ -7,8 +7,10 @@ import org.soneira.savings.infrastructure.persistence.mongo.mapper.CategoryMappe
 import org.soneira.savings.infrastructure.persistence.mongo.repository.CategoryMongoRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
+@Transactional(readOnly = true)
 class CategoryRepositoryImpl(val categoryMongoRepository: CategoryMongoRepository) : CategoryRepository {
     @Cacheable("categories")
     override fun getAll(): List<Category> {
