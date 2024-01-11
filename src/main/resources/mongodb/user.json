@@ -15,15 +15,15 @@
     ],
     "fileParserSettings": {
       "fileType": "EXCEL",
-      "headerOffset": 4,
+      "headerOffset": 5,
       "fieldPosition": {
         "OPERATION_DATE": 0,
         "CATEGORY": 1,
         "SUBCATEGORY": 2,
         "DESCRIPTION": 3,
         "COMMENT": 4,
-        "AMOUNT": 5,
-        "BALANCE": 6
+        "AMOUNT": 6,
+        "BALANCE": 7
       }
     }
   }

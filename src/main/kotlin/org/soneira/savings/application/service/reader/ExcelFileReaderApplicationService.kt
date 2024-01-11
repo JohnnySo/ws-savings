@@ -18,6 +18,7 @@ import java.math.BigDecimal
 class ExcelFileReaderApplicationService(private val subcategoryRepository: SubcategoryRepository) :
     FileReaderApplicationService {
     override fun read(file: InputStream, fileParserSettings: FileParserSettings): List<Movement> {
+        val subcategories = subcategoryRepository.getAll()
         val workbook = HSSFWorkbook(file)
         val movements = ArrayList<Movement>()
         workbook.use {
@@ -27,14 +28,19 @@ class ExcelFileReaderApplicationService(private val subcategoryRepository: Subca
             var order = sheet.lastRowNum - fileParserSettings.headerOffset - 1
             while (rowIt.hasNext()) {
                 val row = rowIt.next()
-                movements.add(buildMovement(row, order, fileParserSettings.fieldPosition))
+                movements.add(buildMovement(row, order, fileParserSettings.fieldPosition, subcategories))
                 order--
             }
         }
         return movements
     }
 
-    private fun buildMovement(row: Row, order: Int, fieldPositions: Map<Field, Int>): Movement {
+    private fun buildMovement(
+        row: Row,
+        order: Int,
+        fieldPositions: Map<Field, Int>,
+        subcategories: List<Subcategory>
+    ): Movement {
         val operationDate =
             fieldPositions[Field.OPERATION_DATE]?.let { row.getCell(it).localDateTimeCellValue.toLocalDate() }
         val subcategoryName =
@@ -52,11 +58,9 @@ class ExcelFileReaderApplicationService(private val subcategoryRepository: Subca
                         "Please review the file format and the user defined format in the app."
             )
         } else {
-            val subcategories = subcategoryRepository.getAll()
-            val subcategory = if (subcategoryName == null) {
-                subcategories.first { Subcategory.DEFAULT_SUBCATEGORY == it.id.value }
-            } else {
-                subcategories.first { subcategoryName == it.descriptionEs }
+            var subcategory = subcategories.firstOrNull { subcategoryName == it.descriptionEs }
+            if (subcategory == null) {
+                subcategory = subcategories.first { Subcategory.DEFAULT_SUBCATEGORY == it.id.value }
             }
             return Movement(operationDate, description, amount, Order(order), subcategory, comment, balance)
         }
