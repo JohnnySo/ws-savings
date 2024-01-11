@@ -1,6 +1,5 @@
 package org.soneira.savings.api.rest
 
-import org.mapstruct.factory.Mappers
 import org.soneira.savings.api.dto.FileDTO
 import org.soneira.savings.api.mapper.FileApiMapper
 import org.soneira.savings.domain.port.input.ImportMovementApplicationService
@@ -17,12 +16,14 @@ import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping(value = ["/movement"], consumes = [MediaType.APPLICATION_JSON_VALUE])
-class MovementController(val importMovementApplicationService: ImportMovementApplicationService) {
+class MovementController(
+    val importMovementApplicationService: ImportMovementApplicationService,
+    val fileApiMapper: FileApiMapper
+) {
 
     @PostMapping(value = ["/preview-file"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun previewFile(@RequestParam(value = "file") file: MultipartFile): ResponseEntity<FileDTO> {
         val fileSaved = importMovementApplicationService.preview(file.inputStream, file.originalFilename ?: "")
-        val fileApiMapper: FileApiMapper = Mappers.getMapper(FileApiMapper::class.java)
         return ResponseEntity<FileDTO>(fileApiMapper.toDto(fileSaved), HttpStatus.OK)
     }
 

@@ -10,15 +10,15 @@ data class Movement(
     val description: String,
     val amount: Money,
     val order: Order,
-    val subcategory: Subcategory?,
-    var comment: String?,
-    val balance: Money?
+    val subcategory: Subcategory,
+    var comment: String,
+    val balance: Money
 ) {
     var id: MovementId = MovementId("")
 
     constructor(
         id: MovementId, operationDate: LocalDate, description: String, amount: Money, order: Order,
-        subcategory: Subcategory?, comment: String?, balance: Money?
+        subcategory: Subcategory, comment: String, balance: Money
     ) :
             this(operationDate, description, amount, order, subcategory, comment, balance) {
         this.id = id

@@ -1,6 +1,5 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.mapstruct.factory.Mappers
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.port.output.repository.CategoryRepository
 import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
@@ -21,7 +20,6 @@ class PeriodMapper(
     private val movementMapper: MovementMapper
 ) {
     fun toDocument(period: EconomicPeriod): EconomicPeriodDocument {
-        val mapper = Mappers.getMapper(MovementMapper::class.java)
         return EconomicPeriodDocument(
             period.user.id.value,
             period.start,
@@ -32,7 +30,7 @@ class PeriodMapper(
             period.expenseBySubcategory.map { (key, value) -> key.id.value to value.amount }.toMap(),
             period.yearMonth.month.value,
             period.yearMonth.year,
-            period.movements.map { mapper.toDocument(it) }
+            period.movements.map { movementMapper.toDocument(it) }
         )
     }
 

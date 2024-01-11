@@ -7,7 +7,6 @@ import org.soneira.savings.domain.vo.Order
 import org.soneira.savings.domain.vo.id.MovementId
 import org.soneira.savings.infrastructure.persistence.mongo.document.MovementDocument
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
 
 @Component
 class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
@@ -17,9 +16,9 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
             movement.description,
             movement.amount.amount,
             movement.order.value,
-            movement.subcategory?.id?.value,
+            movement.subcategory.id.value,
             movement.comment,
-            movement.balance?.amount ?: BigDecimal.ZERO
+            movement.balance.amount
         )
     }
 
@@ -32,7 +31,7 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
             Order(movement.order),
             subCategoryRepository.getAll().first { it.id.value == movement.subcategory },
             movement.comment,
-            Money.of(movement.balance ?: BigDecimal.ZERO)
+            Money.of(movement.balance)
         )
     }
 }

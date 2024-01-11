@@ -8,4 +8,8 @@ data class Subcategory(
     val description: String,
     val descriptionEs: String,
     val category: Category
-)
+) {
+    companion object {
+        val DEFAULT_SUBCATEGORY: Int = 210
+    }
+}

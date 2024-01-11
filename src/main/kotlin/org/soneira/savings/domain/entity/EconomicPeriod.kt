@@ -94,20 +94,15 @@ data class EconomicPeriod(
      */
     private fun calculateExpensesByCategory(): Map<Category, Money> {
         val distinctCategories = movements
-            .filter {
-                it.subcategory != null && it.isCountable(user.settings.subcategoriesNotCountable)
-                        && it.isExpense()
-            }
-            .map { it.subcategory?.category }.distinct()
+            .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
+            .map { it.subcategory.category }.distinct()
         val categoriesMap = mutableMapOf<Category, Money>()
         for (distinctCategory in distinctCategories) {
             val total = movements.filter {
-                distinctCategory == it.subcategory?.category
+                distinctCategory == it.subcategory.category
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            if (distinctCategory != null) {
-                categoriesMap[distinctCategory] = total
-            }
+            categoriesMap[distinctCategory] = total
         }
         return categoriesMap
     }
@@ -118,10 +113,7 @@ data class EconomicPeriod(
      */
     private fun calculateExpensesBySubCategory(): Map<Subcategory, Money> {
         val distinctSubCategories = movements
-            .filter {
-                it.subcategory != null && it.isCountable(user.settings.subcategoriesNotCountable)
-                        && it.isExpense()
-            }
+            .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
             .map { it.subcategory }.distinct()
         val categoriesMap = mutableMapOf<Subcategory, Money>()
         for (distinctSubCategory in distinctSubCategories) {
@@ -129,9 +121,7 @@ data class EconomicPeriod(
                 distinctSubCategory == it.subcategory
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            if (distinctSubCategory != null) {
-                categoriesMap[distinctSubCategory] = total
-            }
+            categoriesMap[distinctSubCategory] = total
         }
         return categoriesMap.mapKeys { it.key }
     }

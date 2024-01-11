@@ -7,13 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class FileDocument(
     val userId: String,
     val filename: String,
-    val movements: List<PreMovementDocument>
+    val movements: List<MovementDocument>
 ) {
     @Id
     lateinit var id: String
 
     constructor(
-        id: String, userId: String, filename: String, movements: List<PreMovementDocument>
+        id: String, userId: String, filename: String, movements: List<MovementDocument>
     ) : this(userId, filename, movements) {
         this.id = id
     }
