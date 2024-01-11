@@ -92,19 +92,7 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
      */
     private fun calculatePeriods(payrolls: List<Movement>): MutableMap<LocalDate, LocalDate> {
         val periods = mutableMapOf<LocalDate, LocalDate>()
-        val payrollsIterator = payrolls.listIterator()
-        do {
-            if (payrollsIterator.hasNext()) {
-                periods[payrollsIterator.next().operationDate] =
-                    payrollsIterator.next().operationDate.minusDays(1)
-            } else {
-                val ym = YearMonth.of(
-                    payrollsIterator.next().operationDate.year,
-                    payrollsIterator.next().operationDate.month
-                )
-                periods[payrollsIterator.next().operationDate] = ym.atEndOfMonth()
-            }
-        } while (payrollsIterator.hasNext())
+        payrolls.zipWithNext { start, end -> periods[start.operationDate] = end.operationDate.minusDays(1) }
         return periods
     }
 }
