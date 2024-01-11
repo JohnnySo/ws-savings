@@ -34,4 +34,16 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
             Money.of(movement.balance)
         )
     }
+
+    fun toDomainWithoutId(movement: MovementDocument): Movement {
+        return Movement(
+            movement.operationDate,
+            movement.description,
+            Money.of(movement.amount),
+            Order(movement.order),
+            subCategoryRepository.getAll().first { it.id.value == movement.subcategory },
+            movement.comment,
+            Money.of(movement.balance)
+        )
+    }
 }

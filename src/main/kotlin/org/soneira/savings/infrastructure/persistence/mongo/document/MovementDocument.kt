@@ -14,6 +14,7 @@ data class MovementDocument(
     val description: String,
     @Field(targetType = FieldType.DECIMAL128) val amount: BigDecimal,
     val order: Int,
+    @Field(targetType = FieldType.INT64)
     val subcategory: BigInteger,
     var comment: String,
     @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal
