@@ -5,9 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("categories")
 data class CategoryDocument(
-    @Id val id: String,
+    @Id val id: Int,
     val key: String,
     val description: String,
+    val descriptionEs: String,
     val typeId: Int,
     val type: String
 )

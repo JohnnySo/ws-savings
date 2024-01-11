@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 data class MovementDTO(
-    val movementId: String,
+    val id: String,
     val operationDate: LocalDate,
     val description: String,
     val amount: BigDecimal,

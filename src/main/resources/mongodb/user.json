@@ -1,0 +1,30 @@
+{
+  "_id": "ObjectId(659f0ab3cf6d624dd9c7714e)",
+  "name": "John",
+  "surname": "Doe",
+  "email": "john.doe@gmail.com",
+  "settings": {
+    "periodStrategyType": "PAYROLL",
+    "periodDefiner": 143,
+    "monthStartBoundary": 8,
+    "monthEndBoundary": 21,
+    "subcategoriesNotCountable": [
+      292,
+      92,
+      101
+    ],
+    "fileParserSettings": {
+      "fileType": "EXCEL",
+      "headerOffset": 4,
+      "fieldPosition": {
+        "OPERATION_DATE": 0,
+        "CATEGORY": 1,
+        "SUBCATEGORY": 2,
+        "DESCRIPTION": 3,
+        "COMMENT": 4,
+        "AMOUNT": 5,
+        "BALANCE": 6
+      }
+    }
+  }
+}

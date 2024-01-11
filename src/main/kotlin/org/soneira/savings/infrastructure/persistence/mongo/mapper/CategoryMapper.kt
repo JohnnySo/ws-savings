@@ -1,12 +1,16 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
 import org.soneira.savings.domain.entity.Category
+import org.soneira.savings.domain.vo.id.CategoryId
 import org.soneira.savings.infrastructure.persistence.mongo.document.CategoryDocument
+import org.springframework.stereotype.Component
 
-@Mapper
-interface CategoryMapper {
-    @Mapping(expression = "java(new CategoryId(categoryDocument.getId()))", target = "id")
-    fun toDomain(categoryDocument: CategoryDocument): Category
+@Component
+class CategoryMapper {
+    fun toDomain(categoryDocument: CategoryDocument): Category {
+        return Category(
+            CategoryId(categoryDocument.id), categoryDocument.key, categoryDocument.description,
+            categoryDocument.descriptionEs, categoryDocument.typeId, categoryDocument.type
+        )
+    }
 }

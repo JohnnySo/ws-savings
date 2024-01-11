@@ -26,7 +26,7 @@ class FileMapper(private val subcategoryRepository: SubcategoryRepository) {
         val subcategories = subcategoryRepository.getAll()
         val movements = mutableListOf<PreMovementDocument>()
         for (premovement in preMovements) {
-            val subcategory = subcategories.first { it.descriptionSubcategory == premovement.subcategory }
+            val subcategory = subcategories.first { it.descriptionEs == premovement.subcategory }
             movements.add(
                 PreMovementDocument(
                     premovement.operationDate, premovement.description, premovement.amount.amount,

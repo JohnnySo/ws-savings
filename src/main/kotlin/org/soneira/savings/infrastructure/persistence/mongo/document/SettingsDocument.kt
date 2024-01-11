@@ -4,9 +4,9 @@ import org.soneira.savings.domain.vo.PeriodStrategyType
 
 data class SettingsDocument(
     val periodStrategyType: PeriodStrategyType,
-    val periodDefiner: String,
+    val periodDefiner: Int,
     val monthStartBoundary: Int,
     val monthEndBoundary: Int,
-    val subcategoriesNotCountable: List<String>,
+    val subcategoriesNotCountable: List<Int>,
     val fileParserSettings: FileParserSettingsDocument
 )

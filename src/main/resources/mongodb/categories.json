@@ -1,0 +1,105 @@
+[
+  {
+    "_id": 112,
+    "key": "expenses.other.expenses",
+    "description": "Other expenses",
+    "description_es": "Otros gastos",
+    "type_id": 1001,
+    "type": "Expenses"
+  },
+  {
+    "_id": 13,
+    "description": "Home",
+    "description_es": "Hogar",
+    "key": "expenses.home",
+    "type_id": 1001,
+    "type": "Expenses"
+  },
+  {
+    "_id": 32,
+    "key": "expenses.vehicle",
+    "description": "Vehicle and transportation",
+    "description_es": "Vehículo y transporte",
+    "type_id": 1001,
+    "type": "Expenses"
+  },
+  {
+    "_id": 64,
+    "type_id": 1001,
+    "type": "Expenses",
+    "key": "expenses.shopping",
+    "description": "Shopping",
+    "description_es": "Compras"
+  },
+  {
+    "_id": 70,
+    "type_id": 1001,
+    "type": "Expenses",
+    "key": "expenses.leisure",
+    "description": "Leisure and travel",
+    "description_es": "Ocio y viajes"
+  },
+  {
+    "_id": 828,
+    "key": "expenses.food",
+    "description": "Food",
+    "description_es": "Alimentación",
+    "type_id": 1001,
+    "type": "Expenses"
+  },
+  {
+    "_id": 829,
+    "key": "expenses.education.health.sport",
+    "description": "Education, health and sport",
+    "description_es": "Educación, salud y deporte",
+    "type_id": 1001,
+    "type": "Expenses"
+  },
+  {
+    "_id": 1,
+    "key": "income.other.income",
+    "description": "Other income",
+    "description_es": "Otros ingresos",
+    "type_id": 1002,
+    "type": "Income"
+  },
+  {
+    "_id": 824,
+    "key": "income.payroll",
+    "description": "Payroll and other benefits",
+    "description_es": "Nómina y otras prestaciones",
+    "type_id": 1002,
+    "type": "Income"
+  },
+  {
+    "_id": 825,
+    "key": "income.bank.advantages",
+    "description": "Bank advantages",
+    "type_id": 1002,
+    "type": "Income"
+  },
+  {
+    "_id": 101,
+    "key": "investiment.savings.investiment.",
+    "description": "Investiment",
+    "description_es": "Inversión",
+    "type_id": 1003,
+    "type": "Investment and savings"
+  },
+  {
+    "_id": 823,
+    "key": "investiment.savings.savings",
+    "description": "Savings",
+    "description_es": "Ahorro",
+    "type_id": 1003,
+    "type": "Investment and savings"
+  },
+  {
+    "_id": 210,
+    "key": "excluded.without.category",
+    "description": "Uncategorized transaction",
+    "description_es": "Movimiento sin categoría",
+    "type_id": 1004,
+    "type": "Excluded"
+  }
+]

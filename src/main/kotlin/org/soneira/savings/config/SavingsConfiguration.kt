@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-@EntityScan(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
-@EnableMongoRepositories(basePackages = ["org.soneira.homepal.economicPeriods.persistence.mongo"])
+@EntityScan(basePackages = ["org.soneira.savings.infrastructure.persistence.mongo"])
+@EnableMongoRepositories(basePackages = ["org.soneira.savings.infrastructure.persistence.mongo"])
 @EnableAsync
 @EnableCaching
 @Configuration

@@ -10,7 +10,7 @@ data class PreMovementDocument(
     val description: String,
     @Field(targetType = FieldType.DECIMAL128) val amount: BigDecimal,
     val order: Int,
-    val subcategory: String?,
+    val subcategory: Int?,
     var comment: String?,
     @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal?
 )

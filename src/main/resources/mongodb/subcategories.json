@@ -1,0 +1,702 @@
+[
+  {
+    "_id": 7,
+    "key": "expenses.other.expenses.self-employed",
+    "description": "Self-employed",
+    "description_es": "Autónomos",
+    "category": 112
+  },
+  {
+    "_id": 8,
+    "key": "expenses.other.expenses.unions",
+    "description": "Unions",
+    "description_es": "Sindicatos",
+    "category": 112
+  },
+  {
+    "_id": 104,
+    "key": "expenses.other.expenses.ong",
+    "description": "NGO",
+    "description_es": "ONG",
+    "category": 112
+  },
+  {
+    "_id": 112,
+    "key": "expenses.other.expenses.others",
+    "description": "Others",
+    "description_es": "Otros gastos (otros)",
+    "category": 112
+  },
+  {
+    "_id": 61,
+    "key": "expenses.other.expenses.subscriptions",
+    "description": "Subscriptions",
+    "description_es": "Suscripciones",
+    "category": 112
+  },
+  {
+    "_id": 806,
+    "key": "expenses.other.expenses.check",
+    "description": "Checks",
+    "description_es": "Cheques",
+    "category": 112
+  },
+  {
+    "_id": 807,
+    "key": "expenses.other.expenses.insurance",
+    "description": "Other insurance",
+    "description_es": "Otros seguros",
+    "category": 112
+  },
+  {
+    "_id": 808,
+    "key": "expenses.other.expenses.loan",
+    "description": "Others loans and guarantees",
+    "description_es": "Otros préstamos y avales",
+    "category": 112
+  },
+  {
+    "_id": 820,
+    "key": "expenses.other.expenses.commissions",
+    "description": "Commissions and interest",
+    "description_es": "Comisiones e intereses",
+    "category": 112
+  },
+  {
+    "_id": 821,
+    "key": "expenses.other.expenses.taxes",
+    "description": "Tax payments",
+    "description_es": "Pagos impuestos",
+    "category": 112
+  },
+  {
+    "_id": 822,
+    "key": "expenses.other.expenses.atm",
+    "description": "ATM",
+    "description_es": "Cajeros",
+    "category": 112
+  },
+  {
+    "_id": 834,
+    "key": "expenses.other.expenses.transfers",
+    "description": "Transfers",
+    "description_es": "Transferencias",
+    "category": 112
+  },
+  {
+    "_id": 836,
+    "key": "expenses.other.expenses.bizum",
+    "description": "Bizum payments",
+    "description_es": "Gasto Bizum",
+    "category": 112
+  },
+  {
+    "_id": 987,
+    "key": "expenses.other.expenses.associations",
+    "description": "Associations and Professional Colleges",
+    "description_es": "Asociaciones y Colegios Profesionales",
+    "category": 112
+  },
+  {
+    "_id": 991,
+    "key": "expenses.other.expenses.alimony",
+    "description": "Alimony",
+    "description_es": "Pensión alimenticia",
+    "category": 112
+  },
+  {
+    "_id": 3,
+    "key": "expenses.home.cleaning",
+    "description": "Cleaning",
+    "description_es": "Limpieza",
+    "category": 13
+  },
+  {
+    "_id": 13,
+    "key": "expenses.home.other",
+    "description": "Home (other)",
+    "description_es": "Hogar (otros)",
+    "category": 13
+  },
+  {
+    "_id": 16,
+    "key": "expenses.home.light.gas",
+    "description": "Light and gas",
+    "description_es": "Luz y gas",
+    "category": 13
+  },
+  {
+    "_id": 18,
+    "key": "expenses.home.tv.internet",
+    "description": "Telephone, TV and internet",
+    "description_es": "Teléfono, TV e internet",
+    "category": 13
+  },
+  {
+    "_id": 21,
+    "key": "expenses.home.housing.rent",
+    "description": "Housing rental",
+    "description_es": "Alquiler vivienda",
+    "category": 13
+  },
+  {
+    "_id": 22,
+    "key": "expenses.home.comunity",
+    "description": "Community",
+    "description_es": "Comunidad",
+    "category": 13
+  },
+  {
+    "_id": 23,
+    "key": "expenses.home.decoration",
+    "description": "Decoration and furniture",
+    "description_es": "Decoración y mobiliario",
+    "category": 13
+  },
+  {
+    "_id": 27,
+    "key": "expenses.home.mortgage",
+    "description": "Mortage",
+    "description_es": "Hipoteca",
+    "category": 13
+  },
+  {
+    "_id": 327,
+    "key": "expenses.home.water",
+    "description": "Water",
+    "description_es": "Agua",
+    "category": 13
+  },
+  {
+    "_id": 832,
+    "key": "expenses.home.maintenance",
+    "description": "Home maintenance",
+    "description_es": "Mantenimiento del hogar",
+    "category": 13
+  },
+  {
+    "_id": 985,
+    "key": "expenses.home.insurance",
+    "description": "Home insurance",
+    "description_es": "Seguro de hogar",
+    "category": 13
+  },
+  {
+    "_id": 988,
+    "key": "expenses.home.storage.room.garage.rental",
+    "description": "Storage room and garage rental",
+    "description_es": "Alquiler trastero y garaje",
+    "category": 13
+  },
+  {
+    "_id": 997,
+    "key": "expenses.home.security",
+    "description": "Security and alarms",
+    "description_es": "Seguridad y alarmas",
+    "category": 13
+  },
+  {
+    "_id": 998,
+    "key": "expenses.home.taxes",
+    "description": "Home taxes",
+    "description_es": "Impuestos hogar",
+    "category": 13
+  },
+  {
+    "id": 6,
+    "key": "expenses.electric.vehicle.recharge",
+    "description": "Recharge electric vehicle",
+    "description_es": "Recarga vehículo eléctrico",
+    "category": 32
+  },
+  {
+    "_id": 115,
+    "key": "expenses.vehicle.toll",
+    "description": "Toll",
+    "description_es": "Peajes",
+    "category": 32
+  },
+  {
+    "_id": 288,
+    "key": "expenses.vehicle.public.transport",
+    "description": "Public transport",
+    "description_es": "Transporte público",
+    "category": 32
+  },
+  {
+    "_id": 32,
+    "key": "expenses.vehicle.others",
+    "description": "Vehicle and transportation (other)",
+    "description_es": "Vehículo y transporte (otros)",
+    "category": 32
+  },
+  {
+    "_id": 33,
+    "key": "expenses.vehicle.insurance",
+    "description": "Vehicle insurance",
+    "description_es": "Seguro de coche y moto",
+    "category": 32
+  },
+  {
+    "_id": 35,
+    "key": "expenses.vehicle.parking",
+    "description": "Parking y garage",
+    "description_es": "Parking y garaje",
+    "category": 32
+  },
+  {
+    "_id": 36,
+    "key": "expenses.vehicle.fuel",
+    "description": "Fuel",
+    "description_es": "Gasolina y combustible",
+    "category": 32
+  },
+  {
+    "_id": 38,
+    "key": "expenses.vehicle.loan",
+    "description": "Vehicle loan",
+    "description_es": "Préstamo de vehículo",
+    "category": 32
+  },
+  {
+    "_id": 39,
+    "key": "expenses.vehicle.cab",
+    "description": "Cab and Carsharing",
+    "description_es": "Taxi y Carsharing",
+    "category": 32
+  },
+  {
+    "_id": 833,
+    "key": "expenses.vehicle.maintenance",
+    "description": "Vehicle maintenance",
+    "description_es": "Mantenimiento de vehículo",
+    "category": 32
+  },
+  {
+    "_id": 995,
+    "key": "expenses.vehicle.fines",
+    "description": "Fines",
+    "description_es": "Multas",
+    "category": 32
+  },
+  {
+    "_id": 996,
+    "key": "expenses.vehicle.taxes",
+    "description": "Vehicle taxes",
+    "description_es": "Impuestos vehículo",
+    "category": 32
+  },
+  {
+    "_id": 105,
+    "key": "expenses.shopping.pets",
+    "description": "Pets and vet",
+    "description_es": "Mascotas y veterinario",
+    "category": 64
+  },
+  {
+    "_id": 113,
+    "key": "expenses.shopping.electronics",
+    "description": "Electronics",
+    "description_es": "Electrónica",
+    "category": 64
+  },
+  {
+    "_id": 64,
+    "key": "expenses.shopping.others",
+    "description": "Shopping (other)",
+    "description_es": "Compras (otros)",
+    "category": 64
+  },
+  {
+    "_id": 65,
+    "key": "expenses.shopping.clothes",
+    "description": "Clothes and complements",
+    "description_es": "Ropa y complementos",
+    "category": 64
+  },
+  {
+    "_id": 812,
+    "key": "expenses.shopping.credit.cards",
+    "description": "Financial and credit cards",
+    "description_es": "Tarjetas financieras y de crédito",
+    "category": 64
+  },
+  {
+    "_id": 830,
+    "key": "expenses.shopping.beauty",
+    "description": "Beauty and perfumery",
+    "description_es": "Belleza, peluquería y perfumería",
+    "category": 64
+  },
+  {
+    "_id": 831,
+    "key": "expenses.shopping.gifts",
+    "description": "Gifts and toys",
+    "description_es": "Regalos y juguetes",
+    "category": 64
+  },
+  {
+    "_id": 258,
+    "key": "expenses.leisure.lotteries",
+    "description": "Lotteries and bets",
+    "description_es": "Loterías y apuestas",
+    "category": 70
+  },
+  {
+    "_id": 70,
+    "key": "expenses.leisure.others",
+    "description": "Leisure and travel (otros)",
+    "description_es": "Ocio y viajes (otros)",
+    "category": 70
+  },
+  {
+    "_id": 75,
+    "key": "expenses.leisure.theater",
+    "description": "Cinema, theater and shows",
+    "description_es": "Cine, teatro y espectáculos",
+    "category": 70
+  },
+  {
+    "_id": 78,
+    "key": "expenses.leisure.books",
+    "description": "Books, music and games",
+    "description_es": "Libros, música y videojuegos",
+    "category": 70
+  },
+  {
+    "_id": 84,
+    "key": "expenses.leisure.restaurants",
+    "description": "Cafes and restaurants",
+    "description_es": "Cafeterías y restaurantes",
+    "category": 70
+  },
+  {
+    "_id": 97,
+    "key": "expenses.leisure.travel.tickets",
+    "description": "Travel tickets",
+    "description_es": "Billetes de viaje",
+    "category": 70
+  },
+  {
+    "_id": 98,
+    "key": "expenses.leisure.hotel",
+    "description": "Hotel and accommodation",
+    "description_es": "Hotel y alojamiento",
+    "category": 70
+  },
+  {
+    "_id": 986,
+    "key": "expenses.leisure.insurance.travel",
+    "description": "Travel insurance",
+    "description_es": "Seguro de viaje",
+    "category": 70
+  },
+  {
+    "_id": 992,
+    "key": "expenses.leisure.travel.expenses",
+    "description": "Travel expenses",
+    "description_es": "Gastos  desplazamiento",
+    "category": 70
+  },
+  {
+    "_id": 993,
+    "key": "expenses.leisure.car.rental",
+    "description": "Car rental",
+    "description_es": "Alquiler vehículo",
+    "category": 70
+  },
+  {
+    "_id": 994,
+    "key": "expenses.leisure.tobacco",
+    "description": "Tobacconists and tobacco",
+    "description_es": "Estancos y tabaco",
+    "category": 70
+  },
+  {
+    "_id": 14,
+    "key": "expenses.food.supermarket",
+    "description": "Supermarket and food",
+    "description_es": "Supermercados y alimentación",
+    "category": 828
+  },
+  {
+    "_id": 828,
+    "key": "expenses.food.others",
+    "description": "Food (other)",
+    "description_es": "Alimentación (otros)",
+    "category": 828
+  },
+  {
+    "_id": 989,
+    "key": "expenses.food.winery",
+    "description": "Wineries and Gourmet",
+    "description_es": "Bodega y Gourmet",
+    "category": 828
+  },
+  {
+    "_id": 990,
+    "key": "expenses.food.food.delivery",
+    "description": "Food delivery",
+    "description_es": "Comida a domicilio",
+    "category": 828
+  },
+  {
+    "_id": 9,
+    "key": "expenses.education.health.sport.nursery",
+    "description": "Nursery and child care",
+    "description_es": "Guardería y cuidado de niños",
+    "category": 829
+  },
+  {
+    "_id": 259,
+    "key": "expenses.education.health.sport.optics",
+    "description": "Optics",
+    "description_es": "Óptica",
+    "category": 829
+  },
+  {
+    "_id": 44,
+    "key": "expenses.education.health.sport.education",
+    "description": "Education",
+    "description_es": "Educación",
+    "category": 829
+  },
+  {
+    "_id": 46,
+    "key": "expenses.education.health.sport.extracurricular.activities",
+    "description": "Extracurricular activities",
+    "description_es": "Actividades extraescolares",
+    "category": 829
+  },
+  {
+    "_id": 49,
+    "key": "expenses.education.health.sport.pharmacy",
+    "description": "Pharmacy, herbalist and nutrition",
+    "description_es": "Farmacia, herbolario y nutrición",
+    "category": 829
+  },
+  {
+    "_id": 50,
+    "key": "expenses.education.health.sport.insurance",
+    "description": "Health insurance",
+    "description_es": "Seguro de salud",
+    "category": 829
+  },
+  {
+    "_id": 51,
+    "key": "expenses.education.health.sport.dentist",
+    "description": "Dentist, doctor",
+    "description_es": "Dentista, médico",
+    "category": 829
+  },
+  {
+    "_id": 52,
+    "key": "expenses.education.health.sport.gym",
+    "description": "Sport and gym",
+    "description_es": "Deporte y gimnasio",
+    "category": 829
+  },
+  {
+    "_id": 810,
+    "key": "expenses.education.health.sport.life.insurance",
+    "description": "Life insurance",
+    "description_es": "Seguro de vida",
+    "category": 829
+  },
+  {
+    "_id": 829,
+    "key": "expenses.education.health.sport.others",
+    "description": "Education, health and sport (other)",
+    "description_es": "Educación, salud y deporte (otros)",
+    "category": 829
+  },
+  {
+    "_id": 1,
+    "key": "income.other.income.others",
+    "description": "Other income (other)",
+    "description_es": "Otros ingresos (otros)",
+    "category": 1
+  },
+  {
+    "_id": 145,
+    "key": "income.other.income.rental",
+    "description": "Rental income",
+    "description_es": "Ingresos por alquiler",
+    "category": 1
+  },
+  {
+    "_id": 2,
+    "key": "income.other.income.check",
+    "description": "Check revenues",
+    "description_es": "Ingresos de cheques",
+    "category": 1
+  },
+  {
+    "_id": 5,
+    "key": "income.other.income.taxes",
+    "description": "Tax revenues",
+    "description_es": "Ingresos de impuestos",
+    "category": 1
+  },
+  {
+    "_id": 801,
+    "key": "income.other.income.cash",
+    "description": "Cash revenues",
+    "description_es": "Ingresos de efectivo",
+    "category": 1
+  },
+  {
+    "_id": 802,
+    "key": "income.other.income.financing.payment",
+    "description": "Financing credit",
+    "description_es": "Abono de financiación",
+    "category": 1
+  },
+  {
+    "_id": 803,
+    "key": "income.other.income.other.entities",
+    "description": "Revenues from other entities",
+    "description_es": "Ingresos de otras entidades",
+    "category": 1
+  },
+  {
+    "_id": 835,
+    "key": "income.other.income.bizum",
+    "description": "Bizum income",
+    "description_es": "Ingreso Bizum",
+    "category": 1
+  },
+  {
+    "_id": 121,
+    "key": "income.payroll.unemployment",
+    "description": "Unemployment benefit",
+    "description_es": "Prestación por desempleo",
+    "category": 824
+  },
+  {
+    "_id": 138,
+    "key": "income.payroll.alimony",
+    "description": "Alimony",
+    "description_es": "Pensión alimenticia",
+    "category": 824
+  },
+  {
+    "_id": 143,
+    "key": "income.payroll.pension",
+    "description": "Payroll or Pension",
+    "description_es": "Nómina o Pensión",
+    "category": 824
+  },
+  {
+    "_id": 824,
+    "key": "income.payroll.others",
+    "description": "Other payroll and benefits",
+    "description_es": "Otros nómina y prestaciones",
+    "category": 824
+  },
+  {
+    "_id": 4,
+    "key": "income.bank.advantages.interest",
+    "description": "Interest payment",
+    "description_es": "Abono de intereses",
+    "category": 825
+  },
+  {
+    "_id": 825,
+    "key": "income.bank.advantages.others",
+    "description": "Other advantages",
+    "description_es": "Otras Ventajas ING",
+    "category": 825
+  },
+  {
+    "_id": 826,
+    "key": "income.bank.advantages.promotions",
+    "description": "Promotional credit",
+    "description_es": "Abono de promociones",
+    "category": 825
+  },
+  {
+    "_id": 101,
+    "key": "investiment.savings.investiment.others",
+    "description": "Other investiments",
+    "description_es": "Otras inversiones",
+    "category": 101
+  },
+  {
+    "_id": 131,
+    "key": "investiment.savings.investiment.funds",
+    "description": "Investment funds",
+    "description_es": "Fondos de inversión",
+    "category": 101
+  },
+  {
+    "_id": 315,
+    "key": "investiment.savings.investiment.pension.plans",
+    "description": "Pension plans",
+    "description_es": "Planes de pensiones",
+    "category": 101
+  },
+  {
+    "_id": 317,
+    "key": "investiment.savings.investiment.shares",
+    "description": "Shares",
+    "description_es": "Acciones",
+    "category": 101
+  },
+  {
+    "_id": 102,
+    "key": "investiment.savings.savings.products",
+    "description": "Savings products",
+    "description_es": "Productos de ahorro",
+    "category": 823
+  },
+  {
+    "_id": 823,
+    "key": "investiment.savings.savings.others",
+    "description": "Other savings",
+    "description_es": "Otros ahorros",
+    "category": 823
+  },
+  {
+    "_id": 92,
+    "key": "investiment.savings.savings.rounding",
+    "description": "Rounding",
+    "description_es": "Redondeo",
+    "category": 823
+  },
+  {
+    "_id": 210,
+    "key": "excluded.without.category.others",
+    "description": "Uncategorized transaction",
+    "description_es": "Movimiento sin categoría",
+    "category": 210
+  },
+  {
+    "_id": 211,
+    "key": "excluded.without.category.credit.card.settlement",
+    "description": "Credit card settlement",
+    "description_es": "Liquidación de tarjeta de crédito ING",
+    "category": 210
+  },
+  {
+    "_id": 212,
+    "key": "excluded.without.category.transfer.between.accounts",
+    "description": "Transfer between accounts",
+    "description_es": "Traspaso entre cuentas",
+    "category": 210
+  },
+  {
+    "_id": 292,
+    "key": "excluded.without.category.transfer.between.savings.accounts",
+    "description": "Transaction between savings accounts",
+    "description_es": "Transacción entre cuentas de ahorro",
+    "category": 210
+  },
+  {
+    "_id": 827,
+    "key": "excluded.without.category.excluded",
+    "description": "Excluded/uncategorized transaction",
+    "description_es": "Movimiento excluido/sin categoría",
+    "category": 210
+  }
+]

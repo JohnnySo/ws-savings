@@ -6,6 +6,7 @@ class Category(
     val id: CategoryId,
     val key: String,
     val description: String,
+    val descriptionEs: String,
     val typeId: Int,
     val type: String
 )

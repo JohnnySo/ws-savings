@@ -5,8 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("subcategories")
 data class SubcategoryDocument(
-    @Id val id: String,
-    val keySubcategory: String,
-    val descriptionSubcategory: String,
-    val parentCategory: String
+    @Id val id: Int,
+    val key: String,
+    val description: String,
+    val descriptionEs: String,
+    val category: Int
 )

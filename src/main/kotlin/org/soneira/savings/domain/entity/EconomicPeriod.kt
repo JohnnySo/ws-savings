@@ -98,11 +98,11 @@ data class EconomicPeriod(
                 it.subcategory != null && it.isCountable(user.settings.subcategoriesNotCountable)
                         && it.isExpense()
             }
-            .map { it.subcategory?.parentCategory }.distinct()
+            .map { it.subcategory?.category }.distinct()
         val categoriesMap = mutableMapOf<Category, Money>()
         for (distinctCategory in distinctCategories) {
             val total = movements.filter {
-                distinctCategory == it.subcategory?.parentCategory
+                distinctCategory == it.subcategory?.category
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
             if (distinctCategory != null) {
