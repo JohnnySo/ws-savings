@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.mapping.Document
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.time.LocalDate
 
 @Document("periods")
@@ -13,8 +14,8 @@ data class EconomicPeriodDocument(
     val end: LocalDate,
     val filename: String,
     val totals: TotalsDocument,
-    val expenseByCategory: Map<Int, BigDecimal>,
-    val expenseBySubcategory: Map<Int, BigDecimal>,
+    val expenseByCategory: Map<BigInteger, BigDecimal>,
+    val expenseBySubcategory: Map<BigInteger, BigDecimal>,
     val month: Int,
     val year: Int,
     @Transient var movements: List<MovementDocument>,
@@ -29,8 +30,8 @@ data class EconomicPeriodDocument(
         end: LocalDate,
         filename: String,
         totals: TotalsDocument,
-        expenseByCategory: Map<Int, BigDecimal>,
-        expenseBySubcategory: Map<Int, BigDecimal>,
+        expenseByCategory: Map<BigInteger, BigDecimal>,
+        expenseBySubcategory: Map<BigInteger, BigDecimal>,
         month: Int,
         year: Int,
         movements: List<MovementDocument>,

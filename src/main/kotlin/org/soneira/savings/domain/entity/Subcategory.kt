@@ -1,6 +1,7 @@
 package org.soneira.savings.domain.entity
 
 import org.soneira.savings.domain.vo.id.SubcategoryId
+import java.math.BigInteger
 
 data class Subcategory(
     val id: SubcategoryId,
@@ -10,6 +11,6 @@ data class Subcategory(
     val category: Category
 ) {
     companion object {
-        val DEFAULT_SUBCATEGORY: Int = 210
+        val DEFAULT_SUBCATEGORY = BigInteger("210")
     }
 }

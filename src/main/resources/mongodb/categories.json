@@ -75,6 +75,7 @@
     "_id": 825,
     "key": "income.bank.advantages",
     "description": "Bank advantages",
+    "description_es": "Ventajas banco",
     "type_id": 1002,
     "type": "Income"
   },

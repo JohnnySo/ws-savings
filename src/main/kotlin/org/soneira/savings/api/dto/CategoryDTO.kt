@@ -1,3 +1,5 @@
 package org.soneira.savings.api.dto
 
-data class CategoryDTO(val id: Int, val description: String)
+import java.math.BigInteger
+
+data class CategoryDTO(val id: BigInteger, val description: String)

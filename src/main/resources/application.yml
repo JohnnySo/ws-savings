@@ -15,7 +15,7 @@ spring:
       port: 27017
       database: savings
       username: savings
-      password: Dumm1
+      password: dummy
   jackson:
     date-format: dd/MM/yyyy
   servlet:

@@ -23,7 +23,7 @@ class ImportMovementApplicationServiceImpl(
 ) : ImportMovementApplicationService {
 
     override fun preview(file: InputStream, filename: String): File {
-        val user = userRepository.getUser("test")
+        val user = userRepository.getUser("john.doe@gmail.com")
         val movements = readerFactory.getReader(user.settings.fileParserSettings.fileType)
             .read(file, user.settings.fileParserSettings)
         return fileRepository.save(user, filename, movements)
