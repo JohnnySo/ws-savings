@@ -17,11 +17,13 @@ data class EconomicPeriodDocument(
     val expenseByCategory: Map<BigInteger, BigDecimal>,
     val expenseBySubcategory: Map<BigInteger, BigDecimal>,
     val month: Int,
-    val year: Int,
-    @Transient var movements: List<MovementDocument>,
+    val year: Int
 ) {
     @Id
     lateinit var id: String
+
+    @Transient
+    lateinit var movements: List<MovementDocument>
 
     constructor(
         id: String,
@@ -33,10 +35,8 @@ data class EconomicPeriodDocument(
         expenseByCategory: Map<BigInteger, BigDecimal>,
         expenseBySubcategory: Map<BigInteger, BigDecimal>,
         month: Int,
-        year: Int,
-        movements: List<MovementDocument>,
-    ) : this(user, start, end, filename, totals, expenseByCategory, expenseBySubcategory, month, year, movements) {
+        year: Int
+    ) : this(user, start, end, filename, totals, expenseByCategory, expenseBySubcategory, month, year) {
         this.id = id
     }
-
 }

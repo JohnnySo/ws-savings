@@ -43,18 +43,18 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
         val allMovements = lastPeriod.movements.toMutableList()
         val maxOrder = lastPeriod.getMaxOrder()
         val nextPayroll = movements.firstOrNull(filterPayrolls)
-        val nextEndDate: LocalDate
-        if (nextPayroll == null) {
-            val ym = YearMonth.of(lastPeriod.start.year, lastPeriod.start.month)
-            nextEndDate = ym.atEndOfMonth()
+        val nextEndDate: LocalDate = if (nextPayroll == null) {
+            YearMonth.of(lastPeriod.start.year, lastPeriod.start.month).atEndOfMonth()
         } else {
-            nextEndDate = nextPayroll.operationDate.minusDays(1)
+            nextPayroll.operationDate.minusDays(1)
         }
-        val movementsToAdd = movements
-            .filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
+        val movementsToAdd = movements.filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
         allMovements.addAll(movementsToAdd)
         allMovements.forEach { m -> m.order.value += maxOrder }
-        return lastPeriod.copy(end = nextEndDate, movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
+        val newPeriod =
+            lastPeriod.copy(end = nextEndDate, movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
+        newPeriod.id = lastPeriod.id
+        return newPeriod
     }
 
     /**
@@ -93,6 +93,13 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
     private fun calculatePeriods(payrolls: List<Movement>): MutableMap<LocalDate, LocalDate> {
         val periods = mutableMapOf<LocalDate, LocalDate>()
         payrolls.zipWithNext { start, end -> periods[start.operationDate] = end.operationDate.minusDays(1) }
+        val lastPayroll = payrolls.last()
+        val endOfPeriod = if (lastPayroll.operationDate.dayOfMonth <= 15) {
+            YearMonth.of(lastPayroll.operationDate.year, lastPayroll.operationDate.month).atEndOfMonth()
+        } else {
+            YearMonth.of(lastPayroll.operationDate.year, lastPayroll.operationDate.month).plusMonths(1).atEndOfMonth()
+        }
+        periods[lastPayroll.operationDate] = endOfPeriod
         return periods
     }
 }

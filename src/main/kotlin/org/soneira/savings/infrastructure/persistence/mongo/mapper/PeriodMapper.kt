@@ -20,7 +20,7 @@ class PeriodMapper(
     private val movementMapper: MovementMapper
 ) {
     fun toDocument(period: EconomicPeriod): EconomicPeriodDocument {
-        return EconomicPeriodDocument(
+        val periodDocument = EconomicPeriodDocument(
             period.user.id.value,
             period.start,
             period.end,
@@ -29,9 +29,10 @@ class PeriodMapper(
             period.expenseByCategory.map { (key, value) -> key.id.value to value.amount }.toMap(),
             period.expenseBySubcategory.map { (key, value) -> key.id.value to value.amount }.toMap(),
             period.yearMonth.month.value,
-            period.yearMonth.year,
-            period.movements.map { movementMapper.toDocument(it) }
+            period.yearMonth.year
         )
+        periodDocument.movements = period.movements.map { movementMapper.toDocument(it) }
+        return periodDocument
     }
 
     fun toDomain(period: EconomicPeriodDocument): EconomicPeriod {

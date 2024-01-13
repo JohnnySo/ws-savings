@@ -5,4 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MovementMongoRepository : MongoRepository<MovementDocument, String>
+interface MovementMongoRepository : MongoRepository<MovementDocument, String> {
+    fun findByPeriodId(periodId: String): List<MovementDocument>
+}

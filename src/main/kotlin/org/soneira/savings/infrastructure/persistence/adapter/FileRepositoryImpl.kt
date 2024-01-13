@@ -20,8 +20,12 @@ class FileRepositoryImpl(
     private val movementMapper: MovementMapper
 ) : FileRepository {
     override fun save(user: User, filename: String, movements: List<Movement>): File {
-        val fileDocument =
-            fileRepository.save(FileDocument(user.id.value, filename, movements.map { movementMapper.toDocument(it) }))
+        val fileDocument = fileRepository.save(
+            FileDocument(user.id.value, filename,
+                movements
+                    .sortedWith(Movement.dateAndOrderComparator)
+                    .map { movementMapper.toDocument(it) })
+        )
         return fileMapper.toDomain(fileDocument, user)
     }
 

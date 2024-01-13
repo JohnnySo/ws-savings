@@ -20,8 +20,14 @@ class PeriodRepositoryImpl(
 ) : PeriodRepository {
     @Transactional(readOnly = true)
     override fun findLastPeriod(user: User): Optional<EconomicPeriod> {
-        val lastPeriod = periodMongoRepository.findLastPeriod(user.id.value)
-        return lastPeriod.map { periodMapper.toDomain(it) }
+        val periods = periodMongoRepository.findLastPeriod(user.id.value)
+        return if (periods.isEmpty()) {
+            Optional.empty()
+        } else {
+            val lastPeriod = periods.first()
+            lastPeriod.movements = movementMongoRepository.findByPeriodId(lastPeriod.id)
+            Optional.of(periodMapper.toDomain(lastPeriod))
+        }
     }
 
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
