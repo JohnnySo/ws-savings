@@ -57,13 +57,19 @@ data class EconomicPeriod(
     }
 
     /**
-     * Reset the order of all the movements of the period to start in 1
+     * Reset the order of all the movements of the period to start in 0
      */
     private fun restoreOrderMovements() {
-        val min = movements.minByOrNull { it.order }
-        if (min != null) {
-            for (movement in movements) {
-                movement.order.value -= min.order.value.minus(1)
+        movements.minByOrNull { it.order }?.let { min ->
+            if (min.order.value > 0) {
+                val minOrder = min.order.value
+                movements.forEach { m -> m.order.value -= minOrder }
+            } else {
+                var minOrder = min.order.value
+                movements.forEach { m ->
+                    m.order.value = minOrder
+                    minOrder++
+                }
             }
         }
     }

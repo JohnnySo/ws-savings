@@ -41,7 +41,6 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
      */
     private fun completeLastPeriod(lastPeriod: EconomicPeriod, movements: List<Movement>): EconomicPeriod {
         val allMovements = lastPeriod.movements.toMutableList()
-        val maxOrder = lastPeriod.getMaxOrder()
         val nextPayroll = movements.firstOrNull(filterPayrolls)
         val nextEndDate: LocalDate = if (nextPayroll == null) {
             YearMonth.of(lastPeriod.start.year, lastPeriod.start.month).atEndOfMonth()
@@ -50,9 +49,10 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
         }
         val movementsToAdd = movements.filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
         allMovements.addAll(movementsToAdd)
-        allMovements.forEach { m -> m.order.value += maxOrder }
-        val newPeriod =
-            lastPeriod.copy(end = nextEndDate, movements = allMovements.sortedWith(Movement.dateAndOrderComparator))
+        val newPeriod = lastPeriod.copy(
+            end = nextEndDate,
+            movements = allMovements.sortedWith(Movement.dateAndOrderComparator)
+        )
         newPeriod.id = lastPeriod.id
         return newPeriod
     }
