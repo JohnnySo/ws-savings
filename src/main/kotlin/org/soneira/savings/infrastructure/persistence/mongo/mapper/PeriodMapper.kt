@@ -31,6 +31,9 @@ class PeriodMapper(
             period.yearMonth.month.value,
             period.yearMonth.year
         )
+        if (period.isIdInitialized()) {
+            periodDocument.id = period.id.value
+        }
         periodDocument.movements = period.movements.map { movementMapper.toDocument(it) }
         return periodDocument
     }

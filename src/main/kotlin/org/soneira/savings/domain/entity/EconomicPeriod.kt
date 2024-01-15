@@ -57,6 +57,14 @@ data class EconomicPeriod(
     }
 
     /**
+     * Check if the lateinit prop id is initialized
+     * @return true if it is initialized
+     */
+    fun isIdInitialized(): Boolean {
+        return ::id.isInitialized
+    }
+
+    /**
      * Reset the order of all the movements of the period to start in 0
      */
     private fun restoreOrderMovements() {

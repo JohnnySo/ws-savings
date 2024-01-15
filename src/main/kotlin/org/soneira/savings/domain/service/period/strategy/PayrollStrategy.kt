@@ -48,13 +48,17 @@ class PayrollStrategy(private val user: User) : PeriodStrategy {
             nextPayroll.operationDate.minusDays(1)
         }
         val movementsToAdd = movements.filter { m -> m.isDateBetween(lastPeriod.start, nextEndDate) }
-        allMovements.addAll(movementsToAdd)
-        val newPeriod = lastPeriod.copy(
-            end = nextEndDate,
-            movements = allMovements.sortedWith(Movement.dateAndOrderComparator)
-        )
-        newPeriod.id = lastPeriod.id
-        return newPeriod
+        if (movementsToAdd.isNotEmpty()) {
+            allMovements.addAll(movementsToAdd)
+            val newPeriod = lastPeriod.copy(
+                end = nextEndDate,
+                movements = allMovements.sortedWith(Movement.dateAndOrderComparator)
+            )
+            newPeriod.id = lastPeriod.id
+            return newPeriod
+        } else {
+            return lastPeriod
+        }
     }
 
     /**
