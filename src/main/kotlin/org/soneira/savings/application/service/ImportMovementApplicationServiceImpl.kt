@@ -33,8 +33,8 @@ class ImportMovementApplicationServiceImpl(
         val user = userRepository.getUser("john.doe@gmail.com")
         val periodsCreatedEvent =
             periodCreator.create(user, fileRepository.get(fileId, user), periodRepository.findLastPeriod(user))
-        applicationEventPublisher.publishEvent(periodsCreatedEvent)
         periodRepository.save(periodsCreatedEvent.economicPeriods)
+        applicationEventPublisher.publishEvent(periodsCreatedEvent)
         return periodsCreatedEvent.economicPeriods
     }
 }
