@@ -5,7 +5,7 @@ import org.soneira.savings.domain.entity.File
 import org.soneira.savings.domain.entity.Movement
 import java.io.InputStream
 
-interface ImportMovementApplicationService {
+interface ImportApplicationService {
 
     /**
      * Store the file and convert it to a list of [Movement]

@@ -3,7 +3,7 @@ package org.soneira.savings.application.service
 import org.soneira.savings.application.service.reader.ReaderFactory
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.File
-import org.soneira.savings.domain.port.input.ImportMovementApplicationService
+import org.soneira.savings.domain.port.input.ImportApplicationService
 import org.soneira.savings.domain.port.output.repository.FileRepository
 import org.soneira.savings.domain.port.output.repository.PeriodRepository
 import org.soneira.savings.domain.port.output.repository.UserRepository
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service
 import java.io.InputStream
 
 @Service
-class ImportMovementApplicationServiceImpl(
+class ImportApplicationServiceImpl(
     val periodCreator: PeriodCreator,
     val userRepository: UserRepository,
     val periodRepository: PeriodRepository,
     val fileRepository: FileRepository,
     val applicationEventPublisher: ApplicationEventPublisher,
     val readerFactory: ReaderFactory,
-) : ImportMovementApplicationService {
+) : ImportApplicationService {
 
     override fun preview(file: InputStream, filename: String): File {
         val user = userRepository.getUser("john.doe@gmail.com")
