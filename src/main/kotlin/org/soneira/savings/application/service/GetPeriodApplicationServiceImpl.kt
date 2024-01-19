@@ -20,6 +20,6 @@ class GetPeriodApplicationServiceImpl(val periodRepository: PeriodRepository) : 
     }
 
     override fun getPeriodById(id: PeriodId): EconomicPeriod {
-        TODO("Not yet implemented")
+        return periodRepository.getPeriod(id)
     }
 }

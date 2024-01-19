@@ -2,7 +2,9 @@ package org.soneira.savings.domain.port.output.repository
 
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.User
+import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.domain.vo.id.PeriodId
 import org.springframework.data.domain.Page
 import java.util.*
 
@@ -37,4 +39,12 @@ interface PeriodRepository {
         sortBy: String,
         sortDirection: SortDirection
     ): Page<EconomicPeriod>
+
+    /**
+     * Get a specific period
+     *
+     * @param id identifier of the period
+     * @return the requested period or [ResourceNotFoundException]
+     */
+    fun getPeriod(id: PeriodId): EconomicPeriod
 }

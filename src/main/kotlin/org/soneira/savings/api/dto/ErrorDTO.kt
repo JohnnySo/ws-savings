@@ -1,3 +1,3 @@
 package org.soneira.savings.api.dto
 
-data class ErrorDTO(val code: Int, val desc: String, val message: String)
+data class ErrorDTO(val status: Int, val title: String, val message: String)

@@ -3,8 +3,6 @@ package org.soneira.savings.api.rest
 import org.soneira.savings.api.dto.FileDTO
 import org.soneira.savings.api.mapper.FileApiMapper
 import org.soneira.savings.domain.port.input.ImportApplicationService
-import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
@@ -25,12 +23,12 @@ class ImportController(
     @PostMapping(value = ["/preview"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun previewFile(@RequestParam(value = "file") file: MultipartFile): ResponseEntity<FileDTO> {
         val fileSaved = importApplicationService.preview(file.inputStream, file.originalFilename ?: "")
-        return ResponseEntity<FileDTO>(fileApiMapper.toDto(fileSaved), HttpStatus.OK)
+        return ResponseEntity.ok(fileApiMapper.toDto(fileSaved))
     }
 
     @PutMapping(value = ["/import/{fileId}"])
     fun import(@PathVariable(value = "fileId") fileId: String): ResponseEntity<String> {
         importApplicationService.import(fileId)
-        return ResponseEntity<String>(HttpStatusCode.valueOf(200))
+        return ResponseEntity.ok("success")
     }
 }

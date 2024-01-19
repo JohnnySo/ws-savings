@@ -5,6 +5,7 @@ import org.soneira.savings.domain.entity.User
 import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.PeriodRepository
 import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.domain.vo.id.PeriodId
 import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.PeriodMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.MovementMongoRepository
@@ -49,6 +50,7 @@ class PeriodRepositoryImpl(
         return periodDocuments.map { periodMapper.toDomain(it) }
     }
 
+    @Transactional(readOnly = true)
     override fun getPeriods(
         limit: Int,
         offset: Int,
@@ -59,9 +61,18 @@ class PeriodRepositoryImpl(
         val sort = Sort.by(Order(Direction.fromString(sortDirection.value), sortBy))
         val pageable: Pageable = PageRequest.of(pageNumber, limit, sort)
         val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAll(pageable)
-        if (page.totalPages in 1..pageNumber) {
-            throw ResourceNotFoundException("The requested page does not exist.")
-        }
         return periodMapper.toDomain(page)
+    }
+
+    @Transactional(readOnly = true)
+    override fun getPeriod(id: PeriodId): EconomicPeriod {
+        val optPeriodDocument = periodMongoRepository.findById(id.value)
+        if (!optPeriodDocument.isPresent) {
+            throw ResourceNotFoundException("The period ${id.value} do not exist.")
+        } else {
+            val periodDocument = optPeriodDocument.get()
+            periodDocument.movements = movementMongoRepository.findByPeriodId(id.value)
+            return periodMapper.toDomain(periodDocument)
+        }
     }
 }
