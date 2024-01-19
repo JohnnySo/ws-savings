@@ -2,10 +2,19 @@ package org.soneira.savings.infrastructure.persistence.adapter
 
 import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.User
+import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.PeriodRepository
+import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.PeriodMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.MovementMongoRepository
 import org.soneira.savings.infrastructure.persistence.mongo.repository.PeriodMongoRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction
+import org.springframework.data.domain.Sort.Order
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -38,5 +47,21 @@ class PeriodRepositoryImpl(
             period.movements = movementDocuments.filter { it.periodId == period.id }
         }
         return periodDocuments.map { periodMapper.toDomain(it) }
+    }
+
+    override fun getPeriods(
+        limit: Int,
+        offset: Int,
+        sortBy: String,
+        sortDirection: SortDirection
+    ): Page<EconomicPeriod> {
+        val pageNumber = (offset / limit)
+        val sort = Sort.by(Order(Direction.fromString(sortDirection.value), sortBy))
+        val pageable: Pageable = PageRequest.of(pageNumber, limit, sort)
+        val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAll(pageable)
+        if (page.totalPages in 1..pageNumber) {
+            throw ResourceNotFoundException("The requested page does not exist.")
+        }
+        return periodMapper.toDomain(page)
     }
 }

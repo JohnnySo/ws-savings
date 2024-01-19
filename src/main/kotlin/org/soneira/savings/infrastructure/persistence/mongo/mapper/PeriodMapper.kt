@@ -9,6 +9,8 @@ import org.soneira.savings.domain.vo.Totals
 import org.soneira.savings.domain.vo.id.PeriodId
 import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.document.TotalsDocument
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.stereotype.Component
 import java.time.YearMonth
 
@@ -54,6 +56,17 @@ class PeriodMapper(
             period.expenseBySubcategory.map { (k, v) -> subcategories.first { it.id.value == k } to Money.of(v) }
                 .toMap(),
             YearMonth.of(period.year, period.month)
+        )
+    }
+
+    fun toDomain(paginatedPeriodDocuments: Page<EconomicPeriodDocument>): Page<EconomicPeriod> {
+        return PageImpl(
+            paginatedPeriodDocuments.content.map {
+                it.movements = emptyList()
+                toDomain(it)
+            },
+            paginatedPeriodDocuments.pageable,
+            paginatedPeriodDocuments.totalElements
         )
     }
 
