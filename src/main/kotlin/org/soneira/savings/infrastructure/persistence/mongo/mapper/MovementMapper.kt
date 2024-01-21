@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
-    fun toDocument(movement: Movement): MovementDocument {
+    fun toDocument(movement: Movement, userId: String): MovementDocument {
         return MovementDocument(
             movement.operationDate,
             movement.description,
@@ -18,7 +18,8 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
             movement.order.value,
             movement.subcategory.id.value,
             movement.comment,
-            movement.balance.amount
+            movement.balance.amount,
+            userId
         )
     }
 

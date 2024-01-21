@@ -36,7 +36,7 @@ class PeriodMapper(
         if (period.isIdInitialized()) {
             periodDocument.id = period.id.value
         }
-        periodDocument.movements = period.movements.map { movementMapper.toDocument(it) }
+        periodDocument.movements = period.movements.map { movementMapper.toDocument(it, period.user.id.value) }
         return periodDocument
     }
 

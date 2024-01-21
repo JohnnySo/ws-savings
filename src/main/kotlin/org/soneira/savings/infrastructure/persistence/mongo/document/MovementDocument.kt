@@ -17,7 +17,8 @@ data class MovementDocument(
     @Field(targetType = FieldType.INT64)
     val subcategory: BigInteger,
     var comment: String,
-    @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal
+    @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal,
+    val user: String
 ) {
     @Id
     lateinit var id: String
@@ -25,9 +26,9 @@ data class MovementDocument(
 
     constructor(
         id: String, periodId: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
-        subcategory: BigInteger, comment: String, balance: BigDecimal
+        subcategory: BigInteger, comment: String, balance: BigDecimal, user: String
     ) :
-            this(operationDate, description, amount, order, subcategory, comment, balance) {
+            this(operationDate, description, amount, order, subcategory, comment, balance, user) {
         this.id = id
         this.periodId = periodId
     }

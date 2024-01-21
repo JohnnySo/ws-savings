@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MovementMongoRepository : MongoRepository<MovementDocument, String> {
     fun findByPeriodId(periodId: String): List<MovementDocument>
+
+    fun findByUserAndPeriodId(userId: String, periodId: String): List<MovementDocument>
 }

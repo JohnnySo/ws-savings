@@ -24,7 +24,7 @@ class FileRepositoryImpl(
             FileDocument(user.id.value, filename,
                 movements
                     .sortedWith(Movement.dateAndOrderComparator)
-                    .map { movementMapper.toDocument(it) })
+                    .map { movementMapper.toDocument(it, user.id.value) })
         )
         return fileMapper.toDomain(fileDocument, user)
     }
