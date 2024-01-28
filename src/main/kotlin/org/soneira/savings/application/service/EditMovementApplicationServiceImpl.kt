@@ -15,6 +15,6 @@ class EditMovementApplicationServiceImpl(
     override fun edit(movement: EditableMovement) {
         //TODO: throw event to recalculate period?
         val user = userRepository.getUser("john.doe@gmail.com")
-        movementRepository.edit(user.id, movement)
+        movementRepository.edit(user, movement)
     }
 }

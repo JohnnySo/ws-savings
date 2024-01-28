@@ -2,8 +2,8 @@ package org.soneira.savings.api.rest
 
 import org.soneira.savings.api.dto.EditableMovementDTO
 import org.soneira.savings.api.dto.MovementDTO
-import org.soneira.savings.api.mapper.PeriodApiMapper
-import org.soneira.savings.domain.port.input.GetPeriodApplicationService
+import org.soneira.savings.api.mapper.MovementApiMapper
+import org.soneira.savings.domain.port.input.FindMovementApplicationService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class MovementController(
-    val getPeriodApplicationService: GetPeriodApplicationService,
-    val periodApiMapper: PeriodApiMapper
+    val findMovementApplicationService: FindMovementApplicationService,
+    val movementApiMapper: MovementApiMapper
 ) {
     @GetMapping("/movements")
-    fun getPeriods(@RequestParam("sort-by", required = true) searchParam: String): ResponseEntity<MovementDTO> {
-        TODO("Not implemented yet")
+    fun getPeriods(
+        @RequestParam("search-param", required = true) searchParam: String
+    ): ResponseEntity<List<MovementDTO>> {
+        val movements = findMovementApplicationService.find(searchParam)
+        return if (movements.isEmpty()) {
+            ResponseEntity.noContent().build()
+        } else {
+            ResponseEntity.ok().body(movements.map { movementApiMapper.toDto(it) })
+        }
     }
 
     @PostMapping("/movement", consumes = [MediaType.APPLICATION_JSON_VALUE])

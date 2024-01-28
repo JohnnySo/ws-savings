@@ -5,7 +5,6 @@ import org.soneira.savings.domain.entity.User
 import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.vo.SortDirection
 import org.soneira.savings.domain.vo.id.PeriodId
-import org.soneira.savings.domain.vo.id.UserId
 import org.springframework.data.domain.Page
 import java.util.*
 
@@ -28,7 +27,7 @@ interface PeriodRepository {
     /**
      * Gets the periods paginated
      *
-     * @param userId        the owner of the periods
+     * @param user          the owner of the periods
      * @param limit         indicates de maximum number of items to get for every page
      * @param offset        indicates how many elements should be omitted from the beginning
      * @param sortBy        the property you want to sort by
@@ -36,7 +35,7 @@ interface PeriodRepository {
      * @return A list of periods
      */
     fun getPeriods(
-        userId: UserId,
+        user: User,
         limit: Int,
         offset: Int,
         sortBy: String,
@@ -46,9 +45,9 @@ interface PeriodRepository {
     /**
      * Get a specific period
      *
-     * @param userId the owner of the periods
+     * @param user   the owner of the periods
      * @param id     identifier of the period
      * @return       the requested period or [ResourceNotFoundException]
      */
-    fun getPeriod(userId: UserId, id: PeriodId): EconomicPeriod
+    fun getPeriod(user: User, id: PeriodId): EconomicPeriod
 }

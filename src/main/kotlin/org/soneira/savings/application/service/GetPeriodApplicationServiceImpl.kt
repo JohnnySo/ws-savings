@@ -21,11 +21,11 @@ class GetPeriodApplicationServiceImpl(
         sortDirection: SortDirection
     ): Page<EconomicPeriod> {
         val user = userRepository.getUser("john.doe@gmail.com")
-        return periodRepository.getPeriods(user.id, limit, offset, sortBy, sortDirection)
+        return periodRepository.getPeriods(user, limit, offset, sortBy, sortDirection)
     }
 
     override fun getPeriodById(id: PeriodId): EconomicPeriod {
         val user = userRepository.getUser("john.doe@gmail.com")
-        return periodRepository.getPeriod(user.id, id)
+        return periodRepository.getPeriod(user, id)
     }
 }

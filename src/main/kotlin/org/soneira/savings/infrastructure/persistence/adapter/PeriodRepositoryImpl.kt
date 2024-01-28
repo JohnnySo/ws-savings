@@ -6,7 +6,6 @@ import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.PeriodRepository
 import org.soneira.savings.domain.vo.SortDirection
 import org.soneira.savings.domain.vo.id.PeriodId
-import org.soneira.savings.domain.vo.id.UserId
 import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.PeriodMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.MovementMongoRepository
@@ -53,7 +52,7 @@ class PeriodRepositoryImpl(
 
     @Transactional(readOnly = true)
     override fun getPeriods(
-        userId: UserId,
+        user: User,
         limit: Int,
         offset: Int,
         sortBy: String,
@@ -62,18 +61,18 @@ class PeriodRepositoryImpl(
         val pageNumber = (offset / limit)
         val sort = Sort.by(Order(Direction.fromString(sortDirection.value), sortBy))
         val pageable: Pageable = PageRequest.of(pageNumber, limit, sort)
-        val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAllByUser(userId.value, pageable)
+        val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAllByUser(user.id.value, pageable)
         return periodMapper.toDomain(page)
     }
 
     @Transactional(readOnly = true)
-    override fun getPeriod(userId: UserId, id: PeriodId): EconomicPeriod {
-        val optPeriodDocument = periodMongoRepository.findByUserAndId(userId.value, id.value)
+    override fun getPeriod(user: User, id: PeriodId): EconomicPeriod {
+        val optPeriodDocument = periodMongoRepository.findByUserAndId(user.id.value, id.value)
         if (!optPeriodDocument.isPresent) {
-            throw ResourceNotFoundException("The period ${id.value} for user ${userId.value} do not exist.")
+            throw ResourceNotFoundException("The period ${id.value} for user ${user.id.value} do not exist.")
         } else {
             val periodDocument = optPeriodDocument.get()
-            periodDocument.movements = movementMongoRepository.findByUserAndPeriodId(userId.value, id.value)
+            periodDocument.movements = movementMongoRepository.findByUserAndPeriodId(user.id.value, id.value)
             return periodMapper.toDomain(periodDocument)
         }
     }

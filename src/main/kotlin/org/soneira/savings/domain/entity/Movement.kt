@@ -3,15 +3,16 @@ package org.soneira.savings.domain.entity
 import org.soneira.savings.domain.vo.Money
 import org.soneira.savings.domain.vo.Order
 import org.soneira.savings.domain.vo.id.MovementId
+import org.springframework.data.mongodb.core.index.TextIndexed
 import java.time.LocalDate
 
 data class Movement(
     val operationDate: LocalDate,
-    val description: String,
+    @TextIndexed val description: String,
     val amount: Money,
     val order: Order,
     val subcategory: Subcategory,
-    var comment: String,
+    @TextIndexed var comment: String,
     val balance: Money
 ) {
     var id: MovementId = MovementId("")

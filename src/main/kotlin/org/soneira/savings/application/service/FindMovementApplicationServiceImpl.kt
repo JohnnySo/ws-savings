@@ -14,6 +14,6 @@ class FindMovementApplicationServiceImpl(
     FindMovementApplicationService {
     override fun find(searchParam: String): List<Movement> {
         val user = userRepository.getUser("john.doe@gmail.com")
-        return movementRepository.find(user.id, searchParam)
+        return movementRepository.find(user, searchParam)
     }
 }
