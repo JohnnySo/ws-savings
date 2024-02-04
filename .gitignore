@@ -38,3 +38,4 @@ out/
 
 ### Volumes ###
 /src/main/resources/docker/compose/volumes/mongo/**/*
+*.env
