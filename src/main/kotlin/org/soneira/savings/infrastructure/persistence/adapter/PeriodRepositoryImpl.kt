@@ -5,6 +5,7 @@ import org.soneira.savings.domain.entity.User
 import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.port.output.repository.PeriodRepository
 import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.domain.vo.id.MovementId
 import org.soneira.savings.domain.vo.id.PeriodId
 import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.PeriodMapper
@@ -74,6 +75,16 @@ class PeriodRepositoryImpl(
             val periodDocument = optPeriodDocument.get()
             periodDocument.movements = movementMongoRepository.findByUserAndPeriodId(user.id.value, id.value)
             return periodMapper.toDomain(periodDocument)
+        }
+    }
+
+    override fun getPeriodOfMovement(user: User, movement: MovementId): Optional<EconomicPeriod> {
+        val movementDocument = movementMongoRepository.findByUserAndId(user.id.value, movement.value)
+        return if (movementDocument.isPresent) {
+            periodMongoRepository.findByUserAndId(user.id.value, movementDocument.get().periodId)
+                .map { periodMapper.toDomain(it) }
+        } else {
+            Optional.empty()
         }
     }
 }

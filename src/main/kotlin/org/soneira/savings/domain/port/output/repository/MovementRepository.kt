@@ -20,7 +20,8 @@ interface MovementRepository {
      * comments and order.
      *
      * @param user the user
-     * @param movement The information to be edited.
+     * @param editableMovement The information to be edited.
+     * @return The movement updated
      */
-    fun edit(user: User, movement: EditableMovement)
+    fun edit(user: User, editableMovement: EditableMovement): Movement
 }

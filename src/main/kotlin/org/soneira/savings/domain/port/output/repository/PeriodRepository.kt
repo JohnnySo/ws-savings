@@ -4,6 +4,7 @@ import org.soneira.savings.domain.entity.EconomicPeriod
 import org.soneira.savings.domain.entity.User
 import org.soneira.savings.domain.exception.ResourceNotFoundException
 import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.domain.vo.id.MovementId
 import org.soneira.savings.domain.vo.id.PeriodId
 import org.springframework.data.domain.Page
 import java.util.*
@@ -50,4 +51,13 @@ interface PeriodRepository {
      * @return       the requested period or [ResourceNotFoundException]
      */
     fun getPeriod(user: User, id: PeriodId): EconomicPeriod
+
+    /**
+     * Get the period of a movement
+     *
+     * @param user     the owner of the periods
+     * @param movement identifier of the movement
+     * @return         the period of the given movement
+     */
+    fun getPeriodOfMovement(user: User, movement: MovementId): Optional<EconomicPeriod>
 }

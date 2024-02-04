@@ -5,12 +5,26 @@ import java.time.LocalDate
 
 data class MovementDTO(
     val id: String,
-    val operationDate: LocalDate,
     val description: String,
-    val amount: BigDecimal,
-    val category: CategoryDTO,
     val subcategory: SubcategoryDTO,
     val comment: String,
-    val balance: BigDecimal,
     val order: Int,
-)
+) {
+    lateinit var operationDate: LocalDate
+    lateinit var amount: BigDecimal
+    lateinit var category: CategoryDTO
+    lateinit var balance: BigDecimal
+
+    constructor(
+        id: String, operationDate: LocalDate, description: String, amount: BigDecimal,
+        category: CategoryDTO, subcategory: SubcategoryDTO, comment: String,
+        balance: BigDecimal, order: Int
+    ) :
+            this(id, description, subcategory, comment, order) {
+        this.operationDate = operationDate
+        this.amount = amount
+        this.category = category
+        this.balance = balance
+
+    }
+}

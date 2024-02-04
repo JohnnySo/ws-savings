@@ -1,6 +1,7 @@
 package org.soneira.savings.infrastructure.persistence.mongo.document
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.index.TextIndexed
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.mapping.FieldType
@@ -11,12 +12,12 @@ import java.time.LocalDate
 @Document("movements")
 data class MovementDocument(
     val operationDate: LocalDate,
-    val description: String,
+    @TextIndexed var description: String,
     @Field(targetType = FieldType.DECIMAL128) val amount: BigDecimal,
-    val order: Int,
+    var order: Int,
     @Field(targetType = FieldType.INT64)
-    val subcategory: BigInteger,
-    var comment: String,
+    var subcategory: BigInteger,
+    @TextIndexed var comment: String,
     @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal,
     val user: String
 ) {

@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Volumes ###
+/src/main/resources/docker/compose/volumes/mongo/**/*
