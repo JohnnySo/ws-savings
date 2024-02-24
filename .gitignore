@@ -37,5 +37,6 @@ out/
 .vscode/
 
 ### Volumes ###
-/src/main/resources/docker/compose/volumes/mongo/**/*
+/src/main/resources/docker/compose/volumes/mongo*/**/*
 *.env
+keyfile
