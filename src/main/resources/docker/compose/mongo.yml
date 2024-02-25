@@ -16,7 +16,7 @@ services:
       retries: 30
     volumes:
       - "./volumes/mongo1:/data/db"
-      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
+  #      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
 
   mongo2:
     image: mongo:7.0
@@ -27,7 +27,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - "./volumes/mongo2:/data/db"
-      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
+  #      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
 
   mongo3:
     image: mongo:7.0
@@ -38,4 +38,4 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - "./volumes/mongo3:/data/db"
-      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
+#      - "./resources/mongo/init-scripts:/docker-entrypoint-initdb.d"
