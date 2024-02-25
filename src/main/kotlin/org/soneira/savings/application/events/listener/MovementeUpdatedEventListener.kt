@@ -10,8 +10,6 @@ import org.springframework.transaction.event.TransactionalEventListener
 class MovementeUpdatedEventListener(val updatePeriodApplicationService: UpdatePeriodApplicationService) {
     @TransactionalEventListener(phase = BEFORE_COMMIT)
     fun listen(movementUpdatedEvent: MovementUpdatedEvent) {
-        //fixme: test rollback edit movement when this event fails
-        //throw DomainException("test")
         updatePeriodApplicationService.update(movementUpdatedEvent.user, movementUpdatedEvent.movement)
     }
 }
