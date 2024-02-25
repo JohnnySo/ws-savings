@@ -16,11 +16,4 @@ interface SubcategoryRepository {
      * @return the subcategory that fits the identifier or the default one [Subcategory]
      */
     fun getByIdOrDefault(id: BigInteger): Subcategory
-
-    /**
-     * Get one subcategory by it's description, if not exist, return the default category
-     * @param description description of subcategory
-     * @return the subcategory that fits the identifier or the default one [Subcategory]
-     */
-    fun getByDescEsOrDefault(description: String?): Subcategory
 }

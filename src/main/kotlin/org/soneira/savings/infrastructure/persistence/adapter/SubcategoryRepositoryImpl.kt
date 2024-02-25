@@ -30,14 +30,4 @@ class SubcategoryRepositoryImpl(
         }
         return subcategory
     }
-
-    override fun getByDescEsOrDefault(description: String?): Subcategory {
-        val subcategories = this.getAll()
-        var subcategory = subcategories.firstOrNull { it.descriptionEs == description }
-        if (subcategory == null) {
-            subcategory = subcategories.first { Subcategory.DEFAULT_SUBCATEGORY == it.id.value }
-        }
-        return subcategory
-    }
-
 }

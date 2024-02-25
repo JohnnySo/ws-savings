@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.DataFormatter
 import org.apache.poi.ss.usermodel.Row
 import org.soneira.savings.domain.entity.Movement
+import org.soneira.savings.domain.entity.Subcategory
 import org.soneira.savings.domain.exception.FileParseException
 import org.soneira.savings.domain.port.input.FileReaderApplicationService
 import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
@@ -74,7 +75,21 @@ class ExcelFileReaderApplicationService(private val subcategoryRepository: Subca
     ): Movement {
         return Movement(
             operationDate, description, amount, Order(order),
-            subcategoryRepository.getByDescEsOrDefault(subcategoryDescription), comment, balance
+            getByDescEsOrDefault(subcategoryDescription), comment, balance
         )
+    }
+
+    /**
+     * Get one subcategory by it's description, if not exist, return the default category
+     * @param description description of subcategory
+     * @return the subcategory that fits the identifier or the default one [Subcategory]
+     */
+    private fun getByDescEsOrDefault(description: String?): Subcategory {
+        val subcategories = subcategoryRepository.getAll()
+        var subcategory = subcategories.firstOrNull { it.descriptionEs == description }
+        if (subcategory == null) {
+            subcategory = subcategories.first { Subcategory.DEFAULT_SUBCATEGORY == it.id.value }
+        }
+        return subcategory
     }
 }
