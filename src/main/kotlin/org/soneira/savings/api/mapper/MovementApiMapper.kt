@@ -6,14 +6,14 @@ import org.soneira.savings.api.dto.SubcategoryDTO
 import org.soneira.savings.domain.entity.Category
 import org.soneira.savings.domain.entity.Movement
 import org.soneira.savings.domain.entity.Subcategory
-import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
 import org.soneira.savings.domain.vo.EditableMovement
 import org.soneira.savings.domain.vo.Order
 import org.soneira.savings.domain.vo.id.MovementId
+import org.soneira.savings.domain.vo.id.SubcategoryId
 import org.springframework.stereotype.Component
 
 @Component
-class MovementApiMapper(val subcategoryRepository: SubcategoryRepository) {
+class MovementApiMapper {
     fun asMovementDTO(movement: Movement): MovementDTO {
         return MovementDTO(
             movement.id.value,
@@ -32,7 +32,7 @@ class MovementApiMapper(val subcategoryRepository: SubcategoryRepository) {
         return EditableMovement(
             MovementId(movement.id),
             movement.description,
-            subcategoryRepository.getByIdOrDefault(movement.subcategory.id),
+            Subcategory(SubcategoryId(movement.subcategory.id)),
             movement.comment, Order(movement.order)
         )
     }

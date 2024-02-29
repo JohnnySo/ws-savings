@@ -7,7 +7,7 @@ import org.springframework.transaction.event.TransactionPhase.BEFORE_COMMIT
 import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
-class MovementeUpdatedEventListener(val updatePeriodApplicationService: UpdatePeriodApplicationService) {
+class MovementUpdatedEventListener(val updatePeriodApplicationService: UpdatePeriodApplicationService) {
     @TransactionalEventListener(phase = BEFORE_COMMIT)
     fun listen(movementUpdatedEvent: MovementUpdatedEvent) {
         updatePeriodApplicationService.update(movementUpdatedEvent.user, movementUpdatedEvent.movement)

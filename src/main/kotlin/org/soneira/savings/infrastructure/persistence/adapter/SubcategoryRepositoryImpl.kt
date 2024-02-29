@@ -7,7 +7,6 @@ import org.soneira.savings.infrastructure.persistence.mongo.repository.Subcatego
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigInteger
 
 @Component
 @Transactional(readOnly = true)
@@ -20,14 +19,5 @@ class SubcategoryRepositoryImpl(
     override fun getAll(): List<Subcategory> {
         val subcategories = subcategoryMongoRepository.findAll()
         return subcategories.map { subCategoryMapper.toDomain(it) }
-    }
-
-    override fun getByIdOrDefault(id: BigInteger): Subcategory {
-        val subcategories = this.getAll()
-        var subcategory = subcategories.firstOrNull { it.id.value == id }
-        if (subcategory == null) {
-            subcategory = subcategories.first { Subcategory.DEFAULT_SUBCATEGORY == it.id.value }
-        }
-        return subcategory
     }
 }

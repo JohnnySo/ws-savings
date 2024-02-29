@@ -81,8 +81,7 @@ class PeriodRepositoryImpl(
     override fun getPeriodOfMovement(user: User, movement: MovementId): Optional<EconomicPeriod> {
         val movementDocument = movementMongoRepository.findByUserAndId(user.id.value, movement.value)
         return if (movementDocument.isPresent) {
-            periodMongoRepository.findByUserAndId(user.id.value, movementDocument.get().periodId)
-                .map { periodMapper.toDomain(it) }
+            Optional.of(this.getPeriod(user, PeriodId(movementDocument.get().periodId)))
         } else {
             Optional.empty()
         }
