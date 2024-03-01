@@ -33,7 +33,6 @@ class MovementRepositoryImpl(
             movement.description = editableMovement.description
             movement.subcategory = editableMovement.subcategory.id.value
             movement.comment = editableMovement.comment
-            movement.order = editableMovement.order.value
             movementMapper.toDomain(movementMongoRepository.save(movement))
         } else {
             throw ResourceNotFoundException("The movement with id ${editableMovement.id.value} do not exist.")
