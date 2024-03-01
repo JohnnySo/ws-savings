@@ -1,12 +1,12 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.soneira.savings.domain.entity.EconomicPeriod
-import org.soneira.savings.domain.port.output.repository.CategoryRepository
-import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
-import org.soneira.savings.domain.port.output.repository.UserRepository
-import org.soneira.savings.domain.vo.Money
-import org.soneira.savings.domain.vo.Totals
-import org.soneira.savings.domain.vo.id.PeriodId
+import org.soneira.savings.domain.model.entity.EconomicPeriod
+import org.soneira.savings.domain.repository.CategoryRepository
+import org.soneira.savings.domain.repository.SubcategoryRepository
+import org.soneira.savings.domain.repository.UserRepository
+import org.soneira.savings.domain.model.vo.Money
+import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.id.PeriodId
 import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPeriodDocument
 import org.soneira.savings.infrastructure.persistence.mongo.document.TotalsDocument
 import org.springframework.data.domain.Page

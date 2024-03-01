@@ -1,13 +1,13 @@
 package org.soneira.savings.application.events.listener
 
-import org.soneira.savings.application.service.RemoveFileApplicationServiceImpl
-import org.soneira.savings.domain.event.PeriodCreatedEvent
+import org.soneira.savings.application.usecase.RemoveFileUseCaseImpl
+import org.soneira.savings.domain.model.event.PeriodCreatedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
-class PeriodCreatedEventListener(val deleteFileApplicationService: RemoveFileApplicationServiceImpl) {
+class PeriodCreatedEventListener(val deleteFileApplicationService: RemoveFileUseCaseImpl) {
     @EventListener
     @Async
     fun listen(periodsCreatedEvent: PeriodCreatedEvent) {

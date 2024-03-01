@@ -3,13 +3,13 @@ package org.soneira.savings.api.mapper
 import org.soneira.savings.api.dto.CategoryDTO
 import org.soneira.savings.api.dto.MovementDTO
 import org.soneira.savings.api.dto.SubcategoryDTO
-import org.soneira.savings.domain.entity.Category
-import org.soneira.savings.domain.entity.Movement
-import org.soneira.savings.domain.entity.Subcategory
-import org.soneira.savings.domain.vo.EditableMovement
-import org.soneira.savings.domain.vo.Order
-import org.soneira.savings.domain.vo.id.MovementId
-import org.soneira.savings.domain.vo.id.SubcategoryId
+import org.soneira.savings.domain.model.entity.Category
+import org.soneira.savings.domain.model.entity.Movement
+import org.soneira.savings.domain.model.entity.Subcategory
+import org.soneira.savings.domain.model.vo.EditableMovement
+import org.soneira.savings.domain.model.vo.Order
+import org.soneira.savings.domain.model.vo.id.MovementId
+import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.springframework.stereotype.Component
 
 @Component

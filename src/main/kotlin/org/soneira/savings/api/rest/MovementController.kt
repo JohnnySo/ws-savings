@@ -2,8 +2,8 @@ package org.soneira.savings.api.rest
 
 import org.soneira.savings.api.dto.MovementDTO
 import org.soneira.savings.api.mapper.MovementApiMapper
-import org.soneira.savings.application.service.EditMovementApplicationServiceImpl
-import org.soneira.savings.domain.port.input.FindMovementApplicationService
+import org.soneira.savings.application.usecase.EditMovementUseCaseImpl
+import org.soneira.savings.domain.usecase.FindMovementUseCase
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class MovementController(
-    val findMovementApplicationService: FindMovementApplicationService,
-    val editMovementApplicationServiceImpl: EditMovementApplicationServiceImpl,
+    val findMovementUseCase: FindMovementUseCase,
+    val editMovementApplicationServiceImpl: EditMovementUseCaseImpl,
     val movementApiMapper: MovementApiMapper
 ) {
     @GetMapping("/movements")
     fun getPeriods(
         @RequestParam("search-param", required = true) searchParam: String
     ): ResponseEntity<List<MovementDTO>> {
-        val movements = findMovementApplicationService.find(searchParam)
+        val movements = findMovementUseCase.find(searchParam)
         return ResponseEntity.ok().body(movements.map { movementApiMapper.asMovementDTO(it) })
     }
 

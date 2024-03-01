@@ -1,6 +1,6 @@
 package org.soneira.savings.api.rest.converter
 
-import org.soneira.savings.domain.vo.SortDirection
+import org.soneira.savings.domain.model.vo.SortDirection
 import org.springframework.core.convert.converter.Converter
 import org.springframework.stereotype.Component
 

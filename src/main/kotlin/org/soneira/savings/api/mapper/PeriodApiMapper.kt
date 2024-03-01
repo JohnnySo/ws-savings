@@ -5,11 +5,11 @@ import org.soneira.savings.api.dto.PeriodDTO
 import org.soneira.savings.api.dto.PeriodDetailDTO
 import org.soneira.savings.api.dto.SubcategoryDTO
 import org.soneira.savings.api.dto.TotalsDTO
-import org.soneira.savings.domain.entity.Category
-import org.soneira.savings.domain.entity.EconomicPeriod
-import org.soneira.savings.domain.entity.Subcategory
-import org.soneira.savings.domain.vo.Money
-import org.soneira.savings.domain.vo.Totals
+import org.soneira.savings.domain.model.entity.Category
+import org.soneira.savings.domain.model.entity.EconomicPeriod
+import org.soneira.savings.domain.model.entity.Subcategory
+import org.soneira.savings.domain.model.vo.Money
+import org.soneira.savings.domain.model.vo.Totals
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl

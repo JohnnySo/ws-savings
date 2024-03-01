@@ -1,10 +1,10 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.soneira.savings.domain.entity.Movement
-import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
-import org.soneira.savings.domain.vo.Money
-import org.soneira.savings.domain.vo.Order
-import org.soneira.savings.domain.vo.id.MovementId
+import org.soneira.savings.domain.model.entity.Movement
+import org.soneira.savings.domain.repository.SubcategoryRepository
+import org.soneira.savings.domain.model.vo.Money
+import org.soneira.savings.domain.model.vo.Order
+import org.soneira.savings.domain.model.vo.id.MovementId
 import org.soneira.savings.infrastructure.persistence.mongo.document.MovementDocument
 import org.springframework.stereotype.Component
 

@@ -1,9 +1,9 @@
 package org.soneira.savings.api.rest
 
 import org.soneira.savings.api.dto.ErrorDTO
-import org.soneira.savings.domain.exception.DomainException
-import org.soneira.savings.domain.exception.FileParseException
-import org.soneira.savings.domain.exception.ResourceNotFoundException
+import org.soneira.savings.domain.model.exception.DomainException
+import org.soneira.savings.domain.model.exception.FileParseException
+import org.soneira.savings.domain.model.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND

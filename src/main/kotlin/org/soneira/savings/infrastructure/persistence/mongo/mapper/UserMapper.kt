@@ -1,10 +1,10 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.soneira.savings.domain.entity.User
-import org.soneira.savings.domain.port.output.repository.SubcategoryRepository
-import org.soneira.savings.domain.vo.FileParserSettings
-import org.soneira.savings.domain.vo.Settings
-import org.soneira.savings.domain.vo.id.UserId
+import org.soneira.savings.domain.model.entity.User
+import org.soneira.savings.domain.repository.SubcategoryRepository
+import org.soneira.savings.domain.model.vo.FileParserSettings
+import org.soneira.savings.domain.model.vo.Settings
+import org.soneira.savings.domain.model.vo.id.UserId
 import org.soneira.savings.infrastructure.persistence.mongo.document.UserDocument
 import org.springframework.stereotype.Component
 

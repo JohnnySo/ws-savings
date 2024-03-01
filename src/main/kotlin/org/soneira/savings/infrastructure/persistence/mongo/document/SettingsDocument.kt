@@ -1,6 +1,6 @@
 package org.soneira.savings.infrastructure.persistence.mongo.document
 
-import org.soneira.savings.domain.vo.PeriodStrategyType
+import org.soneira.savings.domain.model.vo.PeriodStrategyType
 import java.math.BigInteger
 
 data class SettingsDocument(

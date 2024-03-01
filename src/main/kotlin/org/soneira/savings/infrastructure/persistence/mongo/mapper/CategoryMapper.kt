@@ -1,7 +1,7 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.soneira.savings.domain.entity.Category
-import org.soneira.savings.domain.vo.id.CategoryId
+import org.soneira.savings.domain.model.entity.Category
+import org.soneira.savings.domain.model.vo.id.CategoryId
 import org.soneira.savings.infrastructure.persistence.mongo.document.CategoryDocument
 import org.springframework.stereotype.Component
 

@@ -1,7 +1,7 @@
 package org.soneira.savings.config
 
-import org.soneira.savings.domain.service.period.PeriodCreator
-import org.soneira.savings.domain.service.period.PeriodCreatorImpl
+import org.soneira.savings.domain.service.PeriodCreator
+import org.soneira.savings.domain.service.PeriodCreatorImpl
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
