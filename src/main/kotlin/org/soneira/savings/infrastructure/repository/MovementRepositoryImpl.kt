@@ -27,15 +27,12 @@ class MovementRepositoryImpl(
 
     @Transactional(propagation = REQUIRED)
     override fun edit(user: User, editableMovement: EditableMovement): Movement {
-        val optMovement = movementMongoRepository.findByUserAndId(user.id.value, editableMovement.id.value)
-        return if (optMovement.isPresent) {
-            val movement = optMovement.get()
-            movement.description = editableMovement.description
-            movement.subcategory = editableMovement.subcategory.id.value
-            movement.comment = editableMovement.comment
-            movementMapper.toDomain(movementMongoRepository.save(movement))
-        } else {
-            throw ResourceNotFoundException("The movement with id ${editableMovement.id.value} do not exist.")
-        }
+        val movementDocument = movementMongoRepository.findByUserAndId(user.id.value, editableMovement.id.value)
+            .orElseThrow { ResourceNotFoundException("The movement with id ${editableMovement.id.value} do not exist.") }
+        editableMovement.description?.let { movementDocument.description = it }
+        editableMovement.comment?.let { movementDocument.comment = it }
+        editableMovement.subcategory?.let { movementDocument.subcategory = it.id.value }
+        movementMapper.toDomain(movementMongoRepository.save(movementDocument))
+        return movementMapper.toDomain(movementMongoRepository.save(movementDocument))
     }
 }

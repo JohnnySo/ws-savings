@@ -12,5 +12,5 @@ data class PeriodDetailDTO(
     val totals: TotalsDTO,
     val expenseByCategory: Map<CategoryDTO, BigDecimal>,
     val expenseBySubcategory: Map<SubcategoryDTO, BigDecimal>,
-    val movements: List<MovementDTO>
+    val movements: List<MovementViewDTO>
 )

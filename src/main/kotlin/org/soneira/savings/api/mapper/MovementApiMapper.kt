@@ -2,20 +2,20 @@ package org.soneira.savings.api.mapper
 
 import org.soneira.savings.api.dto.CategoryDTO
 import org.soneira.savings.api.dto.MovementDTO
+import org.soneira.savings.api.dto.MovementViewDTO
 import org.soneira.savings.api.dto.SubcategoryDTO
 import org.soneira.savings.domain.model.entity.Category
 import org.soneira.savings.domain.model.entity.Movement
 import org.soneira.savings.domain.model.entity.Subcategory
 import org.soneira.savings.domain.model.vo.EditableMovement
-import org.soneira.savings.domain.model.vo.Order
 import org.soneira.savings.domain.model.vo.id.MovementId
 import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.springframework.stereotype.Component
 
 @Component
 class MovementApiMapper {
-    fun asMovementDTO(movement: Movement): MovementDTO {
-        return MovementDTO(
+    fun asMovementViewDTO(movement: Movement): MovementViewDTO {
+        return MovementViewDTO(
             movement.id.value,
             movement.operationDate,
             movement.description,
@@ -28,13 +28,14 @@ class MovementApiMapper {
         )
     }
 
-    fun asEditableMovement(movement: MovementDTO): EditableMovement {
-        return EditableMovement(
-            MovementId(movement.id),
-            movement.description,
-            Subcategory(SubcategoryId(movement.subcategory.id)),
-            movement.comment, Order(movement.order)
-        )
+    fun asEditableMovement(movementDTO: MovementDTO): EditableMovement {
+        val editableMovement = EditableMovement(MovementId(movementDTO.id))
+        editableMovement.description = movementDTO.description
+        movementDTO.subcategory?.let {
+            editableMovement.subcategory = Subcategory(SubcategoryId(it))
+        }
+        editableMovement.comment = movementDTO.comment
+        return editableMovement
     }
 
     private fun asCategoryDTO(category: Category): CategoryDTO {

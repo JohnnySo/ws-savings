@@ -38,7 +38,7 @@ class PeriodApiMapper(val movementApiMapper: MovementApiMapper) {
             toTotalsDto(period.totals),
             toExpensesByCategoryDto(period.expenseByCategory),
             toExpensesBySubcategoryDto(period.expenseBySubcategory),
-            period.movements.map { movementApiMapper.asMovementDTO(it) })
+            period.movements.map { movementApiMapper.asMovementViewDTO(it) })
     }
 
     private fun toDto(period: EconomicPeriod): PeriodDTO {

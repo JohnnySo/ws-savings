@@ -1,6 +1,7 @@
 package org.soneira.savings.api.rest
 
 import org.soneira.savings.api.dto.MovementDTO
+import org.soneira.savings.api.dto.MovementViewDTO
 import org.soneira.savings.api.mapper.MovementApiMapper
 import org.soneira.savings.application.usecase.EditMovementUseCaseImpl
 import org.soneira.savings.domain.usecase.FindMovementUseCase
@@ -21,9 +22,9 @@ class MovementController(
     @GetMapping("/movements")
     fun getPeriods(
         @RequestParam("search-param", required = true) searchParam: String
-    ): ResponseEntity<List<MovementDTO>> {
+    ): ResponseEntity<List<MovementViewDTO>> {
         val movements = findMovementUseCase.find(searchParam)
-        return ResponseEntity.ok().body(movements.map { movementApiMapper.asMovementDTO(it) })
+        return ResponseEntity.ok().body(movements.map { movementApiMapper.asMovementViewDTO(it) })
     }
 
     @PostMapping("/movement", consumes = [MediaType.APPLICATION_JSON_VALUE])
