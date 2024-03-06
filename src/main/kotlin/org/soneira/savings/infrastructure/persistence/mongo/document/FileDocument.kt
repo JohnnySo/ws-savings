@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("files")
 data class FileDocument(
-    val userId: String,
+    val user: String,
     val filename: String,
     val movements: List<MovementDocument>
 ) {

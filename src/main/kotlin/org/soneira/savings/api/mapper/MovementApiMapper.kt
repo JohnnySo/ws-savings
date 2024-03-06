@@ -15,8 +15,7 @@ import org.springframework.stereotype.Component
 @Component
 class MovementApiMapper {
     fun asMovementViewDTO(movement: Movement): MovementViewDTO {
-        return MovementViewDTO(
-            movement.id.value,
+        val movementDTO = MovementViewDTO(
             movement.operationDate,
             movement.description,
             movement.amount.amount,
@@ -26,6 +25,10 @@ class MovementApiMapper {
             movement.balance.amount,
             movement.order.value
         )
+        if (movement.isIdInit()) {
+            movementDTO.id = movement.id.value
+        }
+        return movementDTO
     }
 
     fun asEditableMovement(movementDTO: MovementDTO): EditableMovement {

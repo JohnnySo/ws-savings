@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface FileMongoRepository : MongoRepository<FileDocument, String> {
-    fun findByIdAndUserId(id: String, userId: String): Optional<FileDocument>
+    fun findByIdAndUser(id: String, user: String): Optional<FileDocument>
 }

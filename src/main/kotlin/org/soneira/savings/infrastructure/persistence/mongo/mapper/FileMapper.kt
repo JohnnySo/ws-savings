@@ -13,7 +13,7 @@ class FileMapper(
     fun toDomain(fileDocument: FileDocument, user: User): File {
         return File(
             FileId(fileDocument.id), user, fileDocument.filename,
-            fileDocument.movements.map { movementMapper.toDomainWithoutId(it) }
+            fileDocument.movements.map { movementMapper.toDomain(it) }
         )
     }
 }

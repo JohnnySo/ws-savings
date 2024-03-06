@@ -10,6 +10,7 @@ class PeriodCreatorImpl : PeriodCreator {
     override fun create(user: User, file: File, optLastPeriod: Optional<EconomicPeriod>): PeriodCreatedEvent {
         val periodStrategy = user.settings.periodStrategyType.get(user)
         val periods = periodStrategy.execute(file, optLastPeriod)
+        periods.forEach { it.init() }
         return PeriodCreatedEvent(file, periods)
     }
 }

@@ -13,6 +13,9 @@ class UpdatePeriodUseCaseImpl(private val periodRepository: PeriodRepository) :
     UpdatePeriodUseCase {
     override fun update(user: User, movement: Movement) {
         val period = periodRepository.getPeriodOfMovement(user, movement.id)
-        period.ifPresent { periodRepository.save(listOf(it.copy())).first() }
+        period.ifPresent {
+            it.init()
+            periodRepository.save(listOf(it))
+        }
     }
 }

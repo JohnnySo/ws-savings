@@ -23,10 +23,10 @@ data class EconomicPeriod(
     val movements: List<Movement>,
 ) : AggregateRoot() {
     lateinit var id: PeriodId
-    var totals: Totals
-    var expenseByCategory: Map<Category, Money>
-    var expenseBySubcategory: Map<Subcategory, Money>
-    var yearMonth: YearMonth
+    lateinit var totals: Totals
+    lateinit var expenseByCategory: Map<Category, Money>
+    lateinit var expenseBySubcategory: Map<Subcategory, Money>
+    lateinit var yearMonth: YearMonth
 
     constructor(
         id: PeriodId, user: User, start: LocalDate, end: LocalDate, filename: String, movements: List<Movement>,
@@ -40,7 +40,7 @@ data class EconomicPeriod(
         this.yearMonth = yearMonth
     }
 
-    init {
+    fun init() {
         restoreOrderMovements()
         totals = calculateTotals()
         expenseByCategory = calculateExpensesByCategory()

@@ -26,11 +26,18 @@ data class MovementDocument(
     lateinit var periodId: String
 
     constructor(
-        id: String, periodId: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
+        id: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
         subcategory: BigInteger, comment: String, balance: BigDecimal, user: String
     ) :
             this(operationDate, description, amount, order, subcategory, comment, balance, user) {
         this.id = id
-        this.periodId = periodId
+    }
+
+    /**
+     * Check if the lateinit prop id is initialized
+     * @return true if it is initialized
+     */
+    fun isIdInit(): Boolean {
+        return ::id.isInitialized
     }
 }

@@ -14,7 +14,7 @@ data class Movement(
     var comment: String,
     val balance: Money
 ) {
-    var id: MovementId = MovementId("")
+    lateinit var id: MovementId
 
     constructor(
         id: MovementId, operationDate: LocalDate, description: String, amount: Money, order: Order,
@@ -63,5 +63,13 @@ data class Movement(
                 m1.operationDate.compareTo(m2.operationDate)
             }
         }
+    }
+
+    /**
+     * Check if the lateinit prop id is initialized
+     * @return true if it is initialized
+     */
+    fun isIdInit(): Boolean {
+        return ::id.isInitialized
     }
 }
