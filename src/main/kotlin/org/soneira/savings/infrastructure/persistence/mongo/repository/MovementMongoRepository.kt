@@ -11,5 +11,5 @@ interface MovementMongoRepository : MongoRepository<MovementDocument, String> {
 
     fun findByUserAndId(user: String, id: String): Optional<MovementDocument>
 
-    fun findByUserAndPeriodId(userId: String, periodId: String): List<MovementDocument>
+    fun findByUserAndPeriodId(user: String, periodId: String): List<MovementDocument>
 }

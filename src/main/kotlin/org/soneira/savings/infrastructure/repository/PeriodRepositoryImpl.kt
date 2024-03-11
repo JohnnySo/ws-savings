@@ -11,6 +11,7 @@ import org.soneira.savings.infrastructure.persistence.mongo.document.EconomicPer
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.PeriodMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.MovementMongoRepository
 import org.soneira.savings.infrastructure.persistence.mongo.repository.PeriodMongoRepository
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -41,6 +42,7 @@ class PeriodRepositoryImpl(
         }
     }
 
+    @CacheEvict("years", allEntries = true)
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
         val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.toDocument(it) })
         periodDocuments.forEach { period -> period.movements.forEach { it.periodId = period.id } }

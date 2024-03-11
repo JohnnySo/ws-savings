@@ -1,6 +1,5 @@
 package org.soneira.savings.domain.model.entity
 
-import org.soneira.savings.domain.model.common.entity.AggregateRoot
 import org.soneira.savings.domain.model.exception.DomainException
 import org.soneira.savings.domain.model.vo.Money
 import org.soneira.savings.domain.model.vo.Totals

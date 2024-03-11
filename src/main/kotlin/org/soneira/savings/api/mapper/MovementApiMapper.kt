@@ -1,10 +1,7 @@
 package org.soneira.savings.api.mapper
 
-import org.soneira.savings.api.dto.CategoryDTO
 import org.soneira.savings.api.dto.MovementDTO
 import org.soneira.savings.api.dto.MovementViewDTO
-import org.soneira.savings.api.dto.SubcategoryDTO
-import org.soneira.savings.domain.model.entity.Category
 import org.soneira.savings.domain.model.entity.Movement
 import org.soneira.savings.domain.model.entity.Subcategory
 import org.soneira.savings.domain.model.vo.EditableMovement
@@ -13,14 +10,15 @@ import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.springframework.stereotype.Component
 
 @Component
-class MovementApiMapper {
+class MovementApiMapper(val categoryApiMapper: CategoryApiMapper) {
     fun asMovementViewDTO(movement: Movement): MovementViewDTO {
+
         val movementDTO = MovementViewDTO(
             movement.operationDate,
             movement.description,
             movement.amount.amount,
-            asCategoryDTO(movement.subcategory.category),
-            asSubcategoryDTO(movement.subcategory),
+            categoryApiMapper.asCategoryDTO(movement.subcategory.category),
+            categoryApiMapper.asSubcategoryDTO(movement.subcategory),
             movement.comment,
             movement.balance.amount,
             movement.order.value
@@ -39,13 +37,5 @@ class MovementApiMapper {
         }
         editableMovement.comment = movementDTO.comment
         return editableMovement
-    }
-
-    private fun asCategoryDTO(category: Category): CategoryDTO {
-        return CategoryDTO(category.id.value, category.descriptionEs)
-    }
-
-    private fun asSubcategoryDTO(subcategory: Subcategory): SubcategoryDTO {
-        return SubcategoryDTO(subcategory.id.value, subcategory.descriptionEs)
     }
 }

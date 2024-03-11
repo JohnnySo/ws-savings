@@ -18,7 +18,10 @@ import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 
 @Component
-class PeriodApiMapper(val movementApiMapper: MovementApiMapper) {
+class PeriodApiMapper(
+    val movementApiMapper: MovementApiMapper,
+    val categoryApiMapper: CategoryApiMapper
+) {
 
     fun toDto(paginatedPeriods: Page<EconomicPeriod>): Page<PeriodDTO> {
         return PageImpl(
@@ -58,20 +61,11 @@ class PeriodApiMapper(val movementApiMapper: MovementApiMapper) {
     }
 
     private fun toExpensesByCategoryDto(expenseByCategory: Map<Category, Money>): Map<CategoryDTO, BigDecimal> {
-        return expenseByCategory.map { (key, value) ->
-            CategoryDTO(
-                key.id.value,
-                key.descriptionEs
-            ) to value.amount
-        }.toMap()
+        return expenseByCategory.map { (key, value) -> categoryApiMapper.asCategoryDTO(key) to value.amount }.toMap()
     }
 
     private fun toExpensesBySubcategoryDto(expenseBySubcategory: Map<Subcategory, Money>): Map<SubcategoryDTO, BigDecimal> {
-        return expenseBySubcategory.map { (key, value) ->
-            SubcategoryDTO(
-                key.id.value,
-                key.descriptionEs
-            ) to value.amount
-        }.toMap()
+        return expenseBySubcategory.map { (key, value) -> categoryApiMapper.asSubcategoryDTO(key) to value.amount }
+            .toMap()
     }
 }
