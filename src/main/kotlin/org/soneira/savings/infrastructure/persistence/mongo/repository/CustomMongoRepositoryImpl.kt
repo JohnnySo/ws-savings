@@ -16,10 +16,8 @@ import org.springframework.data.mongodb.core.aggregation.MatchOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
 
 @Repository
-@Transactional(readOnly = true)
 class CustomMongoRepositoryImpl(val mongodbTemplate: MongoTemplate) : CustomMongoRepository {
 
     override fun searchMovements(user: String, searchParam: String): List<MovementDocument> {

@@ -18,8 +18,7 @@ class MovementRepositoryImpl(
     val customMongoRepositoryImpl: CustomMongoRepositoryImpl,
     val movementMapper: MovementMapper
 ) : MovementRepository {
-
-    @Transactional(readOnly = true)
+    
     override fun find(user: User, searchParam: String): List<Movement> {
         val movements = customMongoRepositoryImpl.searchMovements(user.id.value, searchParam)
         return movements.map { movementMapper.toDomain(it) }

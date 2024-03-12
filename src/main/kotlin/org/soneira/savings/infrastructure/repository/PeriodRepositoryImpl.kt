@@ -24,13 +24,12 @@ import java.util.*
 
 
 @Component
-@Transactional
 class PeriodRepositoryImpl(
     private val periodMapper: PeriodMapper,
     private val periodMongoRepository: PeriodMongoRepository,
     private val movementMongoRepository: MovementMongoRepository
 ) : PeriodRepository {
-    @Transactional(readOnly = true)
+
     override fun findLastPeriod(user: User): Optional<EconomicPeriod> {
         val periods = periodMongoRepository.findLastPeriod(user.id.value)
         return if (periods.isEmpty()) {
@@ -42,6 +41,7 @@ class PeriodRepositoryImpl(
         }
     }
 
+    @Transactional
     @CacheEvict("years", allEntries = true)
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
         val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.toDocument(it) })
@@ -53,7 +53,6 @@ class PeriodRepositoryImpl(
         return periodDocuments.map { periodMapper.toDomain(it) }
     }
 
-    @Transactional(readOnly = true)
     override fun getPeriods(
         user: User,
         limit: Int,
@@ -68,7 +67,6 @@ class PeriodRepositoryImpl(
         return periodMapper.toDomain(page)
     }
 
-    @Transactional(readOnly = true)
     override fun getPeriod(user: User, id: PeriodId): EconomicPeriod {
         val optPeriodDocument = periodMongoRepository.findByUserAndId(user.id.value, id.value)
         if (!optPeriodDocument.isPresent) {

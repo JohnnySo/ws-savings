@@ -7,10 +7,8 @@ import org.soneira.savings.domain.repository.IndicatorRepository
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.IndicatorMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.CustomMongoRepository
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 @Component
-@Transactional(readOnly = true)
 class IndicatorRepositoryImpl(
     val customMongoRepository: CustomMongoRepository,
     val indicatorMapper: IndicatorMapper

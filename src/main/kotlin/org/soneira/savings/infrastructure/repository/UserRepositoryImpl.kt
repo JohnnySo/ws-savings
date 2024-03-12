@@ -6,10 +6,8 @@ import org.soneira.savings.domain.repository.UserRepository
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.UserMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.UserMongoRepository
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 @Component
-@Transactional(readOnly = true)
 class UserRepositoryImpl(
     val userMongoRepository: UserMongoRepository,
     val userMapper: UserMapper

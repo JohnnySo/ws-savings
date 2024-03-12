@@ -25,6 +25,7 @@ class PeriodController(
         @RequestParam("sort-by", defaultValue = "start") sortBy: String,
         @RequestParam("direction", defaultValue = "desc") sortDirection: SortDirection
     ): ResponseEntity<Page<PeriodDTO>> {
+        //FIXME: the results of expensesByCategory and subcategory are not correctly formed
         val paginatedPeriods = getPeriodUseCase.getPaginatedPeriods(limit, offset, sortBy, sortDirection)
         return if (paginatedPeriods.isEmpty) {
             ResponseEntity.noContent().build()

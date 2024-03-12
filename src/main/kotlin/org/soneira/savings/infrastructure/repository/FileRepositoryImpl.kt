@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-@Transactional
 class FileRepositoryImpl(
     private val fileRepository: FileMongoRepository,
     private val fileMapper: FileMapper,
     private val movementMapper: MovementMapper
 ) : FileRepository {
+
+    @Transactional
     override fun save(user: User, filename: String, movements: List<Movement>): File {
         val fileDocument = fileRepository.save(
             FileDocument(user.id.value, filename,
@@ -29,7 +30,6 @@ class FileRepositoryImpl(
         return fileMapper.toDomain(fileDocument, user)
     }
 
-    @Transactional(readOnly = true)
     override fun get(fileId: String, user: User): File {
         val fileDocument = fileRepository.findByIdAndUser(fileId, user.id.value)
         return fileDocument.map { fileMapper.toDomain(it, user) }.orElseThrow {
@@ -37,6 +37,7 @@ class FileRepositoryImpl(
         }
     }
 
+    @Transactional
     override fun remove(file: File) {
         fileRepository.findByIdAndUser(file.id.value, file.user.id.value)
             .ifPresent { fileRepository.delete(it) }

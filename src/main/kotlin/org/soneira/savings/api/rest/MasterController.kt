@@ -14,4 +14,9 @@ class MasterController(val getMasterDataUseCase: GetMasterDataUseCase) {
     fun getYears(): ResponseEntity<List<Int>> {
         return ResponseEntity.ok(this.getMasterDataUseCase.getYears())
     }
+
+    @GetMapping("/categories")
+    fun getCategories() {
+        TODO("return a tree of categories with its subcategories")
+    }
 }
