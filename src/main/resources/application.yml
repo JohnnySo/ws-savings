@@ -11,8 +11,11 @@ spring:
     name: Savings service
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019/?replicaSet=rs0&retryWrites=true
+      host: localhost
+      port: 27017
       database: savings
+      username: savings
+      password: dummy
   jackson:
     date-format: dd/MM/yyyy
   servlet:
