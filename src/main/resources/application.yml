@@ -14,8 +14,9 @@ spring:
       host: localhost
       port: 27017
       database: savings
-      username: savings
-      password: dummy
+      username: ${MONGODB_USER}
+      password: ${MONGODB_PASS}
+
   jackson:
     date-format: dd/MM/yyyy
   servlet:
