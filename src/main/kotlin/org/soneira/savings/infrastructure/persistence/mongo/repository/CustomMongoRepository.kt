@@ -28,7 +28,7 @@ interface CustomMongoRepository {
      * Get the sum os expenses by category of the years passed as parameter
      *
      * @param user           the user to filter periods
-     * @param years          the years of the totals to calculate {@link List<Integer>}
+     * @param years          the years of the total to calculate {@link List<Integer>}
      * @param useSubcategory boolean param that filter by subcategory and not by category
      * @return list of [ExpensesProjection]
      */

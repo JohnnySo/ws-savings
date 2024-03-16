@@ -9,8 +9,10 @@ import org.soneira.savings.infrastructure.persistence.mongo.document.MovementDoc
 import org.springframework.stereotype.Component
 
 @Component
-class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
-    fun toDocument(movement: Movement, user: String): MovementDocument {
+class MovementMapper(
+    private val subcategoryRepository: SubcategoryRepository
+) {
+    fun asMovementDocument(movement: Movement, user: String): MovementDocument {
         if (movement.isIdInit()) {
             return MovementDocument(
                 movement.id.value,
@@ -37,7 +39,7 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
         }
     }
 
-    fun toDomain(movement: MovementDocument): Movement {
+    fun asMovement(movement: MovementDocument): Movement {
         if (movement.isIdInit()) {
             return Movement(
                 MovementId(movement.id),
@@ -45,7 +47,7 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
                 movement.description,
                 Money.of(movement.amount),
                 Order(movement.order),
-                subCategoryRepository.getAll().first { it.id.value == movement.subcategory },
+                subcategoryRepository.getById(movement.subcategory),
                 movement.comment,
                 Money.of(movement.balance)
             )
@@ -55,7 +57,7 @@ class MovementMapper(private val subCategoryRepository: SubcategoryRepository) {
                 movement.description,
                 Money.of(movement.amount),
                 Order(movement.order),
-                subCategoryRepository.getAll().first { it.id.value == movement.subcategory },
+                subcategoryRepository.getById(movement.subcategory),
                 movement.comment,
                 Money.of(movement.balance)
             )

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class FileApiMapper(val movementApiMapper: MovementApiMapper) {
-    fun toDto(file: File): FileDTO {
+    fun asFileDTO(file: File): FileDTO {
         return FileDTO(file.id.value, file.movements.map { movementApiMapper.asMovementViewDTO(it) })
     }
 }

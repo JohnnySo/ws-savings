@@ -30,13 +30,13 @@ class PeriodController(
         return if (paginatedPeriods.isEmpty) {
             ResponseEntity.noContent().build()
         } else {
-            ResponseEntity.ok(periodApiMapper.toDto(paginatedPeriods))
+            ResponseEntity.ok(periodApiMapper.asPageOfPeriodDto(paginatedPeriods))
         }
     }
 
     @GetMapping("/period/{id}")
     fun getPeriod(@PathVariable("id") id: String): ResponseEntity<PeriodDetailDTO> {
         val period = getPeriodUseCase.getPeriodById(PeriodId(id))
-        return ResponseEntity.ok(periodApiMapper.toPeriodDetailDto(period))
+        return ResponseEntity.ok(periodApiMapper.asPeriodDetailDto(period))
     }
 }

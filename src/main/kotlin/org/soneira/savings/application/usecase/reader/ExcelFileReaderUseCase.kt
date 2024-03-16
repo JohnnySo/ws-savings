@@ -7,8 +7,8 @@ import org.apache.poi.ss.usermodel.Row
 import org.soneira.savings.domain.model.entity.Movement
 import org.soneira.savings.domain.model.entity.Subcategory
 import org.soneira.savings.domain.model.exception.FileParseException
-import org.soneira.savings.domain.model.vo.Field
 import org.soneira.savings.domain.model.vo.FileParserSettings
+import org.soneira.savings.domain.model.vo.ImportField
 import org.soneira.savings.domain.model.vo.Money
 import org.soneira.savings.domain.model.vo.Order
 import org.soneira.savings.domain.repository.SubcategoryRepository
@@ -36,20 +36,22 @@ class ExcelFileReaderUseCase(private val subcategoryRepository: SubcategoryRepos
         return movements
     }
 
-    private fun getMovementInfo(row: Row, order: Int, fieldPositions: Map<Field, Int>): Movement {
+    private fun getMovementInfo(row: Row, order: Int, fieldPositions: Map<ImportField, Int>): Movement {
         val operationDate =
-            fieldPositions[Field.OPERATION_DATE]?.let { row.getCell(it).localDateTimeCellValue.toLocalDate() }
+            fieldPositions[ImportField.OPERATION_DATE]?.let { row.getCell(it).localDateTimeCellValue.toLocalDate() }
         val subcategoryDescription =
-            fieldPositions[Field.SUBCATEGORY]?.let { DataFormatter().formatCellValue(row.getCell(it)) }
-        val description = fieldPositions[Field.DESCRIPTION]?.let { DataFormatter().formatCellValue(row.getCell(it)) }
-        val comment = fieldPositions[Field.COMMENT]?.let { DataFormatter().formatCellValue(row.getCell(it)) } ?: ""
-        val amount = fieldPositions[Field.AMOUNT]?.let {
+            fieldPositions[ImportField.SUBCATEGORY]?.let { DataFormatter().formatCellValue(row.getCell(it)) }
+        val description =
+            fieldPositions[ImportField.DESCRIPTION]?.let { DataFormatter().formatCellValue(row.getCell(it)) }
+        val comment =
+            fieldPositions[ImportField.COMMENT]?.let { DataFormatter().formatCellValue(row.getCell(it)) } ?: ""
+        val amount = fieldPositions[ImportField.AMOUNT]?.let {
             if (row.getCell(it).cellType == CellType.NUMERIC) {
                 Money.of(BigDecimal.valueOf(row.getCell(it).numericCellValue))
             } else null
         }
 
-        val balance = fieldPositions[Field.BALANCE]?.let {
+        val balance = fieldPositions[ImportField.BALANCE]?.let {
             if (row.getCell(it).cellType == CellType.NUMERIC) {
                 Money.of(BigDecimal.valueOf(row.getCell(it).numericCellValue))
             } else null

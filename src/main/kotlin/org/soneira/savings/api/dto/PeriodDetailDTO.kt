@@ -1,6 +1,5 @@
 package org.soneira.savings.api.dto
 
-import java.math.BigDecimal
 import java.time.LocalDate
 
 data class PeriodDetailDTO(
@@ -10,7 +9,7 @@ data class PeriodDetailDTO(
     val start: LocalDate,
     val end: LocalDate,
     val totals: TotalsDTO,
-    val expenseByCategory: Map<CategoryDTO, BigDecimal>,
-    val expenseBySubcategory: Map<SubcategoryDTO, BigDecimal>,
+    val expensesByCategory: List<ExpensesByCategoryDTO>,
+    val expensesBySubcategory: List<ExpensesBySubcategoryDTO>,
     val movements: List<MovementViewDTO>
 )

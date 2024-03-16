@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component
 class FileMapper(
     private val movementMapper: MovementMapper
 ) {
-    fun toDomain(fileDocument: FileDocument, user: User): File {
+    fun asFile(fileDocument: FileDocument, user: User): File {
         return File(
             FileId(fileDocument.id), user, fileDocument.filename,
-            fileDocument.movements.map { movementMapper.toDomain(it) }
+            fileDocument.movements.map { movementMapper.asMovement(it) }
         )
     }
 }

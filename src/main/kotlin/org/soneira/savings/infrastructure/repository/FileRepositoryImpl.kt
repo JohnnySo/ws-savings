@@ -25,14 +25,14 @@ class FileRepositoryImpl(
             FileDocument(user.id.value, filename,
                 movements
                     .sortedWith(Movement.dateAndOrderComparator)
-                    .map { movementMapper.toDocument(it, user.id.value) })
+                    .map { movementMapper.asMovementDocument(it, user.id.value) })
         )
-        return fileMapper.toDomain(fileDocument, user)
+        return fileMapper.asFile(fileDocument, user)
     }
 
     override fun get(fileId: String, user: User): File {
         val fileDocument = fileRepository.findByIdAndUser(fileId, user.id.value)
-        return fileDocument.map { fileMapper.toDomain(it, user) }.orElseThrow {
+        return fileDocument.map { fileMapper.asFile(it, user) }.orElseThrow {
             ResourceNotFoundException("The fileId $fileId was not found for user ${user.id.value}")
         }
     }

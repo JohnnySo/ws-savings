@@ -18,10 +18,10 @@ class MovementRepositoryImpl(
     val customMongoRepositoryImpl: CustomMongoRepositoryImpl,
     val movementMapper: MovementMapper
 ) : MovementRepository {
-    
+
     override fun find(user: User, searchParam: String): List<Movement> {
         val movements = customMongoRepositoryImpl.searchMovements(user.id.value, searchParam)
-        return movements.map { movementMapper.toDomain(it) }
+        return movements.map { movementMapper.asMovement(it) }
     }
 
     @Transactional(propagation = REQUIRED)
@@ -31,7 +31,7 @@ class MovementRepositoryImpl(
         editableMovement.description?.let { movementDocument.description = it }
         editableMovement.comment?.let { movementDocument.comment = it }
         editableMovement.subcategory?.let { movementDocument.subcategory = it.id.value }
-        movementMapper.toDomain(movementMongoRepository.save(movementDocument))
-        return movementMapper.toDomain(movementMongoRepository.save(movementDocument))
+        movementMapper.asMovement(movementMongoRepository.save(movementDocument))
+        return movementMapper.asMovement(movementMongoRepository.save(movementDocument))
     }
 }

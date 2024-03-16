@@ -14,8 +14,6 @@ spring:
       host: localhost
       port: 27017
       database: savings
-      username: ${MONGODB_USER}
-      password: ${MONGODB_PASS}
 
   jackson:
     date-format: dd/MM/yyyy
@@ -28,7 +26,3 @@ logging:
   level:
     org.soneira.savings: INFO
     org.springframework.data.mongodb.core.MongoTemplate: DEBUG
-    org:
-      springframework:
-        transaction:
-          interceptor: TRACE

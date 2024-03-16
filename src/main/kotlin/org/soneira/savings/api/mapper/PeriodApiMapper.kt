@@ -1,20 +1,18 @@
 package org.soneira.savings.api.mapper
 
-import org.soneira.savings.api.dto.CategoryDTO
+import org.soneira.savings.api.dto.ExpensesByCategoryDTO
+import org.soneira.savings.api.dto.ExpensesBySubcategoryDTO
 import org.soneira.savings.api.dto.PeriodDTO
 import org.soneira.savings.api.dto.PeriodDetailDTO
-import org.soneira.savings.api.dto.SubcategoryDTO
 import org.soneira.savings.api.dto.TotalsDTO
-import org.soneira.savings.domain.model.entity.Category
 import org.soneira.savings.domain.model.entity.EconomicPeriod
-import org.soneira.savings.domain.model.entity.Subcategory
-import org.soneira.savings.domain.model.vo.Money
-import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.ExpenseByCategory
+import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
+import org.soneira.savings.domain.model.vo.Total
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 
 @Component
@@ -23,28 +21,28 @@ class PeriodApiMapper(
     val categoryApiMapper: CategoryApiMapper
 ) {
 
-    fun toDto(paginatedPeriods: Page<EconomicPeriod>): Page<PeriodDTO> {
+    fun asPageOfPeriodDto(paginatedPeriods: Page<EconomicPeriod>): Page<PeriodDTO> {
         return PageImpl(
-            paginatedPeriods.content.map { toDto(it) },
+            paginatedPeriods.content.map { asPageOfPeriodDto(it) },
             paginatedPeriods.pageable,
             paginatedPeriods.totalElements
         )
     }
 
-    fun toPeriodDetailDto(period: EconomicPeriod): PeriodDetailDTO {
+    fun asPeriodDetailDto(period: EconomicPeriod): PeriodDetailDTO {
         val month = period.yearMonth.format(DateTimeFormatter.ofPattern("MMMM", LocaleContextHolder.getLocale()))
         return PeriodDetailDTO(period.id.value,
             month,
             period.yearMonth.year,
             period.start,
             period.end,
-            toTotalsDto(period.totals),
-            toExpensesByCategoryDto(period.expenseByCategory),
-            toExpensesBySubcategoryDto(period.expenseBySubcategory),
+            asTotalsDto(period.total),
+            asExpensesByCategoryDto(period.expenseByCategory),
+            asExpensesBySubcategoryDto(period.expenseBySubcategory),
             period.movements.map { movementApiMapper.asMovementViewDTO(it) })
     }
 
-    private fun toDto(period: EconomicPeriod): PeriodDTO {
+    private fun asPageOfPeriodDto(period: EconomicPeriod): PeriodDTO {
         val month = period.yearMonth.format(DateTimeFormatter.ofPattern("MMMM", LocaleContextHolder.getLocale()))
         return PeriodDTO(
             period.id.value,
@@ -52,20 +50,29 @@ class PeriodApiMapper(
             period.yearMonth.year,
             period.start,
             period.end,
-            toTotalsDto(period.totals)
+            asTotalsDto(period.total)
         )
     }
 
-    private fun toTotalsDto(totals: Totals): TotalsDTO {
-        return TotalsDTO(totals.income.amount, totals.expense.amount, totals.saved.amount)
+    private fun asTotalsDto(total: Total): TotalsDTO {
+        return TotalsDTO(total.income.amount, total.expense.amount, total.saved.amount)
     }
 
-    private fun toExpensesByCategoryDto(expenseByCategory: Map<Category, Money>): Map<CategoryDTO, BigDecimal> {
-        return expenseByCategory.map { (key, value) -> categoryApiMapper.asCategoryDTO(key) to value.amount }.toMap()
+    private fun asExpensesByCategoryDto(expensesByCategory: List<ExpenseByCategory>): List<ExpensesByCategoryDTO> {
+        return expensesByCategory.map {
+            ExpensesByCategoryDTO(
+                categoryApiMapper.asCategoryDTO(it.category),
+                it.amount.amount
+            )
+        }
     }
 
-    private fun toExpensesBySubcategoryDto(expenseBySubcategory: Map<Subcategory, Money>): Map<SubcategoryDTO, BigDecimal> {
-        return expenseBySubcategory.map { (key, value) -> categoryApiMapper.asSubcategoryDTO(key) to value.amount }
-            .toMap()
+    private fun asExpensesBySubcategoryDto(expenseBySubcategory: List<ExpenseBySubcategory>): List<ExpensesBySubcategoryDTO> {
+        return expenseBySubcategory.map {
+            ExpensesBySubcategoryDTO(
+                categoryApiMapper.asSubcategoryDTO(it.subcategory),
+                it.amount.amount
+            )
+        }
     }
 }

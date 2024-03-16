@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CategoryMapper {
-    fun toDomain(categoryDocument: CategoryDocument): Category {
+    fun asCategory(categoryDocument: CategoryDocument): Category {
         return Category(
             CategoryId(categoryDocument.id), categoryDocument.key, categoryDocument.description,
             categoryDocument.descriptionEs, categoryDocument.typeId, categoryDocument.type

@@ -1,8 +1,10 @@
 package org.soneira.savings.domain.model.entity
 
 import org.soneira.savings.domain.model.exception.DomainException
+import org.soneira.savings.domain.model.vo.ExpenseByCategory
+import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.Money
-import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.Total
 import org.soneira.savings.domain.model.vo.id.PeriodId
 import java.time.LocalDate
 import java.time.Period
@@ -22,18 +24,18 @@ data class EconomicPeriod(
     val movements: List<Movement>,
 ) : AggregateRoot() {
     lateinit var id: PeriodId
-    lateinit var totals: Totals
-    lateinit var expenseByCategory: Map<Category, Money>
-    lateinit var expenseBySubcategory: Map<Subcategory, Money>
+    lateinit var total: Total
+    lateinit var expenseByCategory: List<ExpenseByCategory>
+    lateinit var expenseBySubcategory: List<ExpenseBySubcategory>
     lateinit var yearMonth: YearMonth
 
     constructor(
         id: PeriodId, user: User, start: LocalDate, end: LocalDate, filename: String, movements: List<Movement>,
-        totals: Totals, expenseByCategory: Map<Category, Money>, expenseBySubcategory: Map<Subcategory, Money>,
+        total: Total, expenseByCategory: List<ExpenseByCategory>, expenseBySubcategory: List<ExpenseBySubcategory>,
         yearMonth: YearMonth
     ) : this(user, start, end, filename, movements) {
         this.id = id
-        this.totals = totals
+        this.total = total
         this.expenseByCategory = expenseByCategory
         this.expenseBySubcategory = expenseBySubcategory
         this.yearMonth = yearMonth
@@ -41,7 +43,7 @@ data class EconomicPeriod(
 
     fun init() {
         restoreOrderMovements()
-        totals = calculateTotals()
+        total = calculateTotals()
         expenseByCategory = calculateExpensesByCategory()
         expenseBySubcategory = calculateExpensesBySubCategory()
         yearMonth = getLogicalPeriod()
@@ -84,59 +86,59 @@ data class EconomicPeriod(
     /**
      * Sum up all the movements of the same type (income or expense)
      * and it calculates the total saved by summing or subtracting all the movements
-     * @return and object that hold the total income, expense and saved [Totals]
+     * @return and object that hold the total income, expense and saved [Total]
      */
-    private fun calculateTotals(): Totals {
-        val totals = Totals(Money.ZERO, Money.ZERO, Money.ZERO)
+    private fun calculateTotals(): Total {
+        val total = Total(Money.ZERO, Money.ZERO, Money.ZERO)
         for (movement in movements) {
             if (movement.isCountable(user.settings.subcategoriesNotCountable)) {
                 if (movement.isIncome()) {
-                    totals.income = totals.income.add(movement.amount)
+                    total.income = total.income.add(movement.amount)
                 } else {
-                    totals.expense = totals.expense.add(movement.amount)
+                    total.expense = total.expense.add(movement.amount)
                 }
-                totals.saved = totals.saved.add(movement.amount)
+                total.saved = total.saved.add(movement.amount)
             }
         }
-        return totals
+        return total
     }
 
     /**
      * Sum all the expenses of every category
      * @return a map that contains the category as key and the total amount expended as value
      */
-    private fun calculateExpensesByCategory(): Map<Category, Money> {
+    private fun calculateExpensesByCategory(): List<ExpenseByCategory> {
         val distinctCategories = movements
             .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
             .map { it.subcategory.category }.distinct()
-        val categoriesMap = mutableMapOf<Category, Money>()
+        val expensesByCategory = mutableListOf<ExpenseByCategory>()
         for (distinctCategory in distinctCategories) {
             val total = movements.filter {
                 distinctCategory == it.subcategory.category
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            categoriesMap[distinctCategory] = total
+            expensesByCategory.add(ExpenseByCategory(distinctCategory, total))
         }
-        return categoriesMap
+        return expensesByCategory
     }
 
     /**
      * Sum all the expenses of every subcategory.
      * @return a map that contains the subcategory as key and the total amount expended as value
      */
-    private fun calculateExpensesBySubCategory(): Map<Subcategory, Money> {
+    private fun calculateExpensesBySubCategory(): List<ExpenseBySubcategory> {
         val distinctSubCategories = movements
             .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
             .map { it.subcategory }.distinct()
-        val categoriesMap = mutableMapOf<Subcategory, Money>()
-        for (distinctSubCategory in distinctSubCategories) {
+        val expensesBySubcategory = mutableListOf<ExpenseBySubcategory>()
+        for (distinctSubcategory in distinctSubCategories) {
             val total = movements.filter {
-                distinctSubCategory == it.subcategory
+                distinctSubcategory == it.subcategory
                         && it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense()
             }.map { it.amount }.fold(Money.ZERO) { acc, amount -> acc.add(amount) }
-            categoriesMap[distinctSubCategory] = total
+            expensesBySubcategory.add(ExpenseBySubcategory(distinctSubcategory, total))
         }
-        return categoriesMap.mapKeys { it.key }
+        return expensesBySubcategory
     }
 
     /**

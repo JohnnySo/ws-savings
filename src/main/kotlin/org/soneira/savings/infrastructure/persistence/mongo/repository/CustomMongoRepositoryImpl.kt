@@ -32,9 +32,9 @@ class CustomMongoRepositoryImpl(val mongodbTemplate: MongoTemplate) : CustomMong
 
     override fun getTotalsByYear(user: String, years: List<Int>): List<TotalsProjection> {
         val groupStage = Aggregation.group("year")
-            .sum("totals.saved").`as`("totalSaved")
-            .sum("totals.income").`as`("totalIncome")
-            .sum("totals.expense").`as`("totalExpense")
+            .sum("total.saved").`as`("totalSaved")
+            .sum("total.income").`as`("totalIncome")
+            .sum("total.expense").`as`("totalExpense")
         val sortStage = Aggregation.sort(Sort.by("_id").descending())
         val aggregation = Aggregation.newAggregation(getMatchStage(user, years), groupStage, sortStage)
         val result: AggregationResults<TotalsProjection> = mongodbTemplate

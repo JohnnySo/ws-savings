@@ -25,7 +25,7 @@ class ImportController(
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun previewFile(@RequestParam(value = "file") file: MultipartFile): ResponseEntity<FileDTO> {
         val fileSaved = importMovementsUseCase.preview(file.inputStream, file.originalFilename ?: "")
-        return ResponseEntity.ok(fileApiMapper.toDto(fileSaved))
+        return ResponseEntity.ok(fileApiMapper.asFileDTO(fileSaved))
     }
 
     @PostMapping(value = ["/{fileId}/import"])

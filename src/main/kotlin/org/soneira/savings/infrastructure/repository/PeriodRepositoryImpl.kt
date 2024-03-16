@@ -37,20 +37,20 @@ class PeriodRepositoryImpl(
         } else {
             val lastPeriod = periods.first()
             lastPeriod.movements = movementMongoRepository.findByPeriodId(lastPeriod.id)
-            Optional.of(periodMapper.toDomain(lastPeriod))
+            Optional.of(periodMapper.asPeriod(lastPeriod))
         }
     }
 
     @Transactional
     @CacheEvict("years", allEntries = true)
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
-        val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.toDocument(it) })
+        val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.asPeriodDocument(it) })
         periodDocuments.forEach { period -> period.movements.forEach { it.periodId = period.id } }
         val movementDocuments = movementMongoRepository.saveAll(periodDocuments.flatMap { it.movements })
         periodDocuments.forEach { period ->
             period.movements = movementDocuments.filter { it.periodId == period.id }
         }
-        return periodDocuments.map { periodMapper.toDomain(it) }
+        return periodDocuments.map { periodMapper.asPeriod(it) }
     }
 
     override fun getPeriods(
@@ -64,7 +64,7 @@ class PeriodRepositoryImpl(
         val sort = Sort.by(Order(Direction.fromString(sortDirection.value), sortBy))
         val pageable: Pageable = PageRequest.of(pageNumber, limit, sort)
         val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAllByUser(user.id.value, pageable)
-        return periodMapper.toDomain(page)
+        return periodMapper.asPageOfPeriods(page)
     }
 
     override fun getPeriod(user: User, id: PeriodId): EconomicPeriod {
@@ -74,7 +74,7 @@ class PeriodRepositoryImpl(
         } else {
             val periodDocument = optPeriodDocument.get()
             periodDocument.movements = movementMongoRepository.findByUserAndPeriodId(user.id.value, id.value)
-            return periodMapper.toDomain(periodDocument)
+            return periodMapper.asPeriod(periodDocument)
         }
     }
 

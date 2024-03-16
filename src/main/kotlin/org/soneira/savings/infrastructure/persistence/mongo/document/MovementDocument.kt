@@ -4,7 +4,8 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.TextIndexed
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
-import org.springframework.data.mongodb.core.mapping.FieldType
+import org.springframework.data.mongodb.core.mapping.FieldType.DECIMAL128
+import org.springframework.data.mongodb.core.mapping.FieldType.INT64
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.LocalDate
@@ -12,13 +13,17 @@ import java.time.LocalDate
 @Document("movements")
 data class MovementDocument(
     val operationDate: LocalDate,
+
     @TextIndexed var description: String,
-    @Field(targetType = FieldType.DECIMAL128) val amount: BigDecimal,
+    @Field(targetType = DECIMAL128) val amount: BigDecimal,
     var order: Int,
-    @Field(targetType = FieldType.INT64)
+
+    @Field(targetType = INT64)
     var subcategory: BigInteger,
+
     @TextIndexed var comment: String,
-    @Field(targetType = FieldType.DECIMAL128) val balance: BigDecimal,
+    @Field(targetType = DECIMAL128)
+    val balance: BigDecimal,
     val user: String
 ) {
     @Id

@@ -1,13 +1,13 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
-import org.soneira.savings.domain.model.vo.ExpensesByCategory
-import org.soneira.savings.domain.model.vo.ExpensesBySubcategory
+import org.soneira.savings.domain.model.vo.ExpenseByCategory
+import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.ExpensesByYear
 import org.soneira.savings.domain.model.vo.Money
-import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.Total
 import org.soneira.savings.domain.repository.CategoryRepository
 import org.soneira.savings.domain.repository.SubcategoryRepository
-import org.soneira.savings.infrastructure.persistence.mongo.document.ExpenseProjection
+import org.soneira.savings.infrastructure.persistence.mongo.document.ExpenseDocument
 import org.soneira.savings.infrastructure.persistence.mongo.document.ExpensesProjection
 import org.soneira.savings.infrastructure.persistence.mongo.document.TotalsProjection
 import org.springframework.stereotype.Component
@@ -17,13 +17,13 @@ class IndicatorMapper(
     private val categoryRepository: CategoryRepository,
     private val subcategoryRepository: SubcategoryRepository
 ) {
-    fun asTotals(totalsProjection: TotalsProjection): Totals {
-        val totals = Totals(
+    fun asTotals(totalsProjection: TotalsProjection): Total {
+        val total = Total(
             Money.of(totalsProjection.totalExpense),
             Money.of(totalsProjection.totalIncome), Money.of(totalsProjection.totalSaved)
         )
-        totals.year = totalsProjection.year
-        return totals
+        total.year = totalsProjection.year
+        return total
     }
 
     fun asExpenseByYearAndCategory(expenses: ExpensesProjection): ExpensesByYear {
@@ -38,13 +38,11 @@ class IndicatorMapper(
         return expenseByYear
     }
 
-    fun asExpensesByCategory(expense: ExpenseProjection): ExpensesByCategory {
-        val category = categoryRepository.getAll().first { expense.key == it.id.value }
-        return ExpensesByCategory(category, Money.of(expense.amount))
+    fun asExpensesByCategory(expense: ExpenseDocument): ExpenseByCategory {
+        return ExpenseByCategory(categoryRepository.getById(expense.key), Money.of(expense.value))
     }
 
-    fun asExpensesBySubcategory(expense: ExpenseProjection): ExpensesBySubcategory {
-        val subcategory = subcategoryRepository.getAll().first { expense.key == it.id.value }
-        return ExpensesBySubcategory(subcategory, Money.of(expense.amount))
+    fun asExpensesBySubcategory(expense: ExpenseDocument): ExpenseBySubcategory {
+        return ExpenseBySubcategory(subcategoryRepository.getById(expense.key), Money.of(expense.value))
     }
 }

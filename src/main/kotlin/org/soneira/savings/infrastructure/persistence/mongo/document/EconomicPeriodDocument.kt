@@ -3,8 +3,6 @@ package org.soneira.savings.infrastructure.persistence.mongo.document
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.mapping.Document
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.time.LocalDate
 
 @Document("periods")
@@ -13,9 +11,9 @@ data class EconomicPeriodDocument(
     val start: LocalDate,
     val end: LocalDate,
     val filename: String,
-    val totals: TotalsDocument,
-    val expenseByCategory: Map<BigInteger, BigDecimal>,
-    val expenseBySubcategory: Map<BigInteger, BigDecimal>,
+    val totals: TotalDocument,
+    val expenseByCategory: List<ExpenseDocument>,
+    val expenseBySubcategory: List<ExpenseDocument>,
     val month: Int,
     val year: Int
 ) {
@@ -31,9 +29,9 @@ data class EconomicPeriodDocument(
         start: LocalDate,
         end: LocalDate,
         filename: String,
-        totals: TotalsDocument,
-        expenseByCategory: Map<BigInteger, BigDecimal>,
-        expenseBySubcategory: Map<BigInteger, BigDecimal>,
+        totals: TotalDocument,
+        expenseByCategory: List<ExpenseDocument>,
+        expenseBySubcategory: List<ExpenseDocument>,
         month: Int,
         year: Int
     ) : this(user, start, end, filename, totals, expenseByCategory, expenseBySubcategory, month, year) {

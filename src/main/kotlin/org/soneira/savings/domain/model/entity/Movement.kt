@@ -49,7 +49,7 @@ data class Movement(
     }
 
     /**
-     * @return true if a movement should be taken into account to calculate totals
+     * @return true if a movement should be taken into account to calculate total
      */
     fun isCountable(subcategoriesNotCountable: List<Subcategory>): Boolean {
         return subcategory !in subcategoriesNotCountable

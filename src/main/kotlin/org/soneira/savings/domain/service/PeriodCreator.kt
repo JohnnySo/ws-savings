@@ -15,7 +15,7 @@ interface PeriodCreator {
      * @param user the user,
      * @param file the file stored in database
      * @param optLastPeriod the last period to complete it
-     * @return All the movements divided into economic periods and with the totals calculated
+     * @return All the movements divided into economic periods and with the total calculated
      */
     fun create(
         user: User,
