@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class CategoryMapper {
     fun asCategory(categoryDocument: CategoryDocument): Category {
         return Category(
-            CategoryId(categoryDocument.id), categoryDocument.key, categoryDocument.description,
+            CategoryId(categoryDocument.id.toInt()), categoryDocument.key, categoryDocument.description,
             categoryDocument.descriptionEs, categoryDocument.typeId, categoryDocument.type
         )
     }

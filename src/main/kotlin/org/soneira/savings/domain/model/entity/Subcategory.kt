@@ -1,7 +1,6 @@
 package org.soneira.savings.domain.model.entity
 
 import org.soneira.savings.domain.model.vo.id.SubcategoryId
-import java.math.BigInteger
 
 data class Subcategory(val id: SubcategoryId) {
     lateinit var key: String
@@ -19,6 +18,6 @@ data class Subcategory(val id: SubcategoryId) {
     }
 
     companion object {
-        val DEFAULT_SUBCATEGORY = BigInteger("210")
+        const val DEFAULT_SUBCATEGORY: Int = 210
     }
 }

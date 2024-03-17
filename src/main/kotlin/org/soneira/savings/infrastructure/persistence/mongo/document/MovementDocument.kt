@@ -5,9 +5,8 @@ import org.springframework.data.mongodb.core.index.TextIndexed
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.mapping.FieldType.DECIMAL128
-import org.springframework.data.mongodb.core.mapping.FieldType.INT64
+import org.springframework.data.mongodb.core.mapping.FieldType.INT32
 import java.math.BigDecimal
-import java.math.BigInteger
 import java.time.LocalDate
 
 @Document("movements")
@@ -18,8 +17,8 @@ data class MovementDocument(
     @Field(targetType = DECIMAL128) val amount: BigDecimal,
     var order: Int,
 
-    @Field(targetType = INT64)
-    var subcategory: BigInteger,
+    @Field(targetType = INT32)
+    var subcategory: Int,
 
     @TextIndexed var comment: String,
     @Field(targetType = DECIMAL128)
@@ -32,7 +31,7 @@ data class MovementDocument(
 
     constructor(
         id: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,
-        subcategory: BigInteger, comment: String, balance: BigDecimal, user: String
+        subcategory: Int, comment: String, balance: BigDecimal, user: String
     ) :
             this(operationDate, description, amount, order, subcategory, comment, balance, user) {
         this.id = id

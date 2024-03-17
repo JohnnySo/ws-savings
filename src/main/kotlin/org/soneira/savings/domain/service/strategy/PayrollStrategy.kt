@@ -10,7 +10,7 @@ import java.util.*
 
 class PayrollStrategy(private val user: User) : PeriodStrategy {
 
-    private val filterPayrolls = { m: Movement -> m.subcategory == user.settings.periodDefiner }
+    private val filterPayrolls = { m: Movement -> m.subcategory.id.value == user.settings.periodDefiner.id.value }
 
     override fun execute(
         file: File,

@@ -5,7 +5,6 @@ import org.soneira.savings.domain.repository.SubcategoryRepository
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.SubcategoryMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.SubcategoryMongoRepository
 import org.springframework.stereotype.Component
-import java.math.BigInteger
 
 @Component
 class SubcategoryRepositoryImpl(
@@ -19,5 +18,5 @@ class SubcategoryRepositoryImpl(
         return subcategories.map { subCategoryMapper.asSubcategory(it) }
     }
 
-    override fun getById(id: BigInteger) = getAll().first { it.id.value == id }
+    override fun getById(id: Int) = getAll().first { it.id.value == id }
 }

@@ -1,5 +1,3 @@
 package org.soneira.savings.domain.model.vo.id
 
-import java.math.BigInteger
-
-class SubcategoryId(value: BigInteger) : BaseId<BigInteger>(value)
+class SubcategoryId(value: Int) : BaseId<Int>(value)

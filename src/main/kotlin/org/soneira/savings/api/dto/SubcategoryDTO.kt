@@ -1,11 +1,9 @@
 package org.soneira.savings.api.dto
 
-import java.math.BigInteger
-
-data class SubcategoryDTO(val id: BigInteger) {
+data class SubcategoryDTO(val id: Int) {
     lateinit var description: String
 
-    constructor(id: BigInteger, description: String) :
+    constructor(id: Int, description: String) :
             this(id) {
         this.description = description
     }

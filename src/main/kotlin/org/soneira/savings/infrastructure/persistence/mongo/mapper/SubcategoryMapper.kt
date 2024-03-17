@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class SubcategoryMapper(val categoryRepository: CategoryRepository) {
     fun asSubcategory(subcategoryDocument: SubcategoryDocument): Subcategory {
         return Subcategory(
-            SubcategoryId(subcategoryDocument.id),
+            SubcategoryId(subcategoryDocument.id.toInt()),
             subcategoryDocument.key,
             subcategoryDocument.description,
             subcategoryDocument.descriptionEs,
