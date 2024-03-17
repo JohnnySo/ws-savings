@@ -11,9 +11,7 @@ spring:
     name: Savings service
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: savings
+      uri: mongodb://127.0.0.1:27017/savings?replicaSet=rs0
 
   jackson:
     date-format: dd/MM/yyyy
