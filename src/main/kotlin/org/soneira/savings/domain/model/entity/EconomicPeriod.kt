@@ -104,7 +104,7 @@ data class EconomicPeriod(
     }
 
     /**
-     * Sum all the expenses of every category
+     * Sum all the expenses of every category.
      * @return a map that contains the category as key and the total amount expended as value
      */
     private fun calculateExpensesByCategory(): List<ExpenseByCategory> {
