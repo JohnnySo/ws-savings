@@ -8,8 +8,8 @@ services:
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_ROOT_PASSWORD=${MONGO_PASS}
+      - MONGODB_REPLICA_SET_KEY=${MONGO_RS_KEY}
 
     volumes:
       - 'mongodb_master_data:/bitnami'
@@ -25,8 +25,8 @@ services:
       - MONGODB_REPLICA_SET_MODE=secondary
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGO_PASS}
+      - MONGODB_REPLICA_SET_KEY=${MONGO_RS_KEY}
 
   mongodb-arbiter:
     image: 'bitnami/mongodb:latest'
@@ -39,8 +39,8 @@ services:
       - MONGODB_REPLICA_SET_MODE=arbiter
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGO_PASS}
+      - MONGODB_REPLICA_SET_KEY=${MONGO_RS_KEY}
 
 volumes:
   mongodb_master_data:
