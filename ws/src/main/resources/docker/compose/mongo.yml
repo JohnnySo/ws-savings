@@ -1,24 +1,47 @@
 version: '3.9'
+
 services:
-  mongodb:
-    image: mongo:7.0.4
-    restart: always
-    command: [ "--replSet", "rs0", "--bind_ip_all", "--port", "27017" ]
+  mongodb-primary:
+    image: 'bitnami/mongodb:latest'
     ports:
       - '27017:27017'
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
-      interval: 5s
-      timeout: 30s
-      start_period: 0s
-      start_interval: 10s
-      retries: 30
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+
     volumes:
-      - "./volumes/mongo:/data/db"
-      - "./resources/mongo/1-init.js:/docker-entrypoint-initdb.d/1-init.js:ro"
-      - "./resources/mongo/2-import.sh:/docker-entrypoint-initdb.d/2-import.sh"
-      - "./resources/mongo/categories.json:/import-data/categories.json"
-      - "./resources/mongo/subcategories.json:/import-data/subcategories.json"
-      - "./resources/mongo/user.json:/import-data/user.json"
+      - 'mongodb_master_data:/bitnami'
+
+  mongodb-secondary:
+    image: 'bitnami/mongodb:latest'
+    depends_on:
+      - mongodb-primary
+    ports:
+      - 27027:27017
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+
+  mongodb-arbiter:
+    image: 'bitnami/mongodb:latest'
+    depends_on:
+      - mongodb-primary
+    ports:
+      - 27037:27017
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+
+volumes:
+  mongodb_master_data:
+    driver: local
