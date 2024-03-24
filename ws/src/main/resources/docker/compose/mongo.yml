@@ -3,6 +3,7 @@ version: '3.9'
 services:
   mongodb-primary:
     image: 'bitnami/mongodb:latest'
+    restart: always
     ports:
       - '27017:27017'
     environment:
@@ -16,6 +17,7 @@ services:
 
   mongodb-secondary:
     image: 'bitnami/mongodb:latest'
+    restart: always
     depends_on:
       - mongodb-primary
     ports:
@@ -30,6 +32,7 @@ services:
 
   mongodb-arbiter:
     image: 'bitnami/mongodb:latest'
+    restart: always
     depends_on:
       - mongodb-primary
     ports:

@@ -11,8 +11,7 @@ spring:
     name: Savings service
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/savings?replicaSet=rs0
-
+      uri: ${MONGODB_URI}
   jackson:
     date-format: dd/MM/yyyy
   servlet:

@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.spring") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
 }
 
 group = "org.soneira"
@@ -19,11 +19,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.2.2")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:3.2.2")
-    implementation("org.springframework.boot:spring-boot-starter-cache:3.2.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.2.4")
+    implementation("org.springframework.boot:spring-boot-starter-data-rest:3.2.4")
+    implementation("org.springframework.boot:spring-boot-starter-cache:3.2.4")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.23")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
 }
 
