@@ -110,7 +110,7 @@ data class EconomicPeriod(
     private fun calculateExpensesByCategory(): List<ExpenseByCategory> {
         val distinctCategories = movements
             .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
-            .map { it.subcategory.category }.distinct()
+            .map { it.subcategory.category }.distinctBy { it.id.value }
         val expensesByCategory = mutableListOf<ExpenseByCategory>()
         for (distinctCategory in distinctCategories) {
             val total = movements.filter {
@@ -129,7 +129,7 @@ data class EconomicPeriod(
     private fun calculateExpensesBySubCategory(): List<ExpenseBySubcategory> {
         val distinctSubCategories = movements
             .filter { it.isCountable(user.settings.subcategoriesNotCountable) && it.isExpense() }
-            .map { it.subcategory }.distinct()
+            .map { it.subcategory }.distinctBy { it.id.value }
         val expensesBySubcategory = mutableListOf<ExpenseBySubcategory>()
         for (distinctSubcategory in distinctSubCategories) {
             val total = movements.filter {
