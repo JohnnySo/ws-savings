@@ -79,13 +79,13 @@ class PeriodMapper(
 
     private fun asExpensesByCategoryDto(expensesByCategory: List<ExpenseDocument>): List<ExpenseByCategory> {
         return expensesByCategory.map {
-            ExpenseByCategory(categoryRepository.getById(it.key), Money.of(it.value))
+            ExpenseByCategory(categoryRepository.getById(it.key), Money.of(it.amount))
         }
     }
 
     private fun asExpensesBySubcategoryDto(expensesBySubcategory: List<ExpenseDocument>): List<ExpenseBySubcategory> {
         return expensesBySubcategory.map {
-            ExpenseBySubcategory(subcategoryRepository.getById(it.key), Money.of(it.value))
+            ExpenseBySubcategory(subcategoryRepository.getById(it.key), Money.of(it.amount))
         }
     }
 }

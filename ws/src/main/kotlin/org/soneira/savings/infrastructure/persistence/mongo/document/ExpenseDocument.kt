@@ -9,5 +9,5 @@ class ExpenseDocument(
     @Field(targetType = INT32)
     val key: Int,
     @Field(targetType = DECIMAL128)
-    val value: BigDecimal
+    val amount: BigDecimal
 )

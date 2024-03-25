@@ -39,10 +39,10 @@ class IndicatorMapper(
     }
 
     fun asExpensesByCategory(expense: ExpenseDocument): ExpenseByCategory {
-        return ExpenseByCategory(categoryRepository.getById(expense.key), Money.of(expense.value))
+        return ExpenseByCategory(categoryRepository.getById(expense.key), Money.of(expense.amount))
     }
 
     fun asExpensesBySubcategory(expense: ExpenseDocument): ExpenseBySubcategory {
-        return ExpenseBySubcategory(subcategoryRepository.getById(expense.key), Money.of(expense.value))
+        return ExpenseBySubcategory(subcategoryRepository.getById(expense.key), Money.of(expense.amount))
     }
 }
