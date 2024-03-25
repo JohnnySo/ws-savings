@@ -52,7 +52,7 @@ class CustomMongoRepositoryImpl(val mongodbTemplate: MongoTemplate) : CustomMong
                     Fields.field("year", "\$year"),
                     Fields.field("key", "$categoryKey.key")
                 )
-            ).sum("$categoryKey.value").`as`("spentByCategory"),
+            ).sum("$categoryKey.amount").`as`("spentByCategory"),
             Aggregation.group("\$_id.year").addToSet(
                 BasicDBObject("key", "\$_id.key")
                     .append("amount", "\$spentByCategory")
