@@ -4,7 +4,7 @@ import org.soneira.savings.domain.model.exception.DomainException
 import org.soneira.savings.domain.model.vo.ExpenseByCategory
 import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.Money
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.soneira.savings.domain.model.vo.id.PeriodId
 import java.time.LocalDate
 import java.time.Period
@@ -24,18 +24,18 @@ data class EconomicPeriod(
     val movements: List<Movement>,
 ) : AggregateRoot() {
     lateinit var id: PeriodId
-    lateinit var total: Total
+    lateinit var totals: Totals
     lateinit var expenseByCategory: List<ExpenseByCategory>
     lateinit var expenseBySubcategory: List<ExpenseBySubcategory>
     lateinit var yearMonth: YearMonth
 
     constructor(
         id: PeriodId, user: User, start: LocalDate, end: LocalDate, filename: String, movements: List<Movement>,
-        total: Total, expenseByCategory: List<ExpenseByCategory>, expenseBySubcategory: List<ExpenseBySubcategory>,
+        totals: Totals, expenseByCategory: List<ExpenseByCategory>, expenseBySubcategory: List<ExpenseBySubcategory>,
         yearMonth: YearMonth
     ) : this(user, start, end, filename, movements) {
         this.id = id
-        this.total = total
+        this.totals = totals
         this.expenseByCategory = expenseByCategory
         this.expenseBySubcategory = expenseBySubcategory
         this.yearMonth = yearMonth
@@ -43,7 +43,7 @@ data class EconomicPeriod(
 
     fun init() {
         restoreOrderMovements()
-        total = calculateTotals()
+        totals = calculateTotals()
         expenseByCategory = calculateExpensesByCategory()
         expenseBySubcategory = calculateExpensesBySubCategory()
         yearMonth = getLogicalPeriod()
@@ -86,21 +86,21 @@ data class EconomicPeriod(
     /**
      * Sum up all the movements of the same type (income or expense)
      * and it calculates the total saved by summing or subtracting all the movements
-     * @return and object that hold the total income, expense and saved [Total]
+     * @return and object that hold the total income, expense and saved [Totals]
      */
-    private fun calculateTotals(): Total {
-        val total = Total(Money.ZERO, Money.ZERO, Money.ZERO)
+    private fun calculateTotals(): Totals {
+        val totals = Totals(Money.ZERO, Money.ZERO, Money.ZERO)
         for (movement in movements) {
             if (movement.isCountable(user.settings.subcategoriesNotCountable)) {
                 if (movement.isIncome()) {
-                    total.income = total.income.add(movement.amount)
+                    totals.income = totals.income.add(movement.amount)
                 } else {
-                    total.expense = total.expense.add(movement.amount)
+                    totals.expense = totals.expense.add(movement.amount)
                 }
-                total.saved = total.saved.add(movement.amount)
+                totals.saved = totals.saved.add(movement.amount)
             }
         }
-        return total
+        return totals
     }
 
     /**

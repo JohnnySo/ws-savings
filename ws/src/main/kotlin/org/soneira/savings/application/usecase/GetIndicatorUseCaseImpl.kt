@@ -1,7 +1,7 @@
 package org.soneira.savings.application.usecase
 
 import org.soneira.savings.domain.model.vo.ExpensesByYear
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.soneira.savings.domain.repository.IndicatorRepository
 import org.soneira.savings.domain.repository.UserRepository
 import org.soneira.savings.domain.usecase.GetIndicatorUseCase
@@ -12,7 +12,7 @@ class GetIndicatorUseCaseImpl(
     val indicatorRepository: IndicatorRepository,
     val userRepository: UserRepository
 ) : GetIndicatorUseCase {
-    override fun getAnnualSummary(years: List<Int>): List<Total> {
+    override fun getAnnualSummary(years: List<Int>): List<Totals> {
         val user = userRepository.getUser("john.doe@gmail.com")
         return indicatorRepository.getAnnualSummary(user, years)
     }

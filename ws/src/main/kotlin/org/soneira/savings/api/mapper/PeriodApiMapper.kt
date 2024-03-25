@@ -8,7 +8,7 @@ import org.soneira.savings.api.dto.TotalsDTO
 import org.soneira.savings.domain.model.entity.EconomicPeriod
 import org.soneira.savings.domain.model.vo.ExpenseByCategory
 import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -36,7 +36,7 @@ class PeriodApiMapper(
             period.yearMonth.year,
             period.start,
             period.end,
-            asTotalsDto(period.total),
+            asTotalsDto(period.totals),
             asExpensesByCategoryDto(period.expenseByCategory),
             asExpensesBySubcategoryDto(period.expenseBySubcategory),
             period.movements.map { movementApiMapper.asMovementViewDTO(it) })
@@ -50,12 +50,12 @@ class PeriodApiMapper(
             period.yearMonth.year,
             period.start,
             period.end,
-            asTotalsDto(period.total)
+            asTotalsDto(period.totals)
         )
     }
 
-    private fun asTotalsDto(total: Total): TotalsDTO {
-        return TotalsDTO(total.income.amount, total.expense.amount, total.saved.amount)
+    private fun asTotalsDto(totals: Totals): TotalsDTO {
+        return TotalsDTO(totals.income.amount, totals.expense.amount, totals.saved.amount)
     }
 
     private fun asExpensesByCategoryDto(expensesByCategory: List<ExpenseByCategory>): List<ExpensesByCategoryDTO> {

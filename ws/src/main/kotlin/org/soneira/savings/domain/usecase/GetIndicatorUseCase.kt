@@ -1,16 +1,16 @@
 package org.soneira.savings.domain.usecase
 
 import org.soneira.savings.domain.model.vo.ExpensesByYear
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 
 interface GetIndicatorUseCase {
     /**
      * Gets the information of income, expense and total saved by year
      *
      * @param years the list of years you want to get information
-     * @return the list of [Total] of each year
+     * @return the list of [Totals] of each year
      */
-    fun getAnnualSummary(years: List<Int>): List<Total>
+    fun getAnnualSummary(years: List<Int>): List<Totals>
 
     /**
      * Gets all the expenses divided by category of the years passes as parameters

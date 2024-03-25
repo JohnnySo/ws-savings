@@ -7,14 +7,14 @@ import org.soneira.savings.api.dto.TotalsDTO
 import org.soneira.savings.domain.model.vo.ExpenseByCategory
 import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.ExpensesByYear
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.springframework.stereotype.Component
 
 @Component
 class IndicatorApiMapper(val categoryApiMapper: CategoryApiMapper) {
-    fun asTotalsDTO(total: Total): TotalsDTO {
-        val totalsDto = TotalsDTO(total.expense.amount, total.income.amount, total.saved.amount)
-        totalsDto.year = total.year
+    fun asTotalsDTO(totals: Totals): TotalsDTO {
+        val totalsDto = TotalsDTO(totals.expense.amount, totals.income.amount, totals.saved.amount)
+        totalsDto.year = totals.year
         return totalsDto
     }
 

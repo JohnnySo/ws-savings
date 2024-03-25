@@ -2,7 +2,7 @@ package org.soneira.savings.infrastructure.repository
 
 import org.soneira.savings.domain.model.entity.User
 import org.soneira.savings.domain.model.vo.ExpensesByYear
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.soneira.savings.domain.repository.IndicatorRepository
 import org.soneira.savings.infrastructure.persistence.mongo.mapper.IndicatorMapper
 import org.soneira.savings.infrastructure.persistence.mongo.repository.CustomMongoRepository
@@ -13,7 +13,7 @@ class IndicatorRepositoryImpl(
     val customMongoRepository: CustomMongoRepository,
     val indicatorMapper: IndicatorMapper
 ) : IndicatorRepository {
-    override fun getAnnualSummary(user: User, years: List<Int>): List<Total> {
+    override fun getAnnualSummary(user: User, years: List<Int>): List<Totals> {
         return customMongoRepository.getTotalsByYear(user.id.value, years).map { indicatorMapper.asTotals(it) }
     }
 

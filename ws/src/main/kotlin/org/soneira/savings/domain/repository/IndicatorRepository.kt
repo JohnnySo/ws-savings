@@ -2,7 +2,7 @@ package org.soneira.savings.domain.repository
 
 import org.soneira.savings.domain.model.entity.User
 import org.soneira.savings.domain.model.vo.ExpensesByYear
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 
 interface IndicatorRepository {
     /**
@@ -10,9 +10,9 @@ interface IndicatorRepository {
      *
      * @param user  the user to filter data
      * @param years the list of years you want to get information
-     * @return the list of [Total] of each year
+     * @return the list of [Totals] of each year
      */
-    fun getAnnualSummary(user: User, years: List<Int>): List<Total>
+    fun getAnnualSummary(user: User, years: List<Int>): List<Totals>
 
     /**
      * Gets all the expenses divided by category of the years passes as parameters

@@ -4,7 +4,7 @@ import org.soneira.savings.domain.model.vo.ExpenseByCategory
 import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.ExpensesByYear
 import org.soneira.savings.domain.model.vo.Money
-import org.soneira.savings.domain.model.vo.Total
+import org.soneira.savings.domain.model.vo.Totals
 import org.soneira.savings.domain.repository.CategoryRepository
 import org.soneira.savings.domain.repository.SubcategoryRepository
 import org.soneira.savings.infrastructure.persistence.mongo.document.ExpenseDocument
@@ -17,13 +17,13 @@ class IndicatorMapper(
     private val categoryRepository: CategoryRepository,
     private val subcategoryRepository: SubcategoryRepository
 ) {
-    fun asTotals(totalsProjection: TotalsProjection): Total {
-        val total = Total(
+    fun asTotals(totalsProjection: TotalsProjection): Totals {
+        val totals = Totals(
             Money.of(totalsProjection.totalExpense),
             Money.of(totalsProjection.totalIncome), Money.of(totalsProjection.totalSaved)
         )
-        total.year = totalsProjection.year
-        return total
+        totals.year = totalsProjection.year
+        return totals
     }
 
     fun asExpenseByYearAndCategory(expenses: ExpensesProjection): ExpensesByYear {
