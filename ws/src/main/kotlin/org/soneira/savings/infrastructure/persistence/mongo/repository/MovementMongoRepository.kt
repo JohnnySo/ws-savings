@@ -7,9 +7,9 @@ import java.util.*
 
 @Repository
 interface MovementMongoRepository : MongoRepository<MovementDocument, String> {
-    fun findByPeriodId(periodId: String): List<MovementDocument>
+    fun findByPeriod(period: String): List<MovementDocument>
 
     fun findByUserAndId(user: String, id: String): Optional<MovementDocument>
 
-    fun findByUserAndPeriodId(user: String, periodId: String): List<MovementDocument>
+    fun findByUserAndPeriod(user: String, periodId: String): List<MovementDocument>
 }

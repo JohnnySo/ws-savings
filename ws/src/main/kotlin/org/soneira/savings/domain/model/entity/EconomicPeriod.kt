@@ -43,10 +43,10 @@ data class EconomicPeriod(
 
     fun init() {
         restoreOrderMovements()
+        yearMonth = getLogicalPeriod()
         totals = calculateTotals()
         expenseByCategory = calculateExpensesByCategory()
         expenseBySubcategory = calculateExpensesBySubCategory()
-        yearMonth = getLogicalPeriod()
     }
 
     /**

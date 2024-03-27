@@ -27,7 +27,7 @@ data class MovementDocument(
 ) {
     @Id
     lateinit var id: String
-    lateinit var periodId: String
+    lateinit var period: String
 
     constructor(
         id: String, operationDate: LocalDate, description: String, amount: BigDecimal, order: Int,

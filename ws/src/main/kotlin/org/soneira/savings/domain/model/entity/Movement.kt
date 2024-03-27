@@ -52,7 +52,7 @@ data class Movement(
      * @return true if a movement should be taken into account to calculate total
      */
     fun isCountable(subcategoriesNotCountable: List<Subcategory>): Boolean {
-        return subcategory !in subcategoriesNotCountable
+        return subcategory.id.value !in subcategoriesNotCountable.map { it.id.value }
     }
 
     companion object {

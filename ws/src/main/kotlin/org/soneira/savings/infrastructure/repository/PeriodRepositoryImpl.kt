@@ -36,7 +36,7 @@ class PeriodRepositoryImpl(
             Optional.empty()
         } else {
             val lastPeriod = periods.first()
-            lastPeriod.movements = movementMongoRepository.findByPeriodId(lastPeriod.id)
+            lastPeriod.movements = movementMongoRepository.findByPeriod(lastPeriod.id)
             Optional.of(periodMapper.asPeriod(lastPeriod))
         }
     }
@@ -45,10 +45,10 @@ class PeriodRepositoryImpl(
     @CacheEvict("years", allEntries = true)
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
         val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.asPeriodDocument(it) })
-        periodDocuments.forEach { period -> period.movements.forEach { it.periodId = period.id } }
+        periodDocuments.forEach { period -> period.movements.forEach { it.period = period.id } }
         val movementDocuments = movementMongoRepository.saveAll(periodDocuments.flatMap { it.movements })
         periodDocuments.forEach { period ->
-            period.movements = movementDocuments.filter { it.periodId == period.id }
+            period.movements = movementDocuments.filter { it.period == period.id }
         }
         return periodDocuments.map { periodMapper.asPeriod(it) }
     }
@@ -73,7 +73,7 @@ class PeriodRepositoryImpl(
             throw ResourceNotFoundException("The period ${id.value} for user ${user.id.value} do not exist.")
         } else {
             val periodDocument = optPeriodDocument.get()
-            periodDocument.movements = movementMongoRepository.findByUserAndPeriodId(user.id.value, id.value)
+            periodDocument.movements = movementMongoRepository.findByUserAndPeriod(user.id.value, id.value)
             return periodMapper.asPeriod(periodDocument)
         }
     }
@@ -81,7 +81,7 @@ class PeriodRepositoryImpl(
     override fun getPeriodOfMovement(user: User, movement: MovementId): Optional<EconomicPeriod> {
         val movementDocument = movementMongoRepository.findByUserAndId(user.id.value, movement.value)
         return if (movementDocument.isPresent) {
-            Optional.of(this.getPeriod(user, PeriodId(movementDocument.get().periodId)))
+            Optional.of(this.getPeriod(user, PeriodId(movementDocument.get().period)))
         } else {
             Optional.empty()
         }
