@@ -1,6 +1,7 @@
 package org.soneira.savings.domain.repository
 
 import org.soneira.savings.domain.model.entity.Category
+import org.soneira.savings.domain.model.vo.id.CategoryId
 
 
 interface CategoryRepository {
@@ -12,9 +13,9 @@ interface CategoryRepository {
 
     /**
      * Get one category
-     * @param id the category identifier
+     * @param id the category identifier [CategoryId]
      * @return the category [Category]
      */
-    fun getById(id: Int): Category
+    fun getById(id: CategoryId): Category
 
 }

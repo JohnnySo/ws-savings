@@ -7,10 +7,10 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 
 @Component
-class MasterRepositoryImpl(val customMongoRepository: CustomMongoRepository) : MasterRepository {
+class MasterRepositoryImpl(val customMongodbRepository: CustomMongoRepository) : MasterRepository {
     @Cacheable("years")
     override fun getYears(user: User): List<Int> {
-        return customMongoRepository.findDistinctYears(user.id.value)
+        return customMongodbRepository.findDistinctYears(user.id.value)
     }
 
 }

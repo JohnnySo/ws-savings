@@ -1,8 +1,8 @@
 package org.soneira.savings.domain.usecase
 
-import org.soneira.savings.domain.model.entity.EconomicPeriod
 import org.soneira.savings.domain.model.entity.File
 import org.soneira.savings.domain.model.entity.Movement
+import org.soneira.savings.domain.model.vo.id.FileId
 import java.io.InputStream
 
 interface ImportMovementsUseCase {
@@ -19,7 +19,7 @@ interface ImportMovementsUseCase {
      * - PayrollStrategy: The period is determined by the date of the payrolls
      * - MonthStrategy: The period correspond with exact month
      *
-     * @param fileId the identifier of the file previously stored with preview
+     * @param id the identifier of the file previously stored with preview endpoint
      */
-    fun import(fileId: String): List<EconomicPeriod>
+    fun import(id: FileId)
 }

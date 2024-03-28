@@ -10,20 +10,20 @@ import org.springframework.stereotype.Component
 
 @Component
 class IndicatorRepositoryImpl(
-    val customMongoRepository: CustomMongoRepository,
+    val customMongodbRepository: CustomMongoRepository,
     val indicatorMapper: IndicatorMapper
 ) : IndicatorRepository {
     override fun getAnnualSummary(user: User, years: List<Int>): List<Totals> {
-        return customMongoRepository.getTotalsByYear(user.id.value, years).map { indicatorMapper.asTotals(it) }
+        return customMongodbRepository.getTotalsByYear(user.id.value, years).map { indicatorMapper.asTotals(it) }
     }
 
     override fun getExpensesByCategory(user: User, years: List<Int>): List<ExpensesByYear> {
-        return customMongoRepository.getExpensesByYear(user.id.value, years, false)
+        return customMongodbRepository.getExpensesByYear(user.id.value, years, false)
             .map { indicatorMapper.asExpenseByYearAndCategory(it) }
     }
 
     override fun getExpensesBySubcategory(user: User, years: List<Int>): List<ExpensesByYear> {
-        return customMongoRepository.getExpensesByYear(user.id.value, years, true)
+        return customMongodbRepository.getExpensesByYear(user.id.value, years, true)
             .map { indicatorMapper.asExpenseByYearAndSubcategory(it) }
     }
 }

@@ -5,7 +5,10 @@ import org.soneira.savings.domain.model.vo.ExpenseByCategory
 import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.Money
 import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.id.CategoryId
 import org.soneira.savings.domain.model.vo.id.PeriodId
+import org.soneira.savings.domain.model.vo.id.SubcategoryId
+import org.soneira.savings.domain.model.vo.id.UserId
 import org.soneira.savings.domain.repository.CategoryRepository
 import org.soneira.savings.domain.repository.SubcategoryRepository
 import org.soneira.savings.domain.repository.UserRepository
@@ -46,7 +49,7 @@ class PeriodMapper(
     fun asPeriod(period: EconomicPeriodDocument): EconomicPeriod {
         return EconomicPeriod(
             PeriodId(period.id),
-            userRepository.getUserById(period.user),
+            userRepository.getUserById(UserId(period.user)),
             period.start,
             period.end,
             period.filename,
@@ -79,13 +82,13 @@ class PeriodMapper(
 
     private fun asExpensesByCategoryDto(expensesByCategory: List<ExpenseDocument>): List<ExpenseByCategory> {
         return expensesByCategory.map {
-            ExpenseByCategory(categoryRepository.getById(it.key), Money.of(it.amount))
+            ExpenseByCategory(categoryRepository.getById(CategoryId( it.key)), Money.of(it.amount))
         }
     }
 
     private fun asExpensesBySubcategoryDto(expensesBySubcategory: List<ExpenseDocument>): List<ExpenseBySubcategory> {
         return expensesBySubcategory.map {
-            ExpenseBySubcategory(subcategoryRepository.getById(it.key), Money.of(it.amount))
+            ExpenseBySubcategory(subcategoryRepository.getById(SubcategoryId(it.key)), Money.of(it.amount))
         }
     }
 }

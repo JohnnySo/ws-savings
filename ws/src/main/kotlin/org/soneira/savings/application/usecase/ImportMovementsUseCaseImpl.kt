@@ -1,8 +1,8 @@
 package org.soneira.savings.application.usecase
 
 import org.soneira.savings.application.usecase.reader.ReaderFactory
-import org.soneira.savings.domain.model.entity.EconomicPeriod
 import org.soneira.savings.domain.model.entity.File
+import org.soneira.savings.domain.model.vo.id.FileId
 import org.soneira.savings.domain.repository.FileRepository
 import org.soneira.savings.domain.repository.PeriodRepository
 import org.soneira.savings.domain.repository.UserRepository
@@ -29,12 +29,11 @@ class ImportMovementsUseCaseImpl(
         return fileRepository.save(user, filename, movements)
     }
 
-    override fun import(fileId: String): List<EconomicPeriod> {
+    override fun import(id: FileId) {
         val user = userRepository.getUser("john.doe@gmail.com")
         val periodsCreatedEvent =
-            periodCreator.create(user, fileRepository.get(fileId, user), periodRepository.findLastPeriod(user))
+            periodCreator.create(user, fileRepository.get(id, user), periodRepository.findLastPeriod(user))
         periodRepository.save(periodsCreatedEvent.economicPeriods)
         applicationEventPublisher.publishEvent(periodsCreatedEvent)
-        return periodsCreatedEvent.economicPeriods
     }
 }

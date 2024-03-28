@@ -1,6 +1,7 @@
 package org.soneira.savings.domain.repository
 
 import org.soneira.savings.domain.model.entity.User
+import org.soneira.savings.domain.model.vo.id.UserId
 
 interface UserRepository {
     /**
@@ -13,8 +14,8 @@ interface UserRepository {
 
     /**
      * Get a user by his identifier.
-     * @param id the identifier of the user
+     * @param id the identifier of the user [UserId]
      * @return the full information of the user [User]
      */
-    fun getUserById(id: String): User
+    fun getUserById(id: UserId): User
 }

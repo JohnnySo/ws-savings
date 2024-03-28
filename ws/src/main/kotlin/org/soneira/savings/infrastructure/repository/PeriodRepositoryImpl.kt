@@ -26,17 +26,17 @@ import java.util.*
 @Component
 class PeriodRepositoryImpl(
     private val periodMapper: PeriodMapper,
-    private val periodMongoRepository: PeriodMongoRepository,
-    private val movementMongoRepository: MovementMongoRepository
+    private val periodMongodbRepository: PeriodMongoRepository,
+    private val movementMongodbRepository: MovementMongoRepository
 ) : PeriodRepository {
 
     override fun findLastPeriod(user: User): Optional<EconomicPeriod> {
-        val periods = periodMongoRepository.findLastPeriod(user.id.value)
+        val periods = periodMongodbRepository.findLastPeriod(user.id.value)
         return if (periods.isEmpty()) {
             Optional.empty()
         } else {
             val lastPeriod = periods.first()
-            lastPeriod.movements = movementMongoRepository.findByPeriod(lastPeriod.id)
+            lastPeriod.movements = movementMongodbRepository.findByPeriod(lastPeriod.id)
             Optional.of(periodMapper.asPeriod(lastPeriod))
         }
     }
@@ -44,9 +44,9 @@ class PeriodRepositoryImpl(
     @Transactional
     @CacheEvict("years", allEntries = true)
     override fun save(economicPeriods: List<EconomicPeriod>): List<EconomicPeriod> {
-        val periodDocuments = periodMongoRepository.saveAll(economicPeriods.map { periodMapper.asPeriodDocument(it) })
+        val periodDocuments = periodMongodbRepository.saveAll(economicPeriods.map { periodMapper.asPeriodDocument(it) })
         periodDocuments.forEach { period -> period.movements.forEach { it.period = period.id } }
-        val movementDocuments = movementMongoRepository.saveAll(periodDocuments.flatMap { it.movements })
+        val movementDocuments = movementMongodbRepository.saveAll(periodDocuments.flatMap { it.movements })
         periodDocuments.forEach { period ->
             period.movements = movementDocuments.filter { it.period == period.id }
         }
@@ -63,23 +63,23 @@ class PeriodRepositoryImpl(
         val pageNumber = (offset / limit)
         val sort = Sort.by(Order(Direction.fromString(sortDirection.value), sortBy))
         val pageable: Pageable = PageRequest.of(pageNumber, limit, sort)
-        val page: Page<EconomicPeriodDocument> = periodMongoRepository.findAllByUser(user.id.value, pageable)
+        val page: Page<EconomicPeriodDocument> = periodMongodbRepository.findAllByUser(user.id.value, pageable)
         return periodMapper.asPageOfPeriods(page)
     }
 
     override fun getPeriod(user: User, id: PeriodId): EconomicPeriod {
-        val optPeriodDocument = periodMongoRepository.findByUserAndId(user.id.value, id.value)
+        val optPeriodDocument = periodMongodbRepository.findByUserAndId(user.id.value, id.value)
         if (!optPeriodDocument.isPresent) {
             throw ResourceNotFoundException("The period ${id.value} for user ${user.id.value} do not exist.")
         } else {
             val periodDocument = optPeriodDocument.get()
-            periodDocument.movements = movementMongoRepository.findByUserAndPeriod(user.id.value, id.value)
+            periodDocument.movements = movementMongodbRepository.findByUserAndPeriod(user.id.value, id.value)
             return periodMapper.asPeriod(periodDocument)
         }
     }
 
     override fun getPeriodOfMovement(user: User, movement: MovementId): Optional<EconomicPeriod> {
-        val movementDocument = movementMongoRepository.findByUserAndId(user.id.value, movement.value)
+        val movementDocument = movementMongodbRepository.findByUserAndId(user.id.value, movement.value)
         return if (movementDocument.isPresent) {
             Optional.of(this.getPeriod(user, PeriodId(movementDocument.get().period)))
         } else {

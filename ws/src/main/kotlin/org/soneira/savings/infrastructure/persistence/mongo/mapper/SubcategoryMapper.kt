@@ -1,6 +1,7 @@
 package org.soneira.savings.infrastructure.persistence.mongo.mapper
 
 import org.soneira.savings.domain.model.entity.Subcategory
+import org.soneira.savings.domain.model.vo.id.CategoryId
 import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.soneira.savings.domain.repository.CategoryRepository
 import org.soneira.savings.infrastructure.persistence.mongo.document.SubcategoryDocument
@@ -14,7 +15,7 @@ class SubcategoryMapper(val categoryRepository: CategoryRepository) {
             subcategoryDocument.key,
             subcategoryDocument.description,
             subcategoryDocument.descriptionEs,
-            categoryRepository.getById(subcategoryDocument.category)
+            categoryRepository.getById(CategoryId(subcategoryDocument.category))
         )
     }
 }

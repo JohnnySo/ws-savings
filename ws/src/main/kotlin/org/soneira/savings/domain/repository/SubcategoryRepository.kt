@@ -1,6 +1,7 @@
 package org.soneira.savings.domain.repository
 
 import org.soneira.savings.domain.model.entity.Subcategory
+import org.soneira.savings.domain.model.vo.id.SubcategoryId
 
 interface SubcategoryRepository {
     /**
@@ -11,9 +12,9 @@ interface SubcategoryRepository {
 
     /**
      * Get one subcategory
-     * @param id the subcategory identifier
+     * @param id the subcategory identifier [SubcategoryId]
      * @return the subcategory [Subcategory]
      */
-    fun getById(id: Int): Subcategory
+    fun getById(id: SubcategoryId): Subcategory
 
 }

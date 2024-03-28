@@ -5,6 +5,8 @@ import org.soneira.savings.domain.model.vo.ExpenseBySubcategory
 import org.soneira.savings.domain.model.vo.ExpensesByYear
 import org.soneira.savings.domain.model.vo.Money
 import org.soneira.savings.domain.model.vo.Totals
+import org.soneira.savings.domain.model.vo.id.CategoryId
+import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.soneira.savings.domain.repository.CategoryRepository
 import org.soneira.savings.domain.repository.SubcategoryRepository
 import org.soneira.savings.infrastructure.persistence.mongo.document.ExpenseDocument
@@ -39,10 +41,10 @@ class IndicatorMapper(
     }
 
     fun asExpensesByCategory(expense: ExpenseDocument): ExpenseByCategory {
-        return ExpenseByCategory(categoryRepository.getById(expense.key), Money.of(expense.amount))
+        return ExpenseByCategory(categoryRepository.getById(CategoryId( expense.key)), Money.of(expense.amount))
     }
 
     fun asExpensesBySubcategory(expense: ExpenseDocument): ExpenseBySubcategory {
-        return ExpenseBySubcategory(subcategoryRepository.getById(expense.key), Money.of(expense.amount))
+        return ExpenseBySubcategory(subcategoryRepository.getById(SubcategoryId(expense.key)), Money.of(expense.amount))
     }
 }

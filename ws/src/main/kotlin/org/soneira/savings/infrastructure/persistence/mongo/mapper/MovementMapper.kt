@@ -4,6 +4,7 @@ import org.soneira.savings.domain.model.entity.Movement
 import org.soneira.savings.domain.model.vo.Money
 import org.soneira.savings.domain.model.vo.Order
 import org.soneira.savings.domain.model.vo.id.MovementId
+import org.soneira.savings.domain.model.vo.id.SubcategoryId
 import org.soneira.savings.domain.repository.SubcategoryRepository
 import org.soneira.savings.infrastructure.persistence.mongo.document.MovementDocument
 import org.springframework.stereotype.Component
@@ -47,7 +48,7 @@ class MovementMapper(
                 movement.description,
                 Money.of(movement.amount),
                 Order(movement.order),
-                subcategoryRepository.getById(movement.subcategory),
+                subcategoryRepository.getById(SubcategoryId(movement.subcategory)),
                 movement.comment,
                 Money.of(movement.balance)
             )
@@ -57,7 +58,7 @@ class MovementMapper(
                 movement.description,
                 Money.of(movement.amount),
                 Order(movement.order),
-                subcategoryRepository.getById(movement.subcategory),
+                subcategoryRepository.getById(SubcategoryId(movement.subcategory)),
                 movement.comment,
                 Money.of(movement.balance)
             )
